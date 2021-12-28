@@ -1,0 +1,1776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/cute.jpeg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/cute.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/cute.jpeg">
+  <link rel="mask-icon" href="/images/cute.jpeg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Linux基本命令">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux">
+<meta property="og:url" content="http://example.com/Linux/index.html">
+<meta property="og:site_name" content="Vincent&#39;s Learning Journey">
+<meta property="og:description" content="Linux基本命令">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-12-01T04:42:37.000Z">
+<meta property="article:modified_time" content="2021-12-28T13:59:27.883Z">
+<meta property="article:author" content="Vincent">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/Linux/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Linux | Vincent's Learning Journey</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Vincent's Learning Journey</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">DayDayUp</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section">Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section">Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section">Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/Linux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cute.jpeg">
+      <meta itemprop="name" content="Vincent">
+      <meta itemprop="description" content="nice">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vincent's Learning Journey">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-12-01 12:42:37" itemprop="dateCreated datePublished" datetime="2021-12-01T12:42:37+08:00">2021-12-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-12-28 21:59:27" itemprop="dateModified" datetime="2021-12-28T21:59:27+08:00">2021-12-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">系统</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">Linux基本命令</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="VI-VIM编辑器"><a href="#VI-VIM编辑器" class="headerlink" title="VI/VIM编辑器"></a>VI/VIM编辑器</h2><p>一般模式：</p>
+<table>
+<thead>
+<tr>
+<th>语法</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>yy</td>
+<td>复制光标当前一行</td>
+</tr>
+<tr>
+<td>y数字y</td>
+<td>复制一段（从第几行到第几行）</td>
+</tr>
+<tr>
+<td>p</td>
+<td>箭头移动到目的行粘贴</td>
+</tr>
+<tr>
+<td>u</td>
+<td>撤销上一步</td>
+</tr>
+<tr>
+<td>dd</td>
+<td>删除光标当前行</td>
+</tr>
+<tr>
+<td>d数字d</td>
+<td>删除光标（含）后多少行</td>
+</tr>
+<tr>
+<td>x</td>
+<td>删除一个字母，相当于del</td>
+</tr>
+<tr>
+<td>X</td>
+<td>删除一个字母，相当于Backspace</td>
+</tr>
+<tr>
+<td>yw</td>
+<td>复制一个词</td>
+</tr>
+<tr>
+<td>dw</td>
+<td>删除一个词</td>
+</tr>
+<tr>
+<td>shift+^</td>
+<td>移动到行头</td>
+</tr>
+<tr>
+<td>shift+$</td>
+<td>移动到<strong>行尾</strong></td>
+</tr>
+<tr>
+<td>1+shift+g</td>
+<td>移动到页头，数字</td>
+</tr>
+<tr>
+<td>shift+g</td>
+<td>移动到<strong>页尾</strong></td>
+</tr>
+<tr>
+<td>数字N+shift+g</td>
+<td>移动到<strong>目标行</strong></td>
+</tr>
+</tbody></table>
+<p>编辑模式：</p>
+<table>
+<thead>
+<tr>
+<th>按键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>i</td>
+<td>当前光标前</td>
+</tr>
+<tr>
+<td>a</td>
+<td>当前光标后</td>
+</tr>
+<tr>
+<td>o</td>
+<td>当前光标行的下一行</td>
+</tr>
+<tr>
+<td>I</td>
+<td>光标所在行最前</td>
+</tr>
+<tr>
+<td>A</td>
+<td>光标所在行最后</td>
+</tr>
+<tr>
+<td>O</td>
+<td>当前光标行的上一行</td>
+</tr>
+</tbody></table>
+<p>指令模式：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>:w</td>
+<td>保存</td>
+</tr>
+<tr>
+<td>:q</td>
+<td>退出</td>
+</tr>
+<tr>
+<td>:!</td>
+<td>强制执行</td>
+</tr>
+<tr>
+<td>/要查找的词</td>
+<td>n 查找下一个，N 往上查找</td>
+</tr>
+<tr>
+<td>? 要查找的词</td>
+<td>n是查找上一个，shift+n是往下查找</td>
+</tr>
+<tr>
+<td>:set nu</td>
+<td><strong>显示行号</strong></td>
+</tr>
+<tr>
+<td>:set nonu</td>
+<td><strong>关闭行号</strong></td>
+</tr>
+<tr>
+<td>:%s/old/new/g</td>
+<td>替换内容</td>
+</tr>
+</tbody></table>
+<h2 id="网络配置和系统管理操作"><a href="#网络配置和系统管理操作" class="headerlink" title="网络配置和系统管理操作"></a>网络配置和系统管理操作</h2><h3 id="查看当前网络ip"><a href="#查看当前网络ip" class="headerlink" title="查看当前网络ip"></a>查看当前网络ip</h3><p>ifconfig</p>
+<h3 id="测试主机之间网络连通性"><a href="#测试主机之间网络连通性" class="headerlink" title="测试主机之间网络连通性"></a>测试主机之间网络连通性</h3><p>ping 目的主机</p>
+<p>ping <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a></p>
+<h3 id="修改IP地址"><a href="#修改IP地址" class="headerlink" title="修改IP地址"></a>修改IP地址</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/sysconfig/network-scripts/ifcfg-ens33</span><br><span class="line">vim /etc/sysconfig/network-scripts/ifcfg-eth0</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">TYPE=&quot;Ethernet&quot;</span><br><span class="line">PROXY_METHOD=&quot;none&quot;</span><br><span class="line">BROWSER_ONLY=&quot;no&quot;</span><br><span class="line">BOOTPROTO=static</span><br><span class="line">DEFROUTE=&quot;yes&quot;</span><br><span class="line">IPV4_FAILURE_FATAL=&quot;no&quot;</span><br><span class="line">IPV6INIT=&quot;yes&quot;</span><br><span class="line">IPV6_AUTOCONF=&quot;yes&quot;</span><br><span class="line">IPV6_DEFROUTE=&quot;yes&quot;</span><br><span class="line">IPV6_FAILURE_FATAL=&quot;no&quot;</span><br><span class="line">IPV6_ADDR_GEN_MODE=&quot;stable-privacy&quot;</span><br><span class="line">NAME=&quot;eth0&quot;</span><br><span class="line">UUID=&quot;19c440dc-9a12-4fd7-bc46-0a121ef6af96&quot;</span><br><span class="line">DEVICE=&quot;eth0&quot;</span><br><span class="line">ONBOOT=&quot;yes&quot;</span><br><span class="line">IPADDR=10.211.55.10</span><br><span class="line">GATEWAY=10.211.55.1</span><br><span class="line">DNS1=10.211.55.1</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="重启网络"><a href="#重启网络" class="headerlink" title="重启网络"></a>重启网络</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service network restart</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="配置主机名"><a href="#配置主机名" class="headerlink" title="配置主机名"></a>配置主机名</h2><h3 id="修改主机名称"><a href="#修改主机名称" class="headerlink" title="修改主机名称"></a>修改主机名称</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/hostname</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改hosts映射文件"><a href="#修改hosts映射文件" class="headerlink" title="修改hosts映射文件"></a>修改hosts映射文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/hosts</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">10.211.55.10</span>	linux1</span><br><span class="line"><span class="number">10.211.55.11</span>	linux2</span><br><span class="line"><span class="number">10.211.55.12</span>	linux3</span><br></pre></td></tr></table></figure>
+
+<p>Windows 主机映射文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Windows\System32\drivers\etc</span><br></pre></td></tr></table></figure>
+
+<p>Mac 主机映射文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/hosts</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="关闭防火墙"><a href="#关闭防火墙" class="headerlink" title="关闭防火墙"></a>关闭防火墙</h2><h3 id="service"><a href="#service" class="headerlink" title="service"></a>service</h3><p>service  服务名 start | stop | restart | status</p>
+<p>service network status</p>
+<h3 id="chkconfig"><a href="#chkconfig" class="headerlink" title="chkconfig"></a>chkconfig</h3><p>chkconfig 设置后台服务的自启配置</p>
+<p>chkconfig               （功能描述：查看所有服务器自启配置）</p>
+<p>chkconfig 服务名 off  （功能描述：关掉指定服务的自动启动）</p>
+<p>chkconfig 服务名 on  （功能描述：开启指定服务的自动启动）</p>
+<p>chkconfig 服务名 –list     （功能描述：查看服务开机启动状态）</p>
+<h4 id="启-关闭iptables-防火墙-服务的自动启动"><a href="#启-关闭iptables-防火墙-服务的自动启动" class="headerlink" title="启/关闭iptables(防火墙)服务的自动启动"></a>启/关闭iptables(防火墙)服务的自动启动</h4><p>chkconfig iptables on</p>
+<p>chkconfig iptables off</p>
+<h4 id="开启-关闭-iptables服务指定级别的自动启动"><a href="#开启-关闭-iptables服务指定级别的自动启动" class="headerlink" title="开启/关闭 iptables服务指定级别的自动启动"></a>开启/关闭 iptables服务指定级别的自动启动</h4><p>chkconfig –level 指定级别 iptables on</p>
+<p>chkconfig –level 指定级别 iptables off</p>
+<h3 id="systemctl"><a href="#systemctl" class="headerlink" title="systemctl"></a>systemctl</h3><p>systemctl  start | stop | restart | status     服务名</p>
+<p>systemctl status firewalld</p>
+<h4 id="systemctl-设置后台服务的自启配置"><a href="#systemctl-设置后台服务的自启配置" class="headerlink" title="systemctl 设置后台服务的自启配置"></a>systemctl 设置后台服务的自启配置</h4><p>systemctl list-unit-files     （功能描述：查看服务开机启动状态）</p>
+<p>systemctl disable service_name  （功能描述：关掉指定服务的自动启动）</p>
+<p>systemctl enable service_name  （功能描述：开启指定服务的自动启动）</p>
+<h4 id="开启-关闭iptables-防火墙-服务的自动启动"><a href="#开启-关闭iptables-防火墙-服务的自动启动" class="headerlink" title="开启/关闭iptables(防火墙)服务的自动启动"></a>开启/关闭iptables(防火墙)服务的自动启动</h4><p>systemctl enable firewalld.service</p>
+<p>systemctl disable firewalld.service</p>
+<h4 id="临时关闭防火墙"><a href="#临时关闭防火墙" class="headerlink" title="临时关闭防火墙"></a>临时关闭防火墙</h4><p>systemctl stop firewalld</p>
+<h4 id="开机启动时关闭防火墙"><a href="#开机启动时关闭防火墙" class="headerlink" title="开机启动时关闭防火墙"></a>开机启动时关闭防火墙</h4><p>systemctl disable firewalld.service</p>
+<h2 id="关机重启命令"><a href="#关机重启命令" class="headerlink" title="关机重启命令"></a>关机重启命令</h2><p>sync &gt; shutdown &gt; reboot &gt; halt</p>
+<p>sync          （功能描述：将数据由内存同步到硬盘中）</p>
+<p>halt             （功能描述：关闭系统，等同于shutdown -h now 和 poweroff）</p>
+<p>reboot         （功能描述：就是重启，等同于 shutdown -r now）</p>
+<p>shutdown [选项] 时间    </p>
+<p>powerpff</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-h</td>
+<td>-h=halt关机</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>-r=reboot重启</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>now</td>
+<td>立刻关机</td>
+</tr>
+<tr>
+<td>时间</td>
+<td>等待多久后关机（时间单位是分钟）。</td>
+</tr>
+</tbody></table>
+<h2 id="帮助命令"><a href="#帮助命令" class="headerlink" title="帮助命令"></a>帮助命令</h2><p>man [命令或配置文件]        （功能描述：获得帮助信息）</p>
+<p>man ls</p>
+<p>help 命令    （功能描述：获得shell内置命令的帮助信息）</p>
+<p>help cd</p>
+<h2 id="文件目录类命令"><a href="#文件目录类命令" class="headerlink" title="文件目录类命令"></a>文件目录类命令</h2><h3 id="pwd"><a href="#pwd" class="headerlink" title="pwd"></a>pwd</h3><p>功能描述：显示当前工作目录的绝对路径</p>
+<h3 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h3><p>ls [选项] [目录或是文件]</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-a</td>
+<td>全部的文件，连同隐藏档( 开头为 . 的文件) 一起列出来(常用)</td>
+</tr>
+<tr>
+<td>-l</td>
+<td>长数据串列出，包含文件的属性与权限等等数据；(常用)</td>
+</tr>
+</tbody></table>
+<h3 id="cd"><a href="#cd" class="headerlink" title="cd"></a>cd</h3><p>切换路径</p>
+<h3 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir"></a>mkdir</h3><p>创建新目录</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-p</td>
+<td>创建多层目录</td>
+</tr>
+</tbody></table>
+<p>mkdir -p xiyou/dssz/meihouwang</p>
+<h3 id="rmdir"><a href="#rmdir" class="headerlink" title="rmdir"></a>rmdir</h3><p>删除空目录</p>
+<h3 id="touch"><a href="#touch" class="headerlink" title="touch"></a>touch</h3><p>创建空文件</p>
+<h3 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h3><p>复制文件或者目录</p>
+<p>cp [选项] source dest</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-r</td>
+<td>递归复制整个文件夹</td>
+</tr>
+</tbody></table>
+<p>cp -r xiyou/dssz/ ./</p>
+<h3 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h3><p>移除文件或目录</p>
+<p>rm [选项] deleteFile</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-r</td>
+<td>递归删除目录中所有内容</td>
+</tr>
+<tr>
+<td>-f</td>
+<td>强制执行删除操作，而不提示用于进行确认。</td>
+</tr>
+<tr>
+<td>-v</td>
+<td>显示指令的详细执行过程</td>
+</tr>
+</tbody></table>
+<p>rm -rf dssz/</p>
+<h3 id="mv"><a href="#mv" class="headerlink" title="mv"></a>mv</h3><p>移动文件与目录或重命名</p>
+<p>mv oldNameFile newNameFile    （功能描述：重命名）</p>
+<p>mv /temp/movefile /targetFolder    （功能描述：移动文件）</p>
+<h3 id="cat"><a href="#cat" class="headerlink" title="cat"></a>cat</h3><p>cat  [选项] 要查看的文件</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-n</td>
+<td>显示所有行的行号，包括空行。</td>
+</tr>
+</tbody></table>
+<p>cat -n houge.txt</p>
+<h3 id="more"><a href="#more" class="headerlink" title="more"></a>more</h3><p>文件内容分屏查看器</p>
+<p>more 要查看的文件</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>功能说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>空白键 (space)</td>
+<td>代表向下翻一页；</td>
+</tr>
+<tr>
+<td>Enter</td>
+<td>代表向下翻『一行』；</td>
+</tr>
+<tr>
+<td>q</td>
+<td>代表立刻离开 more ，不再显示该文件内容。</td>
+</tr>
+<tr>
+<td>Ctrl+F</td>
+<td>向下滚动一屏</td>
+</tr>
+<tr>
+<td>Ctrl+B</td>
+<td>返回上一屏</td>
+</tr>
+<tr>
+<td>=</td>
+<td>输出当前行的行号</td>
+</tr>
+<tr>
+<td>:f</td>
+<td>输出文件名和当前行的行号</td>
+</tr>
+</tbody></table>
+<h3 id="less"><a href="#less" class="headerlink" title="less"></a>less</h3><p>分屏显示文件内容</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>功能说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>空白键</td>
+<td>向下翻动一页；</td>
+</tr>
+<tr>
+<td>[pagedown]</td>
+<td>向下翻动一页</td>
+</tr>
+<tr>
+<td>[pageup]</td>
+<td>向上翻动一页；</td>
+</tr>
+<tr>
+<td>/字串</td>
+<td>向下搜寻『字串』的功能；n：向下查找；N：向上查找；</td>
+</tr>
+<tr>
+<td>?字串</td>
+<td>向上搜寻『字串』的功能；n：向上查找；N：向下查找；</td>
+</tr>
+<tr>
+<td>q</td>
+<td>离开 less 这个程序；</td>
+</tr>
+</tbody></table>
+<h3 id="echo"><a href="#echo" class="headerlink" title="echo"></a>echo</h3><p>输出内容到控制台</p>
+<p>echo [选项] [输出内容]</p>
+<p>选项： </p>
+<p> -e：  支持反斜线控制的字符转换</p>
+<table>
+<thead>
+<tr>
+<th>控制字符</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>\</td>
+<td>输出\本身</td>
+</tr>
+<tr>
+<td>\n</td>
+<td>换行符</td>
+</tr>
+<tr>
+<td>\t</td>
+<td>制表符，也就是Tab键</td>
+</tr>
+</tbody></table>
+<h3 id="head"><a href="#head" class="headerlink" title="head"></a>head</h3><p>head用于显示文件的开头部分内容，默认情况下head指令显示文件的前10行内容。</p>
+<p>head 文件       （功能描述：查看文件头10行内容）</p>
+<p>head -n 5 文件    （功能描述：查看文件头5行内容，5可以是任意行数）</p>
+<p>head -n 2 smartd.conf</p>
+<h3 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h3><p>tail用于输出文件中尾部的内容，默认情况下tail指令显示文件的后10行内容。</p>
+<p>tail  文件             （功能描述：查看文件尾部10行内容）</p>
+<p>tail  -n  5 文件     （功能描述：查看文件尾部5行内容，5可以是任意行数）</p>
+<p>tail  -f  文件        （功能描述：实时追踪该文档的所有更新）</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-n&lt;行数&gt;</td>
+<td>输出文件尾部n行内容</td>
+</tr>
+<tr>
+<td>-f</td>
+<td>显示文件最新追加的内容，监视文件变化</td>
+</tr>
+</tbody></table>
+<h3 id="gt-输出重定向和-gt-gt-追加"><a href="#gt-输出重定向和-gt-gt-追加" class="headerlink" title="&gt; 输出重定向和 &gt;&gt; 追加"></a>&gt; 输出重定向和 &gt;&gt; 追加</h3><p>ls -l &gt; 文件                 （功能描述：列表的内容写入文件中（****覆盖写****））</p>
+<p>ls -al  &gt;&gt; 文件            （功能描述：列表的内容****追加****到文件的末尾）</p>
+<p>cat 文件1 &gt; 文件2      （功能描述：将文件1的内容覆盖到文件2）</p>
+<p>echo “内容” &gt;&gt; 文件</p>
+<p>将ls查看信息写入到文件中</p>
+<p>ls -l&gt;houge.txt</p>
+<p>将ls查看信息追加到文件中</p>
+<p>ls -l&gt;&gt;houge.txt</p>
+<p>采用echo将hello单词追加到文件中</p>
+<p>echo hello&gt;&gt;houge.txt</p>
+<h3 id="ln"><a href="#ln" class="headerlink" title="ln"></a>ln</h3><p>软链接</p>
+<p>ln -s [原文件或目录] [软链接名]        （功能描述：给原文件创建一个软链接）</p>
+<p>创建软连接</p>
+<p>ln -s xiyou/dssz/houge.txt ./houzi</p>
+<p>删除软连接</p>
+<p>rm -rf houzi</p>
+<p>进入软连接实际物理路径</p>
+<p>ln -s xiyou/dssz/ ./dssz</p>
+<p>cd -P dssz/</p>
+<h3 id="history"><a href="#history" class="headerlink" title="history"></a>history</h3><p>history                        （功能描述：查看已经执行过历史命令）</p>
+<h2 id="时间日期类命令"><a href="#时间日期类命令" class="headerlink" title="时间日期类命令"></a>时间日期类命令</h2><p>date [OPTION]… [+FORMAT]</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-d&lt;时间字符串&gt;</td>
+<td>显示指定的“时间字符串”表示的时间，而非当前时间</td>
+</tr>
+<tr>
+<td>-s&lt;日期时间&gt;</td>
+<td>设置系统日期时间</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&lt;+日期时间格式&gt;</td>
+<td>指定显示时使用的日期时间格式</td>
+</tr>
+</tbody></table>
+<h3 id="date-显示当前时间"><a href="#date-显示当前时间" class="headerlink" title="date 显示当前时间"></a>date 显示当前时间</h3><p>date                                    （功能描述：显示当前时间）</p>
+<p>date +%Y                            （功能描述：显示当前年份）</p>
+<p>date +%m                            （功能描述：显示当前月份）</p>
+<p>date +%d                            （功能描述：显示当前是哪一天）</p>
+<p>date “+%Y-%m-%d %H:%M:%S”        （功能描述：显示年月日时分秒）</p>
+<h3 id="date-显示非当前时间"><a href="#date-显示非当前时间" class="headerlink" title="date 显示非当前时间"></a>date 显示非当前时间</h3><p>date -d ‘1 days ago’            （功能描述：显示前一天时间）</p>
+<p>date -d ‘-1 days ago’            （功能描述：显示明天时间）</p>
+<h3 id="date-设置系统时间"><a href="#date-设置系统时间" class="headerlink" title="date 设置系统时间"></a>date 设置系统时间</h3><p>date -s 字符串时间</p>
+<p>date -s “2017-06-19 20:52:18”</p>
+<h3 id="cal-查看日历"><a href="#cal-查看日历" class="headerlink" title="cal 查看日历"></a>cal 查看日历</h3><p>cal [选项]            （功能描述：不加选项，显示本月日历）</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>具体某一年</td>
+<td>显示这一年的日历</td>
+</tr>
+</tbody></table>
+<p>cal 2020</p>
+<h2 id="用户管理命令"><a href="#用户管理命令" class="headerlink" title="用户管理命令"></a>用户管理命令</h2><h3 id="useradd"><a href="#useradd" class="headerlink" title="useradd"></a>useradd</h3><p>useradd 用户名            （功能描述：添加新用户）</p>
+<p>useradd -g 组名 用户名    （功能描述：添加新用户到某个组）</p>
+<h3 id="passwd"><a href="#passwd" class="headerlink" title="passwd"></a>passwd</h3><p>设置用户密码</p>
+<p>passwd 用户名    （功能描述：设置用户密码）</p>
+<h3 id="id"><a href="#id" class="headerlink" title="id"></a>id</h3><p>查看用户是否存在</p>
+<p>id 用户名</p>
+<h3 id="cat-etc-passwd"><a href="#cat-etc-passwd" class="headerlink" title="cat  /etc/passwd"></a>cat  /etc/passwd</h3><p>查看创建了哪些用户</p>
+<h3 id="su"><a href="#su" class="headerlink" title="su"></a>su</h3><p>切换用户</p>
+<p>su 用户名称  （功能描述：切换用户，只能获得用户的执行权限，不能获得环境变量）</p>
+<p>su - 用户名称（功能描述：切换到用户并获得该用户的环境变量及执行权限）</p>
+<h3 id="userdel"><a href="#userdel" class="headerlink" title="userdel"></a>userdel</h3><p>删除用户</p>
+<p>userdel  用户名        （功能描述：删除用户但保存用户主目录）</p>
+<p>userdel -r 用户名      （功能描述：用户和用户主目录，都删除）</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-r</td>
+<td>删除用户的同时，删除与用户相关的所有文件。</td>
+</tr>
+</tbody></table>
+<h3 id="who"><a href="#who" class="headerlink" title="who"></a>who</h3><p>查看登录用户信息</p>
+<p>whoami            （功能描述：显示自身用户名称）</p>
+<p>who am i          （功能描述：显示登录用户的用户名)</p>
+<h3 id="sudo"><a href="#sudo" class="headerlink" title="sudo"></a>sudo</h3><p>设置普通用户具有root权限</p>
+<p>先修改配置文件</p>
+<p>vim /etc/sudoers</p>
+<p>修改 /etc/sudoers 文件，找到下面一行(91行)，在root下面添加一行，如下所示：</p>
+<p>## Allow root to run any commands anywhere</p>
+<p>root   ALL=(ALL)   ALL</p>
+<p>vincent  ALL=(ALL)   ALL</p>
+<h3 id="usermod"><a href="#usermod" class="headerlink" title="usermod"></a>usermod</h3><p>修改用户</p>
+<p>usermod -g 用户组 用户名</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-g</td>
+<td>修改用户的初始登录组，给定的组必须存在。默认组id是1。</td>
+</tr>
+</tbody></table>
+<h3 id="groupadd"><a href="#groupadd" class="headerlink" title="groupadd"></a>groupadd</h3><p>groupadd 组名</p>
+<h3 id="groupdel"><a href="#groupdel" class="headerlink" title="groupdel"></a>groupdel</h3><p>groupdel 组名</p>
+<h3 id="groupmod"><a href="#groupmod" class="headerlink" title="groupmod"></a>groupmod</h3><p>groupmod -n 新组名 老组名</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-n&lt;新组名&gt;</td>
+<td>指定工作组的新组名</td>
+</tr>
+</tbody></table>
+<h3 id="cat-etc-group"><a href="#cat-etc-group" class="headerlink" title="cat  /etc/group"></a>cat  /etc/group</h3><p>查看创建了哪些组</p>
+<h2 id="文件权限类命令"><a href="#文件权限类命令" class="headerlink" title="文件权限类命令"></a>文件权限类命令</h2><h3 id="文件属性"><a href="#文件属性" class="headerlink" title="文件属性"></a>文件属性</h3><p>从左到右的10个字符</p>
+<p>0首位表示类型</p>
+<p>在Linux中第一个字符代表这个文件是目录、文件或链接文件等等</p>
+<p>- 代表文件</p>
+<p> d 代表目录</p>
+<p> l 链接文档(link file)</p>
+<p>第1-3位确定属主（该文件的所有者）拥有该文件的权限。—User</p>
+<p>第4-6位确定属组（所有者的同组用户）拥有该文件的权限，—Group</p>
+<p>第7-9位确定其他用户拥有该文件的权限 —Other</p>
+<h3 id="rxw作用文件和目录的不同解释"><a href="#rxw作用文件和目录的不同解释" class="headerlink" title="rxw作用文件和目录的不同解释"></a>rxw作用文件和目录的不同解释</h3><p>作用到文件：</p>
+<p>[ r ]代表可读(read): 可以读取，查看</p>
+<p>[ w ]代表可写(write): 可以修改，但是不代表可以删除该文件，删除一个文件的前提条件是对该文件所在的目录有写权限，才能删除该文件.</p>
+<p>[ x ]代表可执行(execute):可以被系统执行</p>
+<p>作用到目录：</p>
+<p>[ r ]代表可读(read): 可以读取，ls查看目录内容</p>
+<p>[ w ]代表可写(write): 可以修改，目录内创建+删除+重命名目录</p>
+<p>[ x ]代表可执行(execute):可以进入该目录</p>
+<h3 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h3><p>改变权限</p>
+<p>第一种方式变更权限</p>
+<p>chmod  [{ugoa}{+-=}{rwx}] 文件或目录</p>
+<p>chmod u-x,o+x houge.txt</p>
+<p>第二种方式变更权限</p>
+<p>chmod  [mode=421 ]  [文件或目录]</p>
+<p>chmod 777 houge.txt</p>
+<p>chmod -R 777 xiyou/</p>
+<p>u:所有者  g:所有组  o:其他人  a:所有人(u、g、o的总和)</p>
+<p>r=4 w=2 x=1     rwx=4+2+1=7</p>
+<h3 id="chown"><a href="#chown" class="headerlink" title="chown"></a>chown</h3><p>改变所有者</p>
+<p>chown [选项] [最终用户] [文件或目录]        （功能描述：改变文件或者目录的所有者）</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-R</td>
+<td>递归操作</td>
+</tr>
+</tbody></table>
+<p>chown -R vincent:vincent xiyou/</p>
+<h3 id="chgrp"><a href="#chgrp" class="headerlink" title="chgrp"></a>chgrp</h3><p>chgrp [最终用户组] [文件或目录]    （功能描述：改变文件或者目录的所属组）</p>
+<p>chgrp root houge.txt</p>
+<h2 id="搜索查找类命令"><a href="#搜索查找类命令" class="headerlink" title="搜索查找类命令"></a>搜索查找类命令</h2><h3 id="find"><a href="#find" class="headerlink" title="find"></a>find</h3><p>ind指令将从指定目录向下递归地遍历其各个子目录，将满足条件的文件显示在终端。</p>
+<p>find [搜索范围] [选项]</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th align="left">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-name&lt;查询方式&gt;</td>
+<td align="left">按照指定的文件名查找模式查找文件</td>
+</tr>
+<tr>
+<td>-user&lt;用户名&gt;</td>
+<td align="left">查找属于指定用户名所有文件</td>
+</tr>
+<tr>
+<td>-size&lt;文件大小&gt;</td>
+<td align="left">按照指定的文件大小查找文件,单位为: <em><strong>*b*</strong></em> —— 块（512字节）<em><strong>*c*</strong></em> —— 字节<em><strong>*w*</strong></em> —— 字（2字节）<em><strong>*k*</strong></em> —— 千字节<em><strong>*M*</strong></em> —— 兆字节<em><strong>*G*</strong></em> —— 吉字节</td>
+</tr>
+</tbody></table>
+<p>find xiyou/ -name *.txt</p>
+<p>find xiyou/ -user vincent</p>
+<p>find /home -size +204800</p>
+<h3 id="locate"><a href="#locate" class="headerlink" title="locate"></a>locate</h3><p>快速定位文件路径</p>
+<p>locate 搜索文件</p>
+<h3 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h3><p>过滤查找及“|”管道符</p>
+<p>管道符，“|”，表示<strong>将前一个命令的处理结果输出传递给后面的命令处理</strong></p>
+<p>grep 选项 查找内容 源文件</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-n</td>
+<td>显示匹配行及行号。</td>
+</tr>
+</tbody></table>
+<p>找test在第几行</p>
+<p>ls | grep -n test</p>
+<h2 id="压缩和解压类命令"><a href="#压缩和解压类命令" class="headerlink" title="压缩和解压类命令"></a>压缩和解压类命令</h2><h3 id="gzip-gunzip"><a href="#gzip-gunzip" class="headerlink" title="gzip/gunzip"></a>gzip/gunzip</h3><p>gzip 文件        （功能描述：压缩文件，只能将文件压缩为*.gz文件）</p>
+<p>gunzip 文件.gz    （功能描述：解压缩文件命令）</p>
+<p>只能压缩文件不能压缩目录。</p>
+<p>不保留原来的文件。</p>
+<h3 id="zip-unzip"><a href="#zip-unzip" class="headerlink" title="zip/unzip"></a>zip/unzip</h3><p>zip  [选项] XXX.zip  将要压缩的内容         （功能描述：压缩文件和目录的命令）</p>
+<p>unzip [选项] XXX.zip                        （功能描述：解压缩文件）</p>
+<table>
+<thead>
+<tr>
+<th>zip选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-r</td>
+<td>压缩目录</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>unzip选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-d&lt;目录&gt;</td>
+<td>指定解压后文件的存放目录</td>
+</tr>
+</tbody></table>
+<p>zip 压缩命令在window/linux都通用，可以压缩目录且保留源文件。</p>
+<h3 id="tar"><a href="#tar" class="headerlink" title="tar"></a>tar</h3><p>tar  [选项]  XXX.tar.gz  将要打包进去的内容        （功能描述：打包目录，压缩后的文件格式.tar.gz）</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-c</td>
+<td>产生.tar打包文件</td>
+</tr>
+<tr>
+<td>-v</td>
+<td>显示详细信息</td>
+</tr>
+<tr>
+<td>-f</td>
+<td>指定压缩后的文件名</td>
+</tr>
+<tr>
+<td>-z</td>
+<td>打包同时压缩</td>
+</tr>
+<tr>
+<td>-x</td>
+<td>解包.tar文件</td>
+</tr>
+</tbody></table>
+<p>压缩多个文件</p>
+<p>tar -zcvf houma.tar.gz houge.txt bailongma.txt</p>
+<p>压缩目录</p>
+<p>tar -zcvf xiyou.tar.gz xiyou/</p>
+<p>解压到当前目录</p>
+<p>tar -zxvf houma.tar.gz</p>
+<p>解压到指定目录</p>
+<p>tar -zxvf xiyou.tar.gz -C /opt</p>
+<h2 id="磁盘分区类命令"><a href="#磁盘分区类命令" class="headerlink" title="磁盘分区类命令"></a>磁盘分区类命令</h2><h3 id="df"><a href="#df" class="headerlink" title="df"></a>df</h3><p>df: disk free 空余硬盘</p>
+<p>查看磁盘空间使用情况</p>
+<p>df  选项    （功能描述：列出文件系统的整体磁盘使用量，检查文件系统的磁盘空间占用情况）</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-h</td>
+<td>以人们较易阅读的 GBytes, MBytes, KBytes 等格式自行显示；</td>
+</tr>
+</tbody></table>
+<p>df -h</p>
+<h3 id="fdisk"><a href="#fdisk" class="headerlink" title="fdisk"></a>fdisk</h3><p>查看分区</p>
+<p>fdisk -l            （功能描述：查看磁盘分区详情）</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-l</td>
+<td>显示所有硬盘的分区列表</td>
+</tr>
+</tbody></table>
+<p>该命令必须在root用户下才能使用。</p>
+<h3 id="lsblk"><a href="#lsblk" class="headerlink" title="lsblk"></a>lsblk</h3><p>查看设备挂载情况</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-f</td>
+<td>查看详细的设备挂载情况，显示文件系统信息</td>
+</tr>
+</tbody></table>
+<h3 id="mount-umount"><a href="#mount-umount" class="headerlink" title="mount/umount"></a>mount/umount</h3><p>mount [-t vfstype] [-o options] device dir    （功能描述：挂载设备）</p>
+<p>umount 设备文件名或挂载点            （功能描述：卸载设备）</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-t vfstype</td>
+<td>指定文件系统的类型，通常不必指定。mount 会自动选择正确的类型。常用类型有：光盘或光盘镜像：iso9660DOS fat16文件系统：msdos<a target="_blank" rel="noopener" href="http://blog.csdn.net/hancunai0017/article/details/6995284">Windows</a> 9x fat32文件系统：vfatWindows NT ntfs文件系统：ntfsMount Windows文件<a target="_blank" rel="noopener" href="http://blog.csdn.net/hancunai0017/article/details/6995284">网络</a>共享：smbfs<a target="_blank" rel="noopener" href="http://blog.csdn.net/hancunai0017/article/details/6995284">UNIX</a>(LINUX) 文件网络共享：nfs</td>
+</tr>
+<tr>
+<td>-o options</td>
+<td>主要用来描述设备或档案的挂接方式。常用的参数有：loop：用来把一个文件当成硬盘分区挂接上系统ro：采用只读方式挂接设备rw：采用读写方式挂接设备　  iocharset：指定访问文件系统所用字符集</td>
+</tr>
+<tr>
+<td>device</td>
+<td>要挂接(mount)的设备</td>
+</tr>
+<tr>
+<td>dir</td>
+<td>设备在系统上的挂接点(mount point)</td>
+</tr>
+</tbody></table>
+<h2 id="进程线程类命令"><a href="#进程线程类命令" class="headerlink" title="进程线程类命令"></a>进程线程类命令</h2><h3 id="ps"><a href="#ps" class="headerlink" title="ps"></a>ps</h3><p>查看当前系统进程状态</p>
+<p>ps -aux | grep xxx        （功能描述：查看系统中所有进程）</p>
+<p>ps -ef | grep xxx        （功能描述：可以查看子父进程之间的关系）</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-a</td>
+<td>选择所有进程</td>
+</tr>
+<tr>
+<td>-u</td>
+<td>显示所有用户的所有进程</td>
+</tr>
+<tr>
+<td>-x</td>
+<td>显示没有终端的进程</td>
+</tr>
+</tbody></table>
+<h4 id="功能说明"><a href="#功能说明" class="headerlink" title="功能说明"></a>功能说明</h4><p>（1）ps -aux显示信息说明</p>
+<p>​    USER：该进程是由哪个用户产生的</p>
+<p>​    PID：进程的ID号</p>
+<p>%CPU：该进程占用CPU资源的百分比，占用越高，进程越耗费资源；</p>
+<p>%MEM：该进程占用物理内存的百分比，占用越高，进程越耗费资源；</p>
+<p>VSZ：该进程占用虚拟内存的大小，单位KB；</p>
+<p>RSS：该进程占用实际物理内存的大小，单位KB；</p>
+<p>TTY：该进程是在哪个终端中运行的。其中tty1-tty7代表本地控制台终端，tty1-tty6是本地的字符界面终端，tty7是图形终端。pts/0-255代表虚拟终端。</p>
+<p>STAT：进程状态。常见的状态有：R：运行、S：睡眠、T：停止状态、s：包含子进程、+：位于后台</p>
+<p>START：该进程的启动时间</p>
+<p>TIME：该进程占用CPU的运算时间，注意不是系统时间</p>
+<p>COMMAND：产生此进程的命令名</p>
+<p>（2）ps -ef显示信息说明</p>
+<p>UID：用户ID </p>
+<p>PID：进程ID </p>
+<p>PPID：父进程ID </p>
+<p>C：CPU用于计算执行优先级的因子。数值越大，表明进程是CPU密集型运算，执行优先级会降低；数值越小，表明进程是I/O密集型运算，执行优先级会提高 </p>
+<p>STIME：进程启动的时间 </p>
+<p>TTY：完整的终端名称 </p>
+<p>TIME：CPU时间 </p>
+<p>CMD：启动进程所用的命令和参数</p>
+<h4 id="经验技巧"><a href="#经验技巧" class="headerlink" title="经验技巧"></a>经验技巧</h4><p>如果想查看进程的CPU占用率和内存占用率，可以使用aux;</p>
+<p>如果想查看进程的父进程ID可以使用ef;</p>
+<h3 id="kill"><a href="#kill" class="headerlink" title="kill"></a>kill</h3><p>终止进程</p>
+<p>kill  [选项] 进程号        （功能描述：通过进程号杀死进程）</p>
+<p>killall 进程名称            （功能描述：通过进程名称杀死进程，也支持通配符，这在系统因负载过大而变得很慢时很有用）</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-9</td>
+<td>表示强迫进程立即停止</td>
+</tr>
+</tbody></table>
+<p>kill -9 5102</p>
+<p>killall firefox</p>
+<h3 id="pstree"><a href="#pstree" class="headerlink" title="pstree"></a>pstree</h3><p>查看进程树</p>
+<p>pstree [选项]</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-p</td>
+<td>显示进程的PID</td>
+</tr>
+<tr>
+<td>-u</td>
+<td>显示进程的所属用户</td>
+</tr>
+</tbody></table>
+<h3 id="top"><a href="#top" class="headerlink" title="top"></a>top</h3><p>查看系统健康状态</p>
+<p>top [选项]</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-d 秒数</td>
+<td>指定top命令每隔几秒更新。默认是3秒在top命令的交互模式当中可以执行的命令：</td>
+</tr>
+<tr>
+<td>-i</td>
+<td>使top不显示任何闲置或者僵死进程。</td>
+</tr>
+<tr>
+<td>-p</td>
+<td>通过指定监控进程ID来仅仅监控某个进程的状态。</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>P</td>
+<td>以CPU使用率排序，默认就是此项</td>
+</tr>
+<tr>
+<td>M</td>
+<td>以内存的使用率排序</td>
+</tr>
+<tr>
+<td>N</td>
+<td>以PID排序</td>
+</tr>
+<tr>
+<td>q</td>
+<td>退出top</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>内容</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>12:26:46</td>
+<td>系统当前时间</td>
+</tr>
+<tr>
+<td>up 1 day, 13:32</td>
+<td>系统的运行时间，本机已经运行1天13小时32分钟</td>
+</tr>
+<tr>
+<td>2 users</td>
+<td>当前登录了两个用户</td>
+</tr>
+<tr>
+<td>load  average:  0.00, 0.00, 0.00</td>
+<td>系统在之前1分钟，5分钟，15分钟的平均负载。一般认为小于1时，负载较小。如果大于1，系统已经超出负荷。</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>Tasks:  95 total</th>
+<th>系统中的进程总数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1 running</td>
+<td>正在运行的进程数</td>
+</tr>
+<tr>
+<td>94 sleeping</td>
+<td>睡眠的进程</td>
+</tr>
+<tr>
+<td>0 stopped</td>
+<td>正在停止的进程</td>
+</tr>
+<tr>
+<td>0 zombie</td>
+<td>僵尸进程。如果不是0，需要手工检查僵尸进程</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>Cpu(s):  0.1%us</th>
+<th>用户模式占用的CPU百分比</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0.1%sy</td>
+<td>系统模式占用的CPU百分比</td>
+</tr>
+<tr>
+<td>0.0%ni</td>
+<td>改变过优先级的用户进程占用的CPU百分比</td>
+</tr>
+<tr>
+<td>99.7%id</td>
+<td>空闲CPU的CPU百分比</td>
+</tr>
+<tr>
+<td>0.1%wa</td>
+<td>等待输入/输出的进程的占用CPU百分比</td>
+</tr>
+<tr>
+<td>0.0%hi</td>
+<td>硬中断请求服务占用的CPU百分比</td>
+</tr>
+<tr>
+<td>0.1%si</td>
+<td>软中断请求服务占用的CPU百分比</td>
+</tr>
+<tr>
+<td>0.0%st</td>
+<td>st（Steal  time）虚拟时间百分比。就是当有虚拟机时，虚拟CPU等待实际CPU的时间百分比。</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>Mem:   625344k total</th>
+<th>物理内存的总量，单位KB</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>571504k used</td>
+<td>已经使用的物理内存数量</td>
+</tr>
+<tr>
+<td>53840k free</td>
+<td>空闲的物理内存数量，我们使用的是虚拟机，总共只分配了628MB内存，所以只有53MB的空闲内存了</td>
+</tr>
+<tr>
+<td>65800k buffers</td>
+<td>作为缓冲的内存数量</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>Swap:  524280k total</th>
+<th>交换分区（虚拟内存）的总大小</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0k used</td>
+<td>已经使用的交互分区的大小</td>
+</tr>
+<tr>
+<td>524280k free</td>
+<td>空闲交换分区的大小</td>
+</tr>
+<tr>
+<td>409280k cached</td>
+<td>作为缓存的交互分区的大小</td>
+</tr>
+</tbody></table>
+<h3 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a>netstat</h3><p>显示网络统计信息和端口占用情况</p>
+<p>netstat -anp | grep 进程号    （功能描述：查看该进程网络信息）</p>
+<p>netstat -nlp | grep 端口号    （功能描述：查看网络端口号占用情况）</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-n</td>
+<td>拒绝显示别名，能显示数字的全部转化成数字</td>
+</tr>
+<tr>
+<td>-l</td>
+<td>仅列出有在listen（监听）的服务状态</td>
+</tr>
+<tr>
+<td>-p</td>
+<td>表示显示哪个进程在调用</td>
+</tr>
+</tbody></table>
+<h3 id="lsof"><a href="#lsof" class="headerlink" title="lsof"></a>lsof</h3><p>查看端口被哪个进程占用</p>
+<p>lsof -i:44444</p>
+<p>COMMAND  PID    USER   FD   TYPE DEVICE SIZE/OFF NODE NAME<br>java    7073 vincent  670u  IPv6  73392      0t0  TCP *:cognex-dataman (LISTEN)<br>java    7073 vincent  672u  IPv6  73395      0t0  TCP localhost:cognex-dataman-&gt;localhost:45638 (CLOSE_WAIT)<br>java    7073 vincent  729u  IPv6  68482      0t0  TCP linux1:cognex-dataman-&gt;linux1:56552 (CLOSE_WAIT)</p>
+<h3 id="crontab"><a href="#crontab" class="headerlink" title="crontab"></a>crontab</h3><p>系统定时任务</p>
+<p>crontab [选项]</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-e</td>
+<td>编辑crontab定时任务</td>
+</tr>
+<tr>
+<td>-l</td>
+<td>查询crontab任务</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>删除当前用户所有的crontab任务</td>
+</tr>
+</tbody></table>
+<p>重新启动crond服务</p>
+<p>service crond restart</p>
+<p>crontab -e </p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>含义</th>
+<th>范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>第一个“*”</td>
+<td>一小时当中的第几分钟</td>
+<td>0-59</td>
+</tr>
+<tr>
+<td>第二个“*”</td>
+<td>一天当中的第几小时</td>
+<td>0-23</td>
+</tr>
+<tr>
+<td>第三个“*”</td>
+<td>一个月当中的第几天</td>
+<td>1-31</td>
+</tr>
+<tr>
+<td>第四个“*”</td>
+<td>一年当中的第几月</td>
+<td>1-12</td>
+</tr>
+<tr>
+<td>第五个“*”</td>
+<td>一周当中的星期几</td>
+<td>0-7（0和7都代表星期日）</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>特殊符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>*</td>
+<td>代表任何时间。比如第一个“*”就代表一小时中每分钟都执行一次的意思。</td>
+</tr>
+<tr>
+<td>，</td>
+<td>代表不连续的时间。比如“0 8,12,16 * * * 命令”，就代表在每天的8点0分，12点0分，16点0分都执行一次命令</td>
+</tr>
+<tr>
+<td>-</td>
+<td>代表连续的时间范围。比如“0 5  *  *  1-6命令”，代表在周一到周六的凌晨5点0分执行命令</td>
+</tr>
+<tr>
+<td>*/n</td>
+<td>代表每隔多久执行一次。比如“*/10  *  *  *  *  命令”，代表每隔10分钟就执行一遍命令</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>时间</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>45 22 * * * 命令</td>
+<td>在22点45分执行命令</td>
+</tr>
+<tr>
+<td>0 17 * * 1 命令</td>
+<td>每周1 的17点0分执行命令</td>
+</tr>
+<tr>
+<td>0 5 1,15 * * 命令</td>
+<td>每月1号和15号的凌晨5点0分执行命令</td>
+</tr>
+<tr>
+<td>40 4 * * 1-5 命令</td>
+<td>每周一到周五的凌晨4点40分执行命令</td>
+</tr>
+<tr>
+<td>*/10 4 * * * 命令</td>
+<td>每天的凌晨4点，每隔10分钟执行一次命令</td>
+</tr>
+<tr>
+<td>0 0 1,15 * 1 命令</td>
+<td>每月1号和15号，每周1的0点0分都会执行命令。注意：星期几和几号最好不要同时出现，因为他们定义的都是天。非常容易让管理员混乱。</td>
+</tr>
+</tbody></table>
+<p>每隔1分钟，向/root/bailongma.txt文件中添加一个11的数字</p>
+<p>*/1 * * * * /bin/echo ”11” &gt;&gt; /root/bailongma.txt</p>
+<h2 id="软件包管理"><a href="#软件包管理" class="headerlink" title="软件包管理"></a>软件包管理</h2><h3 id="rpm"><a href="#rpm" class="headerlink" title="rpm"></a>rpm</h3><p>RedHat Package Manager</p>
+<h4 id="rpm查询命令"><a href="#rpm查询命令" class="headerlink" title="rpm查询命令"></a>rpm查询命令</h4><p>rpm -qa                （功能描述：查询所安装的所有rpm软件包）</p>
+<p>rpm -qa | grep rpm软件包</p>
+<p>rpm -qa | grep firefox</p>
+<h4 id="rpm卸载命令"><a href="#rpm卸载命令" class="headerlink" title="rpm卸载命令"></a>rpm卸载命令</h4><p>rpm -e RPM软件包</p>
+<p>rpm -e –nodeps 软件包</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-e</td>
+<td>卸载软件包</td>
+</tr>
+<tr>
+<td>–nodeps</td>
+<td>卸载软件时，不检查依赖。这样的话，那些使用该软件包的软件在此之后可能就不能正常工作了。</td>
+</tr>
+</tbody></table>
+<h4 id="rpm安装命令"><a href="#rpm安装命令" class="headerlink" title="rpm安装命令"></a>rpm安装命令</h4><p>rpm -ivh RPM包全名</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-i</td>
+<td>-i=install，安装</td>
+</tr>
+<tr>
+<td>-v</td>
+<td>-v=verbose，显示详细信息</td>
+</tr>
+<tr>
+<td>-h</td>
+<td>-h=hash，进度条</td>
+</tr>
+<tr>
+<td>–nodeps</td>
+<td>–nodeps，不检测依赖进度</td>
+</tr>
+</tbody></table>
+<h3 id="yum"><a href="#yum" class="headerlink" title="yum"></a>yum</h3><p>Yellow dog Updater, Modified。是一个在Fedora和RedHat以及CentOS中的Shell前端软件包管理器。基于RPM包管理，能够从指定的服务器自动下载RPM包并且安装，可以自动处理依赖性关系，并且一次安装所有依赖的软件包，无须繁琐地一次次下载、安装。</p>
+<p>yum [选项] [参数]</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-y</td>
+<td>对所有提问都回答“yes”</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>install</td>
+<td>安装rpm软件包</td>
+</tr>
+<tr>
+<td>update</td>
+<td>更新rpm软件包</td>
+</tr>
+<tr>
+<td>check-update</td>
+<td>检查是否有可用的更新rpm软件包</td>
+</tr>
+<tr>
+<td>remove</td>
+<td>删除指定的rpm软件包</td>
+</tr>
+<tr>
+<td>list</td>
+<td>显示软件包信息</td>
+</tr>
+<tr>
+<td>clean</td>
+<td>清理yum过期的缓存</td>
+</tr>
+<tr>
+<td>deplist</td>
+<td>显示yum软件包的所有依赖关系</td>
+</tr>
+</tbody></table>
+<p>yum -y install firefox.x86_64</p>
+<h4 id="修改网络yum源"><a href="#修改网络yum源" class="headerlink" title="修改网络yum源"></a>修改网络yum源</h4><p>默认的系统YUM源，需要连接国外apache网站，网速比较慢，可以修改关联的网络YUM源为国内镜像的网站，比如网易163,aliyun等。</p>
+<p>1）安装wget, wget用来从指定的URL下载文件</p>
+<p>yum install wget</p>
+<p>2）在/etc/yum.repos.d/目录下，备份默认的repos文件</p>
+<p>cp CentOS-Base.repo  CentOS-Base.repo.backup</p>
+<p>3）下载网易163或者是aliyun的repos文件,任选其一</p>
+<p>wget <a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/repo/Centos-7.repo">http://mirrors.aliyun.com/repo/Centos-7.repo</a>  //阿里云</p>
+<p>wget <a target="_blank" rel="noopener" href="http://mirrors.163.com/.help/CentOS7-Base-163.repo">http://mirrors.163.com/.help/CentOS7-Base-163.repo</a> //网易163</p>
+<p>4）使用下载好的repos文件替换默认的repos文件，例如:用CentOS7-Base-163.repo替换CentOS-Base.repo</p>
+<p>mv CentOS7-Base-163.repo  CentOS-Base.repo</p>
+<p>5）清理旧缓存数据，缓存新数据</p>
+<p>yum clean all</p>
+<p>yum makecache</p>
+<p>6）测试</p>
+<p>yum -y install firefox.x86_64</p>
+<h2 id="安全拷贝和远程同步"><a href="#安全拷贝和远程同步" class="headerlink" title="安全拷贝和远程同步"></a>安全拷贝和远程同步</h2><h3 id="scp（secure-copy）安全拷贝"><a href="#scp（secure-copy）安全拷贝" class="headerlink" title="scp（secure copy）安全拷贝"></a>scp（secure copy）安全拷贝</h3><p>scp可以实现服务器与服务器之间的数据拷贝。</p>
+<p>scp    -r        $pdir/$fname                   $user@linux$host:$pdir/$fname</p>
+<p>命令  递归    要拷贝的文件路径/名称   目的用户@主机:目的路径/名称</p>
+<p>在hadoop101上，将hadoop101中/opt/module目录下的软件拷贝到hadoop102上。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@hadoop101 /]$ scp -r /opt/module/applog/application.properties  vincent@linux2:/opt/module/applog/application.properties</span><br></pre></td></tr></table></figure>
+
+<h3 id="rsync-远程同步工具"><a href="#rsync-远程同步工具" class="headerlink" title="rsync 远程同步工具"></a>rsync 远程同步工具</h3><p>rsync主要用于备份和镜像。具有速度快、避免复制相同内容和支持符号链接的优点。</p>
+<p>rsync和scp区别：用rsync做文件的复制要比scp的速度快，rsync只对差异文件做更新。scp是把所有文件都复制过去。</p>
+<p>rsync   -av              $pdir/$fname                     $user@hadoop$host:$pdir/$fname</p>
+<p>命令     选项参数    要拷贝的文件路径/名称     目的用户@主机:目的路径/名称</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-a</td>
+<td>归档拷贝</td>
+</tr>
+<tr>
+<td>-v</td>
+<td>显示复制过程</td>
+</tr>
+</tbody></table>
+<p>把hadoop101机器上的/opt/software目录同步到hadoop102服务器的/opt/software目录下。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@hadoop101 opt]$ rsync -av /opt/software vincent@hadoop102:/opt /software</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Shell/" rel="prev" title="Shell">
+      <i class="fa fa-chevron-left"></i> Shell
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Kafka/" rel="next" title="Kafka">
+      Kafka <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#VI-VIM%E7%BC%96%E8%BE%91%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">VI&#x2F;VIM编辑器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE%E5%92%8C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E6%93%8D%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">网络配置和系统管理操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E7%BD%91%E7%BB%9Cip"><span class="nav-number">2.1.</span> <span class="nav-text">查看当前网络ip</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E4%B8%BB%E6%9C%BA%E4%B9%8B%E9%97%B4%E7%BD%91%E7%BB%9C%E8%BF%9E%E9%80%9A%E6%80%A7"><span class="nav-number">2.2.</span> <span class="nav-text">测试主机之间网络连通性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9IP%E5%9C%B0%E5%9D%80"><span class="nav-number">2.3.</span> <span class="nav-text">修改IP地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E5%90%AF%E7%BD%91%E7%BB%9C"><span class="nav-number">2.4.</span> <span class="nav-text">重启网络</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%B8%BB%E6%9C%BA%E5%90%8D"><span class="nav-number">3.</span> <span class="nav-text">配置主机名</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E4%B8%BB%E6%9C%BA%E5%90%8D%E7%A7%B0"><span class="nav-number">3.1.</span> <span class="nav-text">修改主机名称</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9hosts%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6"><span class="nav-number">3.2.</span> <span class="nav-text">修改hosts映射文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%97%AD%E9%98%B2%E7%81%AB%E5%A2%99"><span class="nav-number">4.</span> <span class="nav-text">关闭防火墙</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#service"><span class="nav-number">4.1.</span> <span class="nav-text">service</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chkconfig"><span class="nav-number">4.2.</span> <span class="nav-text">chkconfig</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%AF-%E5%85%B3%E9%97%ADiptables-%E9%98%B2%E7%81%AB%E5%A2%99-%E6%9C%8D%E5%8A%A1%E7%9A%84%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8"><span class="nav-number">4.2.1.</span> <span class="nav-text">启&#x2F;关闭iptables(防火墙)服务的自动启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%80%E5%90%AF-%E5%85%B3%E9%97%AD-iptables%E6%9C%8D%E5%8A%A1%E6%8C%87%E5%AE%9A%E7%BA%A7%E5%88%AB%E7%9A%84%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8"><span class="nav-number">4.2.2.</span> <span class="nav-text">开启&#x2F;关闭 iptables服务指定级别的自动启动</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#systemctl"><span class="nav-number">4.3.</span> <span class="nav-text">systemctl</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#systemctl-%E8%AE%BE%E7%BD%AE%E5%90%8E%E5%8F%B0%E6%9C%8D%E5%8A%A1%E7%9A%84%E8%87%AA%E5%90%AF%E9%85%8D%E7%BD%AE"><span class="nav-number">4.3.1.</span> <span class="nav-text">systemctl 设置后台服务的自启配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%80%E5%90%AF-%E5%85%B3%E9%97%ADiptables-%E9%98%B2%E7%81%AB%E5%A2%99-%E6%9C%8D%E5%8A%A1%E7%9A%84%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8"><span class="nav-number">4.3.2.</span> <span class="nav-text">开启&#x2F;关闭iptables(防火墙)服务的自动启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%B4%E6%97%B6%E5%85%B3%E9%97%AD%E9%98%B2%E7%81%AB%E5%A2%99"><span class="nav-number">4.3.3.</span> <span class="nav-text">临时关闭防火墙</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8%E6%97%B6%E5%85%B3%E9%97%AD%E9%98%B2%E7%81%AB%E5%A2%99"><span class="nav-number">4.3.4.</span> <span class="nav-text">开机启动时关闭防火墙</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E6%9C%BA%E9%87%8D%E5%90%AF%E5%91%BD%E4%BB%A4"><span class="nav-number">5.</span> <span class="nav-text">关机重启命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%AE%E5%8A%A9%E5%91%BD%E4%BB%A4"><span class="nav-number">6.</span> <span class="nav-text">帮助命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E7%B1%BB%E5%91%BD%E4%BB%A4"><span class="nav-number">7.</span> <span class="nav-text">文件目录类命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pwd"><span class="nav-number">7.1.</span> <span class="nav-text">pwd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ls"><span class="nav-number">7.2.</span> <span class="nav-text">ls</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cd"><span class="nav-number">7.3.</span> <span class="nav-text">cd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mkdir"><span class="nav-number">7.4.</span> <span class="nav-text">mkdir</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rmdir"><span class="nav-number">7.5.</span> <span class="nav-text">rmdir</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#touch"><span class="nav-number">7.6.</span> <span class="nav-text">touch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cp"><span class="nav-number">7.7.</span> <span class="nav-text">cp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rm"><span class="nav-number">7.8.</span> <span class="nav-text">rm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mv"><span class="nav-number">7.9.</span> <span class="nav-text">mv</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cat"><span class="nav-number">7.10.</span> <span class="nav-text">cat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#more"><span class="nav-number">7.11.</span> <span class="nav-text">more</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#less"><span class="nav-number">7.12.</span> <span class="nav-text">less</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#echo"><span class="nav-number">7.13.</span> <span class="nav-text">echo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#head"><span class="nav-number">7.14.</span> <span class="nav-text">head</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tail"><span class="nav-number">7.15.</span> <span class="nav-text">tail</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gt-%E8%BE%93%E5%87%BA%E9%87%8D%E5%AE%9A%E5%90%91%E5%92%8C-gt-gt-%E8%BF%BD%E5%8A%A0"><span class="nav-number">7.16.</span> <span class="nav-text">&gt; 输出重定向和 &gt;&gt; 追加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ln"><span class="nav-number">7.17.</span> <span class="nav-text">ln</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#history"><span class="nav-number">7.18.</span> <span class="nav-text">history</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E6%97%A5%E6%9C%9F%E7%B1%BB%E5%91%BD%E4%BB%A4"><span class="nav-number">8.</span> <span class="nav-text">时间日期类命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#date-%E6%98%BE%E7%A4%BA%E5%BD%93%E5%89%8D%E6%97%B6%E9%97%B4"><span class="nav-number">8.1.</span> <span class="nav-text">date 显示当前时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#date-%E6%98%BE%E7%A4%BA%E9%9D%9E%E5%BD%93%E5%89%8D%E6%97%B6%E9%97%B4"><span class="nav-number">8.2.</span> <span class="nav-text">date 显示非当前时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#date-%E8%AE%BE%E7%BD%AE%E7%B3%BB%E7%BB%9F%E6%97%B6%E9%97%B4"><span class="nav-number">8.3.</span> <span class="nav-text">date 设置系统时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cal-%E6%9F%A5%E7%9C%8B%E6%97%A5%E5%8E%86"><span class="nav-number">8.4.</span> <span class="nav-text">cal 查看日历</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4"><span class="nav-number">9.</span> <span class="nav-text">用户管理命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#useradd"><span class="nav-number">9.1.</span> <span class="nav-text">useradd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#passwd"><span class="nav-number">9.2.</span> <span class="nav-text">passwd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#id"><span class="nav-number">9.3.</span> <span class="nav-text">id</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cat-etc-passwd"><span class="nav-number">9.4.</span> <span class="nav-text">cat  &#x2F;etc&#x2F;passwd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#su"><span class="nav-number">9.5.</span> <span class="nav-text">su</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#userdel"><span class="nav-number">9.6.</span> <span class="nav-text">userdel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#who"><span class="nav-number">9.7.</span> <span class="nav-text">who</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sudo"><span class="nav-number">9.8.</span> <span class="nav-text">sudo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#usermod"><span class="nav-number">9.9.</span> <span class="nav-text">usermod</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#groupadd"><span class="nav-number">9.10.</span> <span class="nav-text">groupadd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#groupdel"><span class="nav-number">9.11.</span> <span class="nav-text">groupdel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#groupmod"><span class="nav-number">9.12.</span> <span class="nav-text">groupmod</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cat-etc-group"><span class="nav-number">9.13.</span> <span class="nav-text">cat  &#x2F;etc&#x2F;group</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90%E7%B1%BB%E5%91%BD%E4%BB%A4"><span class="nav-number">10.</span> <span class="nav-text">文件权限类命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%B1%9E%E6%80%A7"><span class="nav-number">10.1.</span> <span class="nav-text">文件属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rxw%E4%BD%9C%E7%94%A8%E6%96%87%E4%BB%B6%E5%92%8C%E7%9B%AE%E5%BD%95%E7%9A%84%E4%B8%8D%E5%90%8C%E8%A7%A3%E9%87%8A"><span class="nav-number">10.2.</span> <span class="nav-text">rxw作用文件和目录的不同解释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chmod"><span class="nav-number">10.3.</span> <span class="nav-text">chmod</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chown"><span class="nav-number">10.4.</span> <span class="nav-text">chown</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chgrp"><span class="nav-number">10.5.</span> <span class="nav-text">chgrp</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%E6%9F%A5%E6%89%BE%E7%B1%BB%E5%91%BD%E4%BB%A4"><span class="nav-number">11.</span> <span class="nav-text">搜索查找类命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#find"><span class="nav-number">11.1.</span> <span class="nav-text">find</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#locate"><span class="nav-number">11.2.</span> <span class="nav-text">locate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#grep"><span class="nav-number">11.3.</span> <span class="nav-text">grep</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%8B%E7%BC%A9%E5%92%8C%E8%A7%A3%E5%8E%8B%E7%B1%BB%E5%91%BD%E4%BB%A4"><span class="nav-number">12.</span> <span class="nav-text">压缩和解压类命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gzip-gunzip"><span class="nav-number">12.1.</span> <span class="nav-text">gzip&#x2F;gunzip</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zip-unzip"><span class="nav-number">12.2.</span> <span class="nav-text">zip&#x2F;unzip</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tar"><span class="nav-number">12.3.</span> <span class="nav-text">tar</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%E7%B1%BB%E5%91%BD%E4%BB%A4"><span class="nav-number">13.</span> <span class="nav-text">磁盘分区类命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#df"><span class="nav-number">13.1.</span> <span class="nav-text">df</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fdisk"><span class="nav-number">13.2.</span> <span class="nav-text">fdisk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lsblk"><span class="nav-number">13.3.</span> <span class="nav-text">lsblk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mount-umount"><span class="nav-number">13.4.</span> <span class="nav-text">mount&#x2F;umount</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B%E7%B1%BB%E5%91%BD%E4%BB%A4"><span class="nav-number">14.</span> <span class="nav-text">进程线程类命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ps"><span class="nav-number">14.1.</span> <span class="nav-text">ps</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD%E8%AF%B4%E6%98%8E"><span class="nav-number">14.1.1.</span> <span class="nav-text">功能说明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%8F%E9%AA%8C%E6%8A%80%E5%B7%A7"><span class="nav-number">14.1.2.</span> <span class="nav-text">经验技巧</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kill"><span class="nav-number">14.2.</span> <span class="nav-text">kill</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pstree"><span class="nav-number">14.3.</span> <span class="nav-text">pstree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#top"><span class="nav-number">14.4.</span> <span class="nav-text">top</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#netstat"><span class="nav-number">14.5.</span> <span class="nav-text">netstat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lsof"><span class="nav-number">14.6.</span> <span class="nav-text">lsof</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#crontab"><span class="nav-number">14.7.</span> <span class="nav-text">crontab</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86"><span class="nav-number">15.</span> <span class="nav-text">软件包管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#rpm"><span class="nav-number">15.1.</span> <span class="nav-text">rpm</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#rpm%E6%9F%A5%E8%AF%A2%E5%91%BD%E4%BB%A4"><span class="nav-number">15.1.1.</span> <span class="nav-text">rpm查询命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rpm%E5%8D%B8%E8%BD%BD%E5%91%BD%E4%BB%A4"><span class="nav-number">15.1.2.</span> <span class="nav-text">rpm卸载命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rpm%E5%AE%89%E8%A3%85%E5%91%BD%E4%BB%A4"><span class="nav-number">15.1.3.</span> <span class="nav-text">rpm安装命令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yum"><span class="nav-number">15.2.</span> <span class="nav-text">yum</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E7%BD%91%E7%BB%9Cyum%E6%BA%90"><span class="nav-number">15.2.1.</span> <span class="nav-text">修改网络yum源</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%8B%B7%E8%B4%9D%E5%92%8C%E8%BF%9C%E7%A8%8B%E5%90%8C%E6%AD%A5"><span class="nav-number">16.</span> <span class="nav-text">安全拷贝和远程同步</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#scp%EF%BC%88secure-copy%EF%BC%89%E5%AE%89%E5%85%A8%E6%8B%B7%E8%B4%9D"><span class="nav-number">16.1.</span> <span class="nav-text">scp（secure copy）安全拷贝</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rsync-%E8%BF%9C%E7%A8%8B%E5%90%8C%E6%AD%A5%E5%B7%A5%E5%85%B7"><span class="nav-number">16.2.</span> <span class="nav-text">rsync 远程同步工具</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Vincent"
+      src="/images/cute.jpeg">
+  <p class="site-author-name" itemprop="name">Vincent</p>
+  <div class="site-description" itemprop="description">nice</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vincent</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
