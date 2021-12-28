@@ -4699,309 +4699,6 @@
       </categories>
   </entry>
   <entry>
-    <title>HDFS配置</title>
-    <url>/Hadoop%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h1 id="准备虚拟机"><a href="#准备虚拟机" class="headerlink" title="准备虚拟机"></a>准备虚拟机</h1><h2 id="1-克隆虚拟机"><a href="#1-克隆虚拟机" class="headerlink" title="1. 克隆虚拟机"></a>1. 克隆虚拟机</h2><p>单台虚拟机：内存4G，硬盘50G，安装必要环境(最小化安装)</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo yum install -y epel-release</span><br><span class="line">sudo yum install -y psmisc nc net-tools rsync vim lrzsz ntp libzstd openssl-static tree iotop</span><br></pre></td></tr></table></figure>
-
-<p>修改克隆虚拟机的静态IP(按照自己机器的网络设置进行修改)</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo vim /etc/sysconfig/network-scripts/ifcfg-ens33  或</span><br><span class="line">sudo vim /etc/sysconfig/network-scripts/ifcfg-eth0</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">TYPE=&quot;Ethernet&quot;</span><br><span class="line">PROXY_METHOD=&quot;none&quot;</span><br><span class="line">BROWSER_ONLY=&quot;no&quot;</span><br><span class="line">BOOTPROTO=static</span><br><span class="line">DEFROUTE=&quot;yes&quot;</span><br><span class="line">IPV4_FAILURE_FATAL=&quot;no&quot;</span><br><span class="line">IPV6INIT=&quot;yes&quot;</span><br><span class="line">IPV6_AUTOCONF=&quot;yes&quot;</span><br><span class="line">IPV6_DEFROUTE=&quot;yes&quot;</span><br><span class="line">IPV6_FAILURE_FATAL=&quot;no&quot;</span><br><span class="line">IPV6_ADDR_GEN_MODE=&quot;stable-privacy&quot;</span><br><span class="line">NAME=&quot;eth0&quot;</span><br><span class="line">UUID=&quot;19c440dc-9a12-4fd7-bc46-0a121ef6af96&quot;</span><br><span class="line">DEVICE=&quot;eth0&quot;</span><br><span class="line">ONBOOT=&quot;yes&quot;</span><br><span class="line">IPADDR=10.211.55.10</span><br><span class="line">GATEWAY=10.211.55.1</span><br><span class="line">DNS1=10.211.55.1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="2-修改主机名"><a href="#2-修改主机名" class="headerlink" title="2. 修改主机名"></a>2. 修改主机名</h2><p>修改主机名称</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo vim /etc/hostname</span><br></pre></td></tr></table></figure>
-
-<p>配置主机名称映射，打开/etc/hosts</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo vim /etc/hosts</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight accesslog"><table><tr><td class="code"><pre><span class="line"><span class="number">10.211.55.10</span>	linux1</span><br><span class="line"><span class="number">10.211.55.11</span>	linux2</span><br><span class="line"><span class="number">10.211.55.12</span>	linux3</span><br></pre></td></tr></table></figure>
-
-<p>修改window7的主机映射文件（hosts文件）</p>
-<p>进入C:\Windows\System32\drivers\etc</p>
-<h2 id="3-关闭防火墙"><a href="#3-关闭防火墙" class="headerlink" title="3. 关闭防火墙"></a>3. 关闭防火墙</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo systemctl stop firewalld</span><br><span class="line">sudo systemctl disable firewalld</span><br></pre></td></tr></table></figure>
-
-<h2 id="4-创建vincent用户"><a href="#4-创建vincent用户" class="headerlink" title="4. 创建vincent用户"></a>4. 创建vincent用户</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo useradd vincent</span><br><span class="line">sudo passwd vincent</span><br></pre></td></tr></table></figure>
-
-<h2 id="5-配置vincent用户具有root权限"><a href="#5-配置vincent用户具有root权限" class="headerlink" title="5. 配置vincent用户具有root权限"></a>5. 配置vincent用户具有root权限</h2><p>修改/etc/sudoers文件，如下所示</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo vim /etc/sudoers</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># Allows people in group wheel to run all commands</span></span></span><br><span class="line"><span class="meta">%</span><span class="bash">wheel  ALL=(ALL)       ALL</span></span><br><span class="line">vincent ALL=(ALL)       ALL</span><br></pre></td></tr></table></figure>
-
-<h2 id="6-在-opt目录下创建文件夹"><a href="#6-在-opt目录下创建文件夹" class="headerlink" title="6. 在/opt目录下创建文件夹"></a>6. 在/opt目录下创建文件夹</h2><p>在/opt目录下创建module、software文件夹</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo mkdir module</span><br><span class="line">sudo mkdir software</span><br></pre></td></tr></table></figure>
-
-<p>修改module、software文件夹的所有者</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo chown vincent:vincent /opt/module /opt/software</span><br></pre></td></tr></table></figure>
-
-<h2 id="7-安装JDK"><a href="#7-安装JDK" class="headerlink" title="7. 安装JDK"></a>7. 安装JDK</h2><ol>
-<li><p>将JDK安装包上传到Linux /opt/software目录下</p>
-</li>
-<li><p>解压JDK到/opt/module目录下</p>
-</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tar -zxvf jdk-8u212-linux-x64.tar.gz -C /opt/module/</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>配置JDK环境变量,两种方式:</li>
-</ol>
-<p>新建/etc/profile.d/my_env.sh文件</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo vim /etc/profile.d/my_env.sh</span><br></pre></td></tr></table></figure>
-
-<p>添加如下内容</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">JAVA_HOME</span></span><br><span class="line">export JAVA_HOME=/opt/module/jdk1.8.0_212</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin</span><br></pre></td></tr></table></figure>
-
-<p>或者</p>
-<p>直接将环境变量配置到 /etc/profile 文件中,在/etc/profile文件的末尾追加如下内容</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">JAVA_HOME=/opt/module/jdk1.8.0_212</span><br><span class="line">PATH=$PATH:$JAVA_HOME/bin</span><br><span class="line">export PATH JAVA_HOME</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">source /etc/profile	</span><br></pre></td></tr></table></figure>
-
-<p>测试JDK是否安装成功</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure>
-
-<h2 id="8-安装Hadoop"><a href="#8-安装Hadoop" class="headerlink" title="8. 安装Hadoop"></a>8. 安装Hadoop</h2><p>Hadoop下载地址：<a href="https://archive.apache.org/dist/hadoop/common/hadoop-2.7.2/">https://archive.apache.org/dist/hadoop/common/hadoop-3.1.3/</a></p>
-<p>将hadoop安装包上传到/opt/software目录下</p>
-<p>解压安装文件到/opt/module下面</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tar -zxvf hadoop-3.1.3.tar.gz -C /opt/module/</span><br></pre></td></tr></table></figure>
-
-<p>将Hadoop添加到环境变量</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">HADOOP_HOME</span></span><br><span class="line">HADOOP_HOME=/opt/module/hadoop-3.1.3</span><br><span class="line">PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin</span><br><span class="line">export PATH JAVA_HOME HADOOP_HOME</span><br></pre></td></tr></table></figure>
-
-<p>测试是否安装成功</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop version</span><br></pre></td></tr></table></figure>
-
-<h1 id="完全分布式集群搭建"><a href="#完全分布式集群搭建" class="headerlink" title="完全分布式集群搭建"></a>完全分布式集群搭建</h1><h2 id="1-编写集群分发脚本xsync"><a href="#1-编写集群分发脚本xsync" class="headerlink" title="1. 编写集群分发脚本xsync"></a>1. 编写集群分发脚本xsync</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash">1. 判断参数个数</span></span><br><span class="line">if [ $# -lt 1 ]</span><br><span class="line">then</span><br><span class="line">  echo Not Enough Arguement!</span><br><span class="line">  exit;</span><br><span class="line">fi</span><br><span class="line"><span class="meta">#</span><span class="bash">2. 遍历集群所有机器</span></span><br><span class="line">for host in linux1 linux2 linux3</span><br><span class="line">do</span><br><span class="line">  echo ====================  $host  ====================</span><br><span class="line"><span class="meta">  #</span><span class="bash">3. 遍历所有目录，挨个发送</span></span><br><span class="line">  for file in $@</span><br><span class="line">  do</span><br><span class="line">    #4 判断文件是否存在</span><br><span class="line">    if [ -e $file ]</span><br><span class="line">    then</span><br><span class="line">    #5. 获取父目录</span><br><span class="line">    # cd -P 的意义是防止文件路径是软连接</span><br><span class="line">      pdir=$(cd -P $(dirname $file); pwd)</span><br><span class="line">      #6. 获取当前文件的名称</span><br><span class="line">      fname=$(basename $file)</span><br><span class="line">      ssh $host &quot;mkdir -p $pdir&quot;</span><br><span class="line">      rsync -av $pdir/$fname $host:$pdir</span><br><span class="line">    else</span><br><span class="line">      echo $file does not exists!</span><br><span class="line">    fi</span><br><span class="line">  done</span><br><span class="line">done</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod +x xsync</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-集群配置"><a href="#2-集群配置" class="headerlink" title="2. 集群配置"></a>2. 集群配置</h2><table>
-<thead>
-<tr>
-<th></th>
-<th align="center">linux1</th>
-<th align="center">linux2</th>
-<th align="center">linux3</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>HDFS</td>
-<td align="center">NameNode                     DataNode</td>
-<td align="center">DataNode</td>
-<td align="center">SecondaryNameNode       DataNode</td>
-</tr>
-<tr>
-<td>YARN</td>
-<td align="center">NodeManager</td>
-<td align="center">ResourceManager  NodeManager</td>
-<td align="center">NodeManager</td>
-</tr>
-</tbody></table>
-<h3 id="配置hadoop-env-sh-第54行"><a href="#配置hadoop-env-sh-第54行" class="headerlink" title="配置hadoop-env.sh(第54行)"></a>配置hadoop-env.sh(第54行)</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">:set nu							//设置行号</span><br><span class="line">:set nonu						//取消行号</span><br><span class="line">:noh								//取消高亮</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export JAVA_HOME=/opt/module/jdk1.8.0_212</span><br></pre></td></tr></table></figure>
-
-<h3 id="配置core-site-xml"><a href="#配置core-site-xml" class="headerlink" title="配置core-site.xml"></a>配置core-site.xml</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 指定NameNode的地址 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>fs.defaultFS<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://linux1:9820<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 指定hadoop数据的存储目录,官方配置文件中的配置项是hadoop.tmp.dir,</span></span><br><span class="line"><span class="comment">     用来指定hadoop数据的存储目录,此次配置用的hadoop.data.dir是自己定义的变量,</span></span><br><span class="line"><span class="comment">     因为在hdfs-site.xml中会使用此配置的值来具体指定namenode 和 datanode存储数据的目录--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.data.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>/opt/module/hadoop-3.1.3/data<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.http.staticuser.user<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>vincent<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.permissions.enabled<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 下面是兼容性配置 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 配置该vincent(superUser)允许通过代理访问的主机节点 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.proxyuser.vincent.hosts<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>*<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 配置该vincent(superuser)允许代理的用户所属组 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.proxyuser.vincent.groups<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>*<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 配置该vincent(superuser)允许代理的用户--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.proxyuser.vincent.users<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>*<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="配置hdfs-site-xml"><a href="#配置hdfs-site-xml" class="headerlink" title="配置hdfs-site.xml"></a>配置hdfs-site.xml</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 指定NameNode数据的存储目录 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.name.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>file://$&#123;hadoop.data.dir&#125;/name<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"> <span class="comment">&lt;!-- 指定Datanode数据的存储目录 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.datanode.data.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>file://$&#123;hadoop.data.dir&#125;/data<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 备份数 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.replication<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">value</span>&gt;</span>3<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 指定SecondaryNameNode数据的存储目录 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.checkpoint.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>file://$&#123;hadoop.data.dir&#125;/namesecondary<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- nn web端访问地址--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.http-address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>linux1:9870<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- 2nn web端访问地址--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.secondary.http-address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>linux3:9868<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="配置yarn-site-xml"><a href="#配置yarn-site-xml" class="headerlink" title="配置yarn-site.xml"></a>配置yarn-site.xml</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 指定mapreduce走shuffle --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.aux-services<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>mapreduce_shuffle<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">     <span class="comment">&lt;!-- 指定ResourceManager的地址--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.hostname<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>linux2<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 环境变量的继承 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.env-whitelist<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>JAVA_HOME,HADOOP_COMMON_HOME,HADOOP_HDFS_HOME,HADOOP_CONF_DIR,CLASSPATH_PREPEND_DISTCACHE,HADOOP_YARN_HOME,HADOOP_MAPRED_HOME<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 配置日志的聚集 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.log-aggregation-enable<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.log.server.url<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>http://linux1:19888/jobhistory/logs<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.log-aggregation.retain-seconds<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>604800<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--node manager 配置 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.resource.cpu-vcores<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>2<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">discription</span>&gt;</span>每个nodemanager可分配的cpu总核数<span class="tag">&lt;/<span class="name">discription</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.resource.memory-mb<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>4096<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">discription</span>&gt;</span>每个nodemanager可分配的内存总量<span class="tag">&lt;/<span class="name">discription</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">优化建议：</span></span><br><span class="line"><span class="comment">1. cpu核数=逻辑核数-其他应用数（datanode？work？zk？等）</span></span><br><span class="line"><span class="comment">cat /proc/cpuinfo | grep &quot;processor&quot; | wc -l</span></span><br><span class="line"><span class="comment">可以查看集群的逻辑核数</span></span><br><span class="line"><span class="comment">2. 内存建议是CPU的整数倍，给系统预留好足够用的内存</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--AppMaster 配置 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.app.mapreduce.am.resource.cpu-vcores<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span>	</span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.app.mapreduce.am.resource.mb<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>2048<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">discription</span>&gt;</span>ApplicationMaster的占用的内存大小<span class="tag">&lt;/<span class="name">discription</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">优化建议</span></span><br><span class="line"><span class="comment">1. cpu和内存比例和 nm的分配比例保持一致</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- Container 配置优化 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.scheduler.maximum-allocation-vcores<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>2<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">discription</span>&gt;</span>单个任务可申请的最多虚拟CPU个数<span class="tag">&lt;/<span class="name">discription</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.scheduler.minimum-allocation-vcores<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">discription</span>&gt;</span>单个任务可申请的最小虚拟CPU个数<span class="tag">&lt;/<span class="name">discription</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.scheduler.minimum-allocation-mb<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>512<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">discription</span>&gt;</span>单个任务可申请最小内存<span class="tag">&lt;/<span class="name">discription</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.shceduler.maximum-allocation-mb<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>4096<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">discription</span>&gt;</span>单个任务可申请最大内存，默认8192MB<span class="tag">&lt;/<span class="name">discription</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">优化建议</span></span><br><span class="line"><span class="comment">1. 在调度器中，很多资源计算部分会转化为这个最小值的N倍进行计算。所以，设定可分配内存等资源的时候，最好是刚好为这个最小值的倍数</span></span><br><span class="line"><span class="comment">2. cpu/内存比例保持一致</span></span><br><span class="line"><span class="comment">3. YARN采用了线程监控的方法判断任务是否超量使用内存，一旦发现超量，则直接将其杀死。由于Cgroups对内存的控制缺乏灵活性（即任务任何时刻不能超过内存上限，如果超过，则直接将其杀死或者报OOM），而Java进程在创建瞬间内存将翻倍，之后骤降到正常值，这种情况下，采用线程监控的方式更加灵活（当发现进程树内存瞬间翻倍超过设定值时，可认为是正常现象，不会将任务杀死），因此YARN未提供Cgroups内存隔离机制来控制容器。</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.scheduler.fair.assignmultiple<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">discription</span>&gt;</span>是否允许NodeManager一次分配多个容器<span class="tag">&lt;/<span class="name">discription</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.scheduler.fair.max.assign<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>8<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">discription</span>&gt;</span>如果允许一次分配多个,一次最多可分配多少个,这里按照一个最小分配yarn.scheduler.minimum-allocation-mb0.5gb来计算总共内存4/0.5=8<span class="tag">&lt;/<span class="name">discription</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--是否启动一个线程检查每个任务正使用的物理内存量，如果任务超出分配值，则直接将其杀掉，默认是true --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.pmem-check-enabled<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--是否启动一个线程检查每个任务正使用的虚拟内存量，如果任务超出分配值，则直接将其杀掉，默认是true --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.vmem-check-enabled<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="配置mapred-site-xml"><a href="#配置mapred-site-xml" class="headerlink" title="配置mapred-site.xml"></a>配置mapred-site.xml</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 指定MapReduce程序运行在Yarn上 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.framework.name<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>yarn<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- mapreduce参数设置 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.map.memory.mb<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>2048<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">discription</span>&gt;</span>map的内存大小<span class="tag">&lt;/<span class="name">discription</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.map.java.opts<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>-Xmx1024M<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">discription</span>&gt;</span>用户设定的map/reduce阶段申请的container的JVM参数。最大堆设定要比申请的内存少一些，用于JVM的非堆部分使用0.80-0.85建议<span class="tag">&lt;/<span class="name">discription</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.reduce.memory.mb<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>3072<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.reduce.java.opts<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>-Xmx2048M<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">优化参考</span></span><br><span class="line"><span class="comment">1. 如果集群主要使用mr进行计算，那么建议map的内存和cpu和容器最小的相等。</span></span><br><span class="line"><span class="comment">2. 一个容器里面最多跑几个map？yarn.scheduler.maximum-allocation-mb/mapreduce.map.memory.mb=2</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- 历史服务器端地址 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.jobhistory.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>linux1:10020<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 历史服务器web端地址 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.jobhistory.webapp.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>linux1:19888<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="在集群上分发配置好的hadoop"><a href="#在集群上分发配置好的hadoop" class="headerlink" title="在集群上分发配置好的hadoop"></a>在集群上分发配置好的hadoop</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">xsync /opt/module/hadoop-3.1.3</span><br></pre></td></tr></table></figure>
-
-<h2 id="3-集群单点启动"><a href="#3-集群单点启动" class="headerlink" title="3. 集群单点启动"></a>3. 集群单点启动</h2><p>如果集群是第一次启动，需要格式化NameNode。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hdfs namenode -format</span><br></pre></td></tr></table></figure>
-
-<p>在linux1上启动NameNode</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hdfs --daemon start namenode</span><br></pre></td></tr></table></figure>
-
-<p>在linux1、linux2以及linux3上执行如下命令（三台都要执行）</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hdfs --daemon start datanode</span><br></pre></td></tr></table></figure>
-
-<h2 id="4-SSH无密登录配置"><a href="#4-SSH无密登录配置" class="headerlink" title="4. SSH无密登录配置"></a>4. SSH无密登录配置</h2><p>生成公钥和私钥</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
-
-<p>然后敲（三个回车），就会生成两个文件id_rsa（私钥）、id_rsa.pub（公钥）</p>
-<p>将公钥拷贝到本机</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-copy-id linux1</span><br></pre></td></tr></table></figure>
-
-<p>分发公钥到集群各个节点</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">xsync .ssh</span><br></pre></td></tr></table></figure>
-
-<table>
-<thead>
-<tr>
-<th>known_hosts</th>
-<th>记录ssh访问过计算机的公钥(public key)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>id_rsa</td>
-<td>生成的私钥</td>
-</tr>
-<tr>
-<td>id_rsa.pub</td>
-<td>生成的公钥</td>
-</tr>
-<tr>
-<td>authorized_keys</td>
-<td>存放授权过的无密登录服务器公钥</td>
-</tr>
-</tbody></table>
-<h2 id="5-群起集群"><a href="#5-群起集群" class="headerlink" title="5. 群起集群"></a>5. 群起集群</h2><h3 id="配置workers"><a href="#配置workers" class="headerlink" title="配置workers"></a>配置workers</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim /opt/module/hadoop-3.1.3/etc/hadoop/workers</span><br></pre></td></tr></table></figure>
-
-<p>在该文件中增加如下内容：</p>
-<figure class="highlight gcode"><table><tr><td class="code"><pre><span class="line">li<span class="symbol">nux1</span></span><br><span class="line">li<span class="symbol">nux2</span></span><br><span class="line">li<span class="symbol">nux3</span></span><br></pre></td></tr></table></figure>
-
-<p>同步所有节点配置文件</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">xsync /opt/module/hadoop-3.1.3/etc/hadoop/workers</span><br></pre></td></tr></table></figure>
-
-<h3 id="启动集群"><a href="#启动集群" class="headerlink" title="启动集群"></a>启动集群</h3><ol>
-<li>如果集群是第一次启动，需要在linux1节点格式化NameNode（注意格式化之前，一定要先停止上次启动的所有namenode和datanode进程，然后再删除data和log数据）</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hdfs namenode -format</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>启动HDFS</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">start-dfs.sh</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>在配置了ResourceManager的节点(linux2)启动YARN</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">start-yarn.sh</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li>集群基本测试</li>
-</ol>
-<p>上传文件到集群</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop fs -mkdir -p /user/vincent/input</span><br><span class="line">hadoop fs -put $HADOOP_HOME/wcinput/wc.input /user/vincent/input</span><br></pre></td></tr></table></figure>
-
-<h2 id="6-集群启动-停止方式总结"><a href="#6-集群启动-停止方式总结" class="headerlink" title="6. 集群启动/停止方式总结"></a>6. 集群启动/停止方式总结</h2><h3 id="各个服务组件逐一启动-停止"><a href="#各个服务组件逐一启动-停止" class="headerlink" title="各个服务组件逐一启动/停止"></a>各个服务组件逐一启动/停止</h3><p>分别启动/停止HDFS组件</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hdfs --daemon start/stop namenode/datanode/secondarynamenode</span><br></pre></td></tr></table></figure>
-
-<p>启动/停止YARN</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yarn --daemon start/stop  resourcemanager/nodemanager</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="各个模块分开启动-停止（配置ssh是前提）常用"><a href="#各个模块分开启动-停止（配置ssh是前提）常用" class="headerlink" title="各个模块分开启动/停止（配置ssh是前提）常用"></a>各个模块分开启动/停止（配置ssh是前提）常用</h3><p>整体启动/停止HDFS</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">start-dfs.sh/stop-dfs.sh</span><br></pre></td></tr></table></figure>
-
-<p>整体启动/停止YARN</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">start-yarn.sh/stop-yarn.sh</span><br></pre></td></tr></table></figure>
-
-<h2 id="7-配置历史服务器"><a href="#7-配置历史服务器" class="headerlink" title="7. 配置历史服务器"></a>7. 配置历史服务器</h2><p>配置mapred-site.xml</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 历史服务器端地址 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.jobhistory.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>linux1:10020<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">&lt;!-- 历史服务器web端地址 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.jobhistory.webapp.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>linux1:19888<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>分发配置</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">xsync $HADOOP_HOME/etc/hadoop/mapred-site.xml</span><br></pre></td></tr></table></figure>
-
-<p>在linux1上启动历史服务器</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mapred --daemon start historyserver</span><br></pre></td></tr></table></figure>
-
-<p>查看JobHistory</p>
-<p><a href="http://linux1:19888/jobhistory">http://linux1:19888/jobhistory</a></p>
-<h2 id="8-配置日志的聚集"><a href="#8-配置日志的聚集" class="headerlink" title="8. 配置日志的聚集"></a>8. 配置日志的聚集</h2><p>配置yarn-site.xml</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.log-aggregation-enable<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.log.server.url<span class="tag">&lt;/<span class="name">name</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>http://linux1:19888/jobhistory/logs<span class="tag">&lt;/<span class="name">value</span>&gt;</span>  </span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.log-aggregation.retain-seconds<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>604800<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>分发配置</p>
-<p>重启NodeManager 、ResourceManager和HistoryServer</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">stop-yarn.sh</span><br><span class="line"></span><br><span class="line">mapred --daemon stop historyserver</span><br><span class="line"></span><br><span class="line">start-yarn.sh</span><br><span class="line"></span><br><span class="line">mapred --daemon start historyserver</span><br></pre></td></tr></table></figure>
-
-<p>删除HDFS上已经存在的输出文件</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hdfs dfs -rm -R /user/vincent/output</span><br></pre></td></tr></table></figure>
-
-<p>执行WordCount程序</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.1.3.jar wordcount /user/vincent/input /user/vincent/output</span><br></pre></td></tr></table></figure>
-
-<p>查看日志</p>
-<p><a href="http://linux1:19888/jobhistory">http://linux1:19888/jobhistory</a></p>
-<h2 id="9-集群时间同步"><a href="#9-集群时间同步" class="headerlink" title="9. 集群时间同步"></a>9. 集群时间同步</h2><p>时间同步的方式：找一个机器，作为时间服务器，所有的机器与这台集群时间进行定时的同步，比如，每隔十分钟，同步一次时间。</p>
-<h3 id="时间服务器配置（必须root用户）"><a href="#时间服务器配置（必须root用户）" class="headerlink" title="时间服务器配置（必须root用户）"></a>时间服务器配置（必须root用户）</h3><h4 id="1-在所有节点关闭ntp服务和自启动"><a href="#1-在所有节点关闭ntp服务和自启动" class="headerlink" title="1. 在所有节点关闭ntp服务和自启动"></a>1. 在所有节点关闭ntp服务和自启动</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo systemctl stop ntpd</span><br><span class="line">sudo systemctl disable ntpd</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-修改ntp配置文件"><a href="#2-修改ntp配置文件" class="headerlink" title="2. 修改ntp配置文件"></a>2. 修改ntp配置文件</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim /etc/ntp.conf</span><br></pre></td></tr></table></figure>
-
-<p>a）修改1（授权192.168.1.0-192.168.1.255网段上的所有机器可以从这台机器上查询和同步时间）</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">修改</span><br><span class="line">#restrict 192.168.1.0 mask 255.255.255.0 nomodify notrap</span><br><span class="line">为</span><br><span class="line">restrict 192.168.1.0 mask 255.255.255.0 nomodify notrap</span><br></pre></td></tr></table></figure>
-
-<p>b）修改2（集群在局域网中，不使用其他互联网上的时间）</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">修改</span><br><span class="line">server 0.centos.pool.ntp.org iburst</span><br><span class="line">server 1.centos.pool.ntp.org iburst</span><br><span class="line">server 2.centos.pool.ntp.org iburst</span><br><span class="line">server 3.centos.pool.ntp.org iburst</span><br><span class="line">为</span><br><span class="line">#server 0.centos.pool.ntp.org iburst</span><br><span class="line">#server 1.centos.pool.ntp.org iburst</span><br><span class="line">#server 2.centos.pool.ntp.org iburst</span><br><span class="line">#server 3.centos.pool.ntp.org iburst</span><br></pre></td></tr></table></figure>
-
-<p>c）添加3（当该节点丢失网络连接，依然可以采用本地时间作为时间服务器为集群中的其他节点提供时间同步）</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">server 127.127.1.0</span><br><span class="line">fudge 127.127.1.0 stratum 10</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-修改-etc-sysconfig-ntpd-文件"><a href="#3-修改-etc-sysconfig-ntpd-文件" class="headerlink" title="3. 修改/etc/sysconfig/ntpd 文件"></a>3. 修改/etc/sysconfig/ntpd 文件</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim /etc/sysconfig/ntpd</span><br></pre></td></tr></table></figure>
-
-<p>增加内容如下（让硬件时间与系统时间一起同步）</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">SYNC_HWCLOCK=yes</span><br></pre></td></tr></table></figure>
-
-<p>Tips:</p>
-<p>系统时间: 一般说来就是我们执行 date命令看到的时间，linux系统下所有的时间调用（除了直接访问硬件时间的命令）都是使用的这个时间。 </p>
-<p>硬件时间: 主板上BIOS中的时间，由主板电池供电来维持运行，系统开机时要读取这个时间，并根据它来设定系统时间（注意：系统启动时根据硬件时间设定系统时间的过程可能存在时区换算，这要视具体的系统及相关设置而定）</p>
-<h4 id="4-重新启动ntpd服务"><a href="#4-重新启动ntpd服务" class="headerlink" title="4. 重新启动ntpd服务"></a>4. 重新启动ntpd服务</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">systemctl start ntpd</span><br></pre></td></tr></table></figure>
-
-<h4 id="5-设置ntpd服务开机启动"><a href="#5-设置ntpd服务开机启动" class="headerlink" title="5. 设置ntpd服务开机启动"></a>5. 设置ntpd服务开机启动</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">systemctl enable ntpd</span><br></pre></td></tr></table></figure>
-
-<h3 id="其他机器配置（必须root用户）"><a href="#其他机器配置（必须root用户）" class="headerlink" title="其他机器配置（必须root用户）"></a>其他机器配置（必须root用户）</h3><p>在其他机器配置10分钟与时间服务器同步一次</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">crontab -e</span><br></pre></td></tr></table></figure>
-
-<p>编写定时任务如下</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">*/10 * * * * /usr/sbin/ntpdate linux1</span><br></pre></td></tr></table></figure>
-
-<p>修改任意机器时间</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">date -s &quot;2017-9-11 11:11:11&quot;</span><br></pre></td></tr></table></figure>
-
-<p>十分钟后查看机器是否与时间服务器同步</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">date</span><br></pre></td></tr></table></figure>
-
-<h2 id="10、HDFS存储多目录"><a href="#10、HDFS存储多目录" class="headerlink" title="10、HDFS存储多目录"></a>10、HDFS存储多目录</h2><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.datanode.data.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">value</span>&gt;</span>file:///dfs/data1,file:///hd2/dfs/data2,file:///hd3/dfs/data3,file:///hd4/dfs/data4<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>hd1、hd2、hd3、hd4为一个节点上的多个磁盘。</p>
-<h2 id="11、集群数据均衡"><a href="#11、集群数据均衡" class="headerlink" title="11、集群数据均衡"></a>11、集群数据均衡</h2><h3 id="1）节点间数据均衡"><a href="#1）节点间数据均衡" class="headerlink" title="1）节点间数据均衡"></a>1）节点间数据均衡</h3><p>开启数据均衡命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">start-balancer.sh -threshold 10</span><br></pre></td></tr></table></figure>
-
-<p>对于参数10，代表的是集群中各个节点的磁盘空间利用率相差不超过10%，可根据实际情况进行调整。</p>
-<p>停止数据均衡命令：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">stop-balancer.sh</span><br></pre></td></tr></table></figure>
-
-<h3 id="2）磁盘间数据均衡"><a href="#2）磁盘间数据均衡" class="headerlink" title="2）磁盘间数据均衡"></a>2）磁盘间数据均衡</h3><p>（1）生成均衡计划</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hdfs diskbalancer -plan linux2</span><br></pre></td></tr></table></figure>
-
-<p>在当前路径生成linux2.plan.json</p>
-<p>（2）执行均衡计划</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hdfs diskbalancer -execute linux2.plan.json</span><br></pre></td></tr></table></figure>
-
-<p>（3）查看当前均衡任务的执行情况</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hdfs diskbalancer -query linux2</span><br></pre></td></tr></table></figure>
-
-<p>（4）取消均衡任务</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hdfs diskbalancer -cancel linux2.plan.json</span><br></pre></td></tr></table></figure>
-
-<h2 id="12、支持LZO压缩配置"><a href="#12、支持LZO压缩配置" class="headerlink" title="12、支持LZO压缩配置"></a>12、支持LZO压缩配置</h2><p>1）hadoop本身并不支持lzo压缩，故需要使用twitter提供的hadoop-lzo开源组件。hadoop-lzo需依赖hadoop和lzo进行编译。</p>
-<p>2）将编译好后的hadoop-lzo-0.4.20.jar 放入hadoop-3.1.3/share/hadoop/common/</p>
-<p>3）同步hadoop-lzo-0.4.20.jar到linux2、linux3</p>
-<p>4）core-site.xml增加配置支持LZO压缩</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>io.compression.codecs<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span></span><br><span class="line">        org.apache.hadoop.io.compress.GzipCodec,</span><br><span class="line">        org.apache.hadoop.io.compress.DefaultCodec,</span><br><span class="line">        org.apache.hadoop.io.compress.BZip2Codec,</span><br><span class="line">        org.apache.hadoop.io.compress.SnappyCodec,</span><br><span class="line">        com.hadoop.compression.lzo.LzoCodec,</span><br><span class="line">        com.hadoop.compression.lzo.LzopCodec</span><br><span class="line">    <span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>io.compression.codec.lzo.class<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>com.hadoop.compression.lzo.LzoCodec<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>5）同步core-site.xml到linux2、linux3</p>
-<p>6）测试wordcount</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop jar /opt/module/hadoop-3.1.3/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.1.3.jar wordcount -Dmapreduce.output.fileoutputformat.compress=true -Dmapreduce.output.fileoutputformat.compress.codec=com.hadoop.compression.lzo.LzopCodec input /output</span><br></pre></td></tr></table></figure>
-
-<h1 id="问题总结"><a href="#问题总结" class="headerlink" title="问题总结"></a>问题总结</h1><p>1）ERROR: Cannot set priority of datanode process</p>
-<figure class="highlight gcode"><table><tr><td class="code"><pre><span class="line">将克隆的li<span class="symbol">nux2</span>和li<span class="symbol">nux3</span>上的hadoop卸载，重新安装。</span><br></pre></td></tr></table></figure>
-
-<p>2）linux2，linux3没有没有datanode</p>
-<figure class="highlight haskell"><table><tr><td class="code"><pre><span class="line">由于datanode的<span class="type">VERSION</span>不同导致，删除linux2，linux3的<span class="class"><span class="keyword">data</span>目录下文件即可。</span></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>Hadoop</category>
-      </categories>
-  </entry>
-  <entry>
     <title>Hbase</title>
     <url>/Hbase/</url>
     <content><![CDATA[<p><a href="http://hbase.apache.org/2.0/book.html">http://hbase.apache.org/2.0/book.html</a></p>
@@ -5422,6 +5119,309 @@
 <p>Local Index适用于写操作频繁的场景。</p>
 <p><strong>索引数据和数据表的数据是存放在同一张表中（且是同一个Region）</strong>，避免了在写操作的时候往不同服务器的索引表中写索引带来的额外开销。</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE LOCAL INDEX my_index ON my_table (my_column);</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Hadoop</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>HDFS配置</title>
+    <url>/Hadoop%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h1 id="准备虚拟机"><a href="#准备虚拟机" class="headerlink" title="准备虚拟机"></a>准备虚拟机</h1><h2 id="1-克隆虚拟机"><a href="#1-克隆虚拟机" class="headerlink" title="1. 克隆虚拟机"></a>1. 克隆虚拟机</h2><p>单台虚拟机：内存4G，硬盘50G，安装必要环境(最小化安装)</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo yum install -y epel-release</span><br><span class="line">sudo yum install -y psmisc nc net-tools rsync vim lrzsz ntp libzstd openssl-static tree iotop</span><br></pre></td></tr></table></figure>
+
+<p>修改克隆虚拟机的静态IP(按照自己机器的网络设置进行修改)</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo vim /etc/sysconfig/network-scripts/ifcfg-ens33  或</span><br><span class="line">sudo vim /etc/sysconfig/network-scripts/ifcfg-eth0</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">TYPE=&quot;Ethernet&quot;</span><br><span class="line">PROXY_METHOD=&quot;none&quot;</span><br><span class="line">BROWSER_ONLY=&quot;no&quot;</span><br><span class="line">BOOTPROTO=static</span><br><span class="line">DEFROUTE=&quot;yes&quot;</span><br><span class="line">IPV4_FAILURE_FATAL=&quot;no&quot;</span><br><span class="line">IPV6INIT=&quot;yes&quot;</span><br><span class="line">IPV6_AUTOCONF=&quot;yes&quot;</span><br><span class="line">IPV6_DEFROUTE=&quot;yes&quot;</span><br><span class="line">IPV6_FAILURE_FATAL=&quot;no&quot;</span><br><span class="line">IPV6_ADDR_GEN_MODE=&quot;stable-privacy&quot;</span><br><span class="line">NAME=&quot;eth0&quot;</span><br><span class="line">UUID=&quot;19c440dc-9a12-4fd7-bc46-0a121ef6af96&quot;</span><br><span class="line">DEVICE=&quot;eth0&quot;</span><br><span class="line">ONBOOT=&quot;yes&quot;</span><br><span class="line">IPADDR=10.211.55.10</span><br><span class="line">GATEWAY=10.211.55.1</span><br><span class="line">DNS1=10.211.55.1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-修改主机名"><a href="#2-修改主机名" class="headerlink" title="2. 修改主机名"></a>2. 修改主机名</h2><p>修改主机名称</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo vim /etc/hostname</span><br></pre></td></tr></table></figure>
+
+<p>配置主机名称映射，打开/etc/hosts</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo vim /etc/hosts</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight accesslog"><table><tr><td class="code"><pre><span class="line"><span class="number">10.211.55.10</span>	linux1</span><br><span class="line"><span class="number">10.211.55.11</span>	linux2</span><br><span class="line"><span class="number">10.211.55.12</span>	linux3</span><br></pre></td></tr></table></figure>
+
+<p>修改window7的主机映射文件（hosts文件）</p>
+<p>进入C:\Windows\System32\drivers\etc</p>
+<h2 id="3-关闭防火墙"><a href="#3-关闭防火墙" class="headerlink" title="3. 关闭防火墙"></a>3. 关闭防火墙</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo systemctl stop firewalld</span><br><span class="line">sudo systemctl disable firewalld</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-创建vincent用户"><a href="#4-创建vincent用户" class="headerlink" title="4. 创建vincent用户"></a>4. 创建vincent用户</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo useradd vincent</span><br><span class="line">sudo passwd vincent</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-配置vincent用户具有root权限"><a href="#5-配置vincent用户具有root权限" class="headerlink" title="5. 配置vincent用户具有root权限"></a>5. 配置vincent用户具有root权限</h2><p>修改/etc/sudoers文件，如下所示</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo vim /etc/sudoers</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># Allows people in group wheel to run all commands</span></span></span><br><span class="line"><span class="meta">%</span><span class="bash">wheel  ALL=(ALL)       ALL</span></span><br><span class="line">vincent ALL=(ALL)       ALL</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-在-opt目录下创建文件夹"><a href="#6-在-opt目录下创建文件夹" class="headerlink" title="6. 在/opt目录下创建文件夹"></a>6. 在/opt目录下创建文件夹</h2><p>在/opt目录下创建module、software文件夹</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo mkdir module</span><br><span class="line">sudo mkdir software</span><br></pre></td></tr></table></figure>
+
+<p>修改module、software文件夹的所有者</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo chown vincent:vincent /opt/module /opt/software</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-安装JDK"><a href="#7-安装JDK" class="headerlink" title="7. 安装JDK"></a>7. 安装JDK</h2><ol>
+<li><p>将JDK安装包上传到Linux /opt/software目录下</p>
+</li>
+<li><p>解压JDK到/opt/module目录下</p>
+</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tar -zxvf jdk-8u212-linux-x64.tar.gz -C /opt/module/</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>配置JDK环境变量,两种方式:</li>
+</ol>
+<p>新建/etc/profile.d/my_env.sh文件</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo vim /etc/profile.d/my_env.sh</span><br></pre></td></tr></table></figure>
+
+<p>添加如下内容</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">JAVA_HOME</span></span><br><span class="line">export JAVA_HOME=/opt/module/jdk1.8.0_212</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin</span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<p>直接将环境变量配置到 /etc/profile 文件中,在/etc/profile文件的末尾追加如下内容</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">JAVA_HOME=/opt/module/jdk1.8.0_212</span><br><span class="line">PATH=$PATH:$JAVA_HOME/bin</span><br><span class="line">export PATH JAVA_HOME</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">source /etc/profile	</span><br></pre></td></tr></table></figure>
+
+<p>测试JDK是否安装成功</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure>
+
+<h2 id="8-安装Hadoop"><a href="#8-安装Hadoop" class="headerlink" title="8. 安装Hadoop"></a>8. 安装Hadoop</h2><p>Hadoop下载地址：<a href="https://archive.apache.org/dist/hadoop/common/hadoop-2.7.2/">https://archive.apache.org/dist/hadoop/common/hadoop-3.1.3/</a></p>
+<p>将hadoop安装包上传到/opt/software目录下</p>
+<p>解压安装文件到/opt/module下面</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tar -zxvf hadoop-3.1.3.tar.gz -C /opt/module/</span><br></pre></td></tr></table></figure>
+
+<p>将Hadoop添加到环境变量</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">HADOOP_HOME</span></span><br><span class="line">HADOOP_HOME=/opt/module/hadoop-3.1.3</span><br><span class="line">PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin</span><br><span class="line">export PATH JAVA_HOME HADOOP_HOME</span><br></pre></td></tr></table></figure>
+
+<p>测试是否安装成功</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop version</span><br></pre></td></tr></table></figure>
+
+<h1 id="完全分布式集群搭建"><a href="#完全分布式集群搭建" class="headerlink" title="完全分布式集群搭建"></a>完全分布式集群搭建</h1><h2 id="1-编写集群分发脚本xsync"><a href="#1-编写集群分发脚本xsync" class="headerlink" title="1. 编写集群分发脚本xsync"></a>1. 编写集群分发脚本xsync</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash">1. 判断参数个数</span></span><br><span class="line">if [ $# -lt 1 ]</span><br><span class="line">then</span><br><span class="line">  echo Not Enough Arguement!</span><br><span class="line">  exit;</span><br><span class="line">fi</span><br><span class="line"><span class="meta">#</span><span class="bash">2. 遍历集群所有机器</span></span><br><span class="line">for host in linux1 linux2 linux3</span><br><span class="line">do</span><br><span class="line">  echo ====================  $host  ====================</span><br><span class="line"><span class="meta">  #</span><span class="bash">3. 遍历所有目录，挨个发送</span></span><br><span class="line">  for file in $@</span><br><span class="line">  do</span><br><span class="line">    #4 判断文件是否存在</span><br><span class="line">    if [ -e $file ]</span><br><span class="line">    then</span><br><span class="line">    #5. 获取父目录</span><br><span class="line">    # cd -P 的意义是防止文件路径是软连接</span><br><span class="line">      pdir=$(cd -P $(dirname $file); pwd)</span><br><span class="line">      #6. 获取当前文件的名称</span><br><span class="line">      fname=$(basename $file)</span><br><span class="line">      ssh $host &quot;mkdir -p $pdir&quot;</span><br><span class="line">      rsync -av $pdir/$fname $host:$pdir</span><br><span class="line">    else</span><br><span class="line">      echo $file does not exists!</span><br><span class="line">    fi</span><br><span class="line">  done</span><br><span class="line">done</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod +x xsync</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-集群配置"><a href="#2-集群配置" class="headerlink" title="2. 集群配置"></a>2. 集群配置</h2><table>
+<thead>
+<tr>
+<th></th>
+<th align="center">linux1</th>
+<th align="center">linux2</th>
+<th align="center">linux3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HDFS</td>
+<td align="center">NameNode                     DataNode</td>
+<td align="center">DataNode</td>
+<td align="center">SecondaryNameNode       DataNode</td>
+</tr>
+<tr>
+<td>YARN</td>
+<td align="center">NodeManager</td>
+<td align="center">ResourceManager  NodeManager</td>
+<td align="center">NodeManager</td>
+</tr>
+</tbody></table>
+<h3 id="配置hadoop-env-sh-第54行"><a href="#配置hadoop-env-sh-第54行" class="headerlink" title="配置hadoop-env.sh(第54行)"></a>配置hadoop-env.sh(第54行)</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">:set nu							//设置行号</span><br><span class="line">:set nonu						//取消行号</span><br><span class="line">:noh								//取消高亮</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export JAVA_HOME=/opt/module/jdk1.8.0_212</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置core-site-xml"><a href="#配置core-site-xml" class="headerlink" title="配置core-site.xml"></a>配置core-site.xml</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 指定NameNode的地址 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>fs.defaultFS<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://linux1:9820<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 指定hadoop数据的存储目录,官方配置文件中的配置项是hadoop.tmp.dir,</span></span><br><span class="line"><span class="comment">     用来指定hadoop数据的存储目录,此次配置用的hadoop.data.dir是自己定义的变量,</span></span><br><span class="line"><span class="comment">     因为在hdfs-site.xml中会使用此配置的值来具体指定namenode 和 datanode存储数据的目录--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.data.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>/opt/module/hadoop-3.1.3/data<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.http.staticuser.user<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>vincent<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.permissions.enabled<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 下面是兼容性配置 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 配置该vincent(superUser)允许通过代理访问的主机节点 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.proxyuser.vincent.hosts<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>*<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 配置该vincent(superuser)允许代理的用户所属组 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.proxyuser.vincent.groups<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>*<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 配置该vincent(superuser)允许代理的用户--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.proxyuser.vincent.users<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>*<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="配置hdfs-site-xml"><a href="#配置hdfs-site-xml" class="headerlink" title="配置hdfs-site.xml"></a>配置hdfs-site.xml</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 指定NameNode数据的存储目录 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.name.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>file://$&#123;hadoop.data.dir&#125;/name<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"> <span class="comment">&lt;!-- 指定Datanode数据的存储目录 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.datanode.data.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>file://$&#123;hadoop.data.dir&#125;/data<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 备份数 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.replication<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">value</span>&gt;</span>3<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 指定SecondaryNameNode数据的存储目录 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.checkpoint.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>file://$&#123;hadoop.data.dir&#125;/namesecondary<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- nn web端访问地址--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.http-address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>linux1:9870<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- 2nn web端访问地址--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.secondary.http-address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>linux3:9868<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="配置yarn-site-xml"><a href="#配置yarn-site-xml" class="headerlink" title="配置yarn-site.xml"></a>配置yarn-site.xml</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 指定mapreduce走shuffle --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.aux-services<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>mapreduce_shuffle<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">     <span class="comment">&lt;!-- 指定ResourceManager的地址--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.hostname<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>linux2<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 环境变量的继承 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.env-whitelist<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>JAVA_HOME,HADOOP_COMMON_HOME,HADOOP_HDFS_HOME,HADOOP_CONF_DIR,CLASSPATH_PREPEND_DISTCACHE,HADOOP_YARN_HOME,HADOOP_MAPRED_HOME<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 配置日志的聚集 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.log-aggregation-enable<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.log.server.url<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>http://linux1:19888/jobhistory/logs<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.log-aggregation.retain-seconds<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>604800<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--node manager 配置 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.resource.cpu-vcores<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>2<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">discription</span>&gt;</span>每个nodemanager可分配的cpu总核数<span class="tag">&lt;/<span class="name">discription</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.resource.memory-mb<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>4096<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">discription</span>&gt;</span>每个nodemanager可分配的内存总量<span class="tag">&lt;/<span class="name">discription</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">优化建议：</span></span><br><span class="line"><span class="comment">1. cpu核数=逻辑核数-其他应用数（datanode？work？zk？等）</span></span><br><span class="line"><span class="comment">cat /proc/cpuinfo | grep &quot;processor&quot; | wc -l</span></span><br><span class="line"><span class="comment">可以查看集群的逻辑核数</span></span><br><span class="line"><span class="comment">2. 内存建议是CPU的整数倍，给系统预留好足够用的内存</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--AppMaster 配置 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.app.mapreduce.am.resource.cpu-vcores<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span>	</span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.app.mapreduce.am.resource.mb<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>2048<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">discription</span>&gt;</span>ApplicationMaster的占用的内存大小<span class="tag">&lt;/<span class="name">discription</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">优化建议</span></span><br><span class="line"><span class="comment">1. cpu和内存比例和 nm的分配比例保持一致</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- Container 配置优化 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.scheduler.maximum-allocation-vcores<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>2<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">discription</span>&gt;</span>单个任务可申请的最多虚拟CPU个数<span class="tag">&lt;/<span class="name">discription</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.scheduler.minimum-allocation-vcores<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">discription</span>&gt;</span>单个任务可申请的最小虚拟CPU个数<span class="tag">&lt;/<span class="name">discription</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.scheduler.minimum-allocation-mb<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>512<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">discription</span>&gt;</span>单个任务可申请最小内存<span class="tag">&lt;/<span class="name">discription</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.shceduler.maximum-allocation-mb<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>4096<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">discription</span>&gt;</span>单个任务可申请最大内存，默认8192MB<span class="tag">&lt;/<span class="name">discription</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">优化建议</span></span><br><span class="line"><span class="comment">1. 在调度器中，很多资源计算部分会转化为这个最小值的N倍进行计算。所以，设定可分配内存等资源的时候，最好是刚好为这个最小值的倍数</span></span><br><span class="line"><span class="comment">2. cpu/内存比例保持一致</span></span><br><span class="line"><span class="comment">3. YARN采用了线程监控的方法判断任务是否超量使用内存，一旦发现超量，则直接将其杀死。由于Cgroups对内存的控制缺乏灵活性（即任务任何时刻不能超过内存上限，如果超过，则直接将其杀死或者报OOM），而Java进程在创建瞬间内存将翻倍，之后骤降到正常值，这种情况下，采用线程监控的方式更加灵活（当发现进程树内存瞬间翻倍超过设定值时，可认为是正常现象，不会将任务杀死），因此YARN未提供Cgroups内存隔离机制来控制容器。</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.scheduler.fair.assignmultiple<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">discription</span>&gt;</span>是否允许NodeManager一次分配多个容器<span class="tag">&lt;/<span class="name">discription</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.scheduler.fair.max.assign<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>8<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">discription</span>&gt;</span>如果允许一次分配多个,一次最多可分配多少个,这里按照一个最小分配yarn.scheduler.minimum-allocation-mb0.5gb来计算总共内存4/0.5=8<span class="tag">&lt;/<span class="name">discription</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--是否启动一个线程检查每个任务正使用的物理内存量，如果任务超出分配值，则直接将其杀掉，默认是true --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.pmem-check-enabled<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--是否启动一个线程检查每个任务正使用的虚拟内存量，如果任务超出分配值，则直接将其杀掉，默认是true --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.vmem-check-enabled<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="配置mapred-site-xml"><a href="#配置mapred-site-xml" class="headerlink" title="配置mapred-site.xml"></a>配置mapred-site.xml</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 指定MapReduce程序运行在Yarn上 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.framework.name<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>yarn<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- mapreduce参数设置 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.map.memory.mb<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>2048<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">discription</span>&gt;</span>map的内存大小<span class="tag">&lt;/<span class="name">discription</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.map.java.opts<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>-Xmx1024M<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">discription</span>&gt;</span>用户设定的map/reduce阶段申请的container的JVM参数。最大堆设定要比申请的内存少一些，用于JVM的非堆部分使用0.80-0.85建议<span class="tag">&lt;/<span class="name">discription</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.reduce.memory.mb<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>3072<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.reduce.java.opts<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>-Xmx2048M<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">优化参考</span></span><br><span class="line"><span class="comment">1. 如果集群主要使用mr进行计算，那么建议map的内存和cpu和容器最小的相等。</span></span><br><span class="line"><span class="comment">2. 一个容器里面最多跑几个map？yarn.scheduler.maximum-allocation-mb/mapreduce.map.memory.mb=2</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- 历史服务器端地址 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.jobhistory.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>linux1:10020<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 历史服务器web端地址 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.jobhistory.webapp.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>linux1:19888<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="在集群上分发配置好的hadoop"><a href="#在集群上分发配置好的hadoop" class="headerlink" title="在集群上分发配置好的hadoop"></a>在集群上分发配置好的hadoop</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">xsync /opt/module/hadoop-3.1.3</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-集群单点启动"><a href="#3-集群单点启动" class="headerlink" title="3. 集群单点启动"></a>3. 集群单点启动</h2><p>如果集群是第一次启动，需要格式化NameNode。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hdfs namenode -format</span><br></pre></td></tr></table></figure>
+
+<p>在linux1上启动NameNode</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hdfs --daemon start namenode</span><br></pre></td></tr></table></figure>
+
+<p>在linux1、linux2以及linux3上执行如下命令（三台都要执行）</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hdfs --daemon start datanode</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-SSH无密登录配置"><a href="#4-SSH无密登录配置" class="headerlink" title="4. SSH无密登录配置"></a>4. SSH无密登录配置</h2><p>生成公钥和私钥</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
+
+<p>然后敲（三个回车），就会生成两个文件id_rsa（私钥）、id_rsa.pub（公钥）</p>
+<p>将公钥拷贝到本机</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-copy-id linux1</span><br></pre></td></tr></table></figure>
+
+<p>分发公钥到集群各个节点</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">xsync .ssh</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>known_hosts</th>
+<th>记录ssh访问过计算机的公钥(public key)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id_rsa</td>
+<td>生成的私钥</td>
+</tr>
+<tr>
+<td>id_rsa.pub</td>
+<td>生成的公钥</td>
+</tr>
+<tr>
+<td>authorized_keys</td>
+<td>存放授权过的无密登录服务器公钥</td>
+</tr>
+</tbody></table>
+<h2 id="5-群起集群"><a href="#5-群起集群" class="headerlink" title="5. 群起集群"></a>5. 群起集群</h2><h3 id="配置workers"><a href="#配置workers" class="headerlink" title="配置workers"></a>配置workers</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim /opt/module/hadoop-3.1.3/etc/hadoop/workers</span><br></pre></td></tr></table></figure>
+
+<p>在该文件中增加如下内容：</p>
+<figure class="highlight gcode"><table><tr><td class="code"><pre><span class="line">li<span class="symbol">nux1</span></span><br><span class="line">li<span class="symbol">nux2</span></span><br><span class="line">li<span class="symbol">nux3</span></span><br></pre></td></tr></table></figure>
+
+<p>同步所有节点配置文件</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">xsync /opt/module/hadoop-3.1.3/etc/hadoop/workers</span><br></pre></td></tr></table></figure>
+
+<h3 id="启动集群"><a href="#启动集群" class="headerlink" title="启动集群"></a>启动集群</h3><ol>
+<li>如果集群是第一次启动，需要在linux1节点格式化NameNode（注意格式化之前，一定要先停止上次启动的所有namenode和datanode进程，然后再删除data和log数据）</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hdfs namenode -format</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>启动HDFS</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">start-dfs.sh</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>在配置了ResourceManager的节点(linux2)启动YARN</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">start-yarn.sh</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>集群基本测试</li>
+</ol>
+<p>上传文件到集群</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop fs -mkdir -p /user/vincent/input</span><br><span class="line">hadoop fs -put $HADOOP_HOME/wcinput/wc.input /user/vincent/input</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-集群启动-停止方式总结"><a href="#6-集群启动-停止方式总结" class="headerlink" title="6. 集群启动/停止方式总结"></a>6. 集群启动/停止方式总结</h2><h3 id="各个服务组件逐一启动-停止"><a href="#各个服务组件逐一启动-停止" class="headerlink" title="各个服务组件逐一启动/停止"></a>各个服务组件逐一启动/停止</h3><p>分别启动/停止HDFS组件</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hdfs --daemon start/stop namenode/datanode/secondarynamenode</span><br></pre></td></tr></table></figure>
+
+<p>启动/停止YARN</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yarn --daemon start/stop  resourcemanager/nodemanager</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="各个模块分开启动-停止（配置ssh是前提）常用"><a href="#各个模块分开启动-停止（配置ssh是前提）常用" class="headerlink" title="各个模块分开启动/停止（配置ssh是前提）常用"></a>各个模块分开启动/停止（配置ssh是前提）常用</h3><p>整体启动/停止HDFS</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">start-dfs.sh/stop-dfs.sh</span><br></pre></td></tr></table></figure>
+
+<p>整体启动/停止YARN</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">start-yarn.sh/stop-yarn.sh</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-配置历史服务器"><a href="#7-配置历史服务器" class="headerlink" title="7. 配置历史服务器"></a>7. 配置历史服务器</h2><p>配置mapred-site.xml</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 历史服务器端地址 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.jobhistory.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>linux1:10020<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">&lt;!-- 历史服务器web端地址 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.jobhistory.webapp.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>linux1:19888<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>分发配置</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">xsync $HADOOP_HOME/etc/hadoop/mapred-site.xml</span><br></pre></td></tr></table></figure>
+
+<p>在linux1上启动历史服务器</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mapred --daemon start historyserver</span><br></pre></td></tr></table></figure>
+
+<p>查看JobHistory</p>
+<p><a href="http://linux1:19888/jobhistory">http://linux1:19888/jobhistory</a></p>
+<h2 id="8-配置日志的聚集"><a href="#8-配置日志的聚集" class="headerlink" title="8. 配置日志的聚集"></a>8. 配置日志的聚集</h2><p>配置yarn-site.xml</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.log-aggregation-enable<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.log.server.url<span class="tag">&lt;/<span class="name">name</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>http://linux1:19888/jobhistory/logs<span class="tag">&lt;/<span class="name">value</span>&gt;</span>  </span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.log-aggregation.retain-seconds<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>604800<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>分发配置</p>
+<p>重启NodeManager 、ResourceManager和HistoryServer</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">stop-yarn.sh</span><br><span class="line"></span><br><span class="line">mapred --daemon stop historyserver</span><br><span class="line"></span><br><span class="line">start-yarn.sh</span><br><span class="line"></span><br><span class="line">mapred --daemon start historyserver</span><br></pre></td></tr></table></figure>
+
+<p>删除HDFS上已经存在的输出文件</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hdfs dfs -rm -R /user/vincent/output</span><br></pre></td></tr></table></figure>
+
+<p>执行WordCount程序</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.1.3.jar wordcount /user/vincent/input /user/vincent/output</span><br></pre></td></tr></table></figure>
+
+<p>查看日志</p>
+<p><a href="http://linux1:19888/jobhistory">http://linux1:19888/jobhistory</a></p>
+<h2 id="9-集群时间同步"><a href="#9-集群时间同步" class="headerlink" title="9. 集群时间同步"></a>9. 集群时间同步</h2><p>时间同步的方式：找一个机器，作为时间服务器，所有的机器与这台集群时间进行定时的同步，比如，每隔十分钟，同步一次时间。</p>
+<h3 id="时间服务器配置（必须root用户）"><a href="#时间服务器配置（必须root用户）" class="headerlink" title="时间服务器配置（必须root用户）"></a>时间服务器配置（必须root用户）</h3><h4 id="1-在所有节点关闭ntp服务和自启动"><a href="#1-在所有节点关闭ntp服务和自启动" class="headerlink" title="1. 在所有节点关闭ntp服务和自启动"></a>1. 在所有节点关闭ntp服务和自启动</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo systemctl stop ntpd</span><br><span class="line">sudo systemctl disable ntpd</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-修改ntp配置文件"><a href="#2-修改ntp配置文件" class="headerlink" title="2. 修改ntp配置文件"></a>2. 修改ntp配置文件</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim /etc/ntp.conf</span><br></pre></td></tr></table></figure>
+
+<p>a）修改1（授权192.168.1.0-192.168.1.255网段上的所有机器可以从这台机器上查询和同步时间）</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">修改</span><br><span class="line">#restrict 192.168.1.0 mask 255.255.255.0 nomodify notrap</span><br><span class="line">为</span><br><span class="line">restrict 192.168.1.0 mask 255.255.255.0 nomodify notrap</span><br></pre></td></tr></table></figure>
+
+<p>b）修改2（集群在局域网中，不使用其他互联网上的时间）</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">修改</span><br><span class="line">server 0.centos.pool.ntp.org iburst</span><br><span class="line">server 1.centos.pool.ntp.org iburst</span><br><span class="line">server 2.centos.pool.ntp.org iburst</span><br><span class="line">server 3.centos.pool.ntp.org iburst</span><br><span class="line">为</span><br><span class="line">#server 0.centos.pool.ntp.org iburst</span><br><span class="line">#server 1.centos.pool.ntp.org iburst</span><br><span class="line">#server 2.centos.pool.ntp.org iburst</span><br><span class="line">#server 3.centos.pool.ntp.org iburst</span><br></pre></td></tr></table></figure>
+
+<p>c）添加3（当该节点丢失网络连接，依然可以采用本地时间作为时间服务器为集群中的其他节点提供时间同步）</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">server 127.127.1.0</span><br><span class="line">fudge 127.127.1.0 stratum 10</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-修改-etc-sysconfig-ntpd-文件"><a href="#3-修改-etc-sysconfig-ntpd-文件" class="headerlink" title="3. 修改/etc/sysconfig/ntpd 文件"></a>3. 修改/etc/sysconfig/ntpd 文件</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim /etc/sysconfig/ntpd</span><br></pre></td></tr></table></figure>
+
+<p>增加内容如下（让硬件时间与系统时间一起同步）</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">SYNC_HWCLOCK=yes</span><br></pre></td></tr></table></figure>
+
+<p>Tips:</p>
+<p>系统时间: 一般说来就是我们执行 date命令看到的时间，linux系统下所有的时间调用（除了直接访问硬件时间的命令）都是使用的这个时间。 </p>
+<p>硬件时间: 主板上BIOS中的时间，由主板电池供电来维持运行，系统开机时要读取这个时间，并根据它来设定系统时间（注意：系统启动时根据硬件时间设定系统时间的过程可能存在时区换算，这要视具体的系统及相关设置而定）</p>
+<h4 id="4-重新启动ntpd服务"><a href="#4-重新启动ntpd服务" class="headerlink" title="4. 重新启动ntpd服务"></a>4. 重新启动ntpd服务</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">systemctl start ntpd</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-设置ntpd服务开机启动"><a href="#5-设置ntpd服务开机启动" class="headerlink" title="5. 设置ntpd服务开机启动"></a>5. 设置ntpd服务开机启动</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">systemctl enable ntpd</span><br></pre></td></tr></table></figure>
+
+<h3 id="其他机器配置（必须root用户）"><a href="#其他机器配置（必须root用户）" class="headerlink" title="其他机器配置（必须root用户）"></a>其他机器配置（必须root用户）</h3><p>在其他机器配置10分钟与时间服务器同步一次</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">crontab -e</span><br></pre></td></tr></table></figure>
+
+<p>编写定时任务如下</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">*/10 * * * * /usr/sbin/ntpdate linux1</span><br></pre></td></tr></table></figure>
+
+<p>修改任意机器时间</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">date -s &quot;2017-9-11 11:11:11&quot;</span><br></pre></td></tr></table></figure>
+
+<p>十分钟后查看机器是否与时间服务器同步</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">date</span><br></pre></td></tr></table></figure>
+
+<h2 id="10、HDFS存储多目录"><a href="#10、HDFS存储多目录" class="headerlink" title="10、HDFS存储多目录"></a>10、HDFS存储多目录</h2><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.datanode.data.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">value</span>&gt;</span>file:///dfs/data1,file:///hd2/dfs/data2,file:///hd3/dfs/data3,file:///hd4/dfs/data4<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>hd1、hd2、hd3、hd4为一个节点上的多个磁盘。</p>
+<h2 id="11、集群数据均衡"><a href="#11、集群数据均衡" class="headerlink" title="11、集群数据均衡"></a>11、集群数据均衡</h2><h3 id="1）节点间数据均衡"><a href="#1）节点间数据均衡" class="headerlink" title="1）节点间数据均衡"></a>1）节点间数据均衡</h3><p>开启数据均衡命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">start-balancer.sh -threshold 10</span><br></pre></td></tr></table></figure>
+
+<p>对于参数10，代表的是集群中各个节点的磁盘空间利用率相差不超过10%，可根据实际情况进行调整。</p>
+<p>停止数据均衡命令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">stop-balancer.sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="2）磁盘间数据均衡"><a href="#2）磁盘间数据均衡" class="headerlink" title="2）磁盘间数据均衡"></a>2）磁盘间数据均衡</h3><p>（1）生成均衡计划</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hdfs diskbalancer -plan linux2</span><br></pre></td></tr></table></figure>
+
+<p>在当前路径生成linux2.plan.json</p>
+<p>（2）执行均衡计划</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hdfs diskbalancer -execute linux2.plan.json</span><br></pre></td></tr></table></figure>
+
+<p>（3）查看当前均衡任务的执行情况</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hdfs diskbalancer -query linux2</span><br></pre></td></tr></table></figure>
+
+<p>（4）取消均衡任务</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hdfs diskbalancer -cancel linux2.plan.json</span><br></pre></td></tr></table></figure>
+
+<h2 id="12、支持LZO压缩配置"><a href="#12、支持LZO压缩配置" class="headerlink" title="12、支持LZO压缩配置"></a>12、支持LZO压缩配置</h2><p>1）hadoop本身并不支持lzo压缩，故需要使用twitter提供的hadoop-lzo开源组件。hadoop-lzo需依赖hadoop和lzo进行编译。</p>
+<p>2）将编译好后的hadoop-lzo-0.4.20.jar 放入hadoop-3.1.3/share/hadoop/common/</p>
+<p>3）同步hadoop-lzo-0.4.20.jar到linux2、linux3</p>
+<p>4）core-site.xml增加配置支持LZO压缩</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>io.compression.codecs<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span></span><br><span class="line">        org.apache.hadoop.io.compress.GzipCodec,</span><br><span class="line">        org.apache.hadoop.io.compress.DefaultCodec,</span><br><span class="line">        org.apache.hadoop.io.compress.BZip2Codec,</span><br><span class="line">        org.apache.hadoop.io.compress.SnappyCodec,</span><br><span class="line">        com.hadoop.compression.lzo.LzoCodec,</span><br><span class="line">        com.hadoop.compression.lzo.LzopCodec</span><br><span class="line">    <span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>io.compression.codec.lzo.class<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>com.hadoop.compression.lzo.LzoCodec<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>5）同步core-site.xml到linux2、linux3</p>
+<p>6）测试wordcount</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop jar /opt/module/hadoop-3.1.3/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.1.3.jar wordcount -Dmapreduce.output.fileoutputformat.compress=true -Dmapreduce.output.fileoutputformat.compress.codec=com.hadoop.compression.lzo.LzopCodec input /output</span><br></pre></td></tr></table></figure>
+
+<h1 id="问题总结"><a href="#问题总结" class="headerlink" title="问题总结"></a>问题总结</h1><p>1）ERROR: Cannot set priority of datanode process</p>
+<figure class="highlight gcode"><table><tr><td class="code"><pre><span class="line">将克隆的li<span class="symbol">nux2</span>和li<span class="symbol">nux3</span>上的hadoop卸载，重新安装。</span><br></pre></td></tr></table></figure>
+
+<p>2）linux2，linux3没有没有datanode</p>
+<figure class="highlight haskell"><table><tr><td class="code"><pre><span class="line">由于datanode的<span class="type">VERSION</span>不同导致，删除linux2，linux3的<span class="class"><span class="keyword">data</span>目录下文件即可。</span></span><br></pre></td></tr></table></figure>
 
 ]]></content>
       <categories>
