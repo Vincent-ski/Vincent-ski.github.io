@@ -39,7 +39,7 @@
 <meta property="og:image" content="http://example.com/Hbase/31.png">
 <meta property="og:image" content="http://example.com/Hbase/34.png">
 <meta property="article:published_time" content="2021-12-24T10:46:41.000Z">
-<meta property="article:modified_time" content="2021-12-28T13:05:20.345Z">
+<meta property="article:modified_time" content="2022-01-10T10:09:31.380Z">
 <meta property="article:author" content="Vincent">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/Hbase/22.png">
@@ -226,7 +226,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-12-28 21:05:20" itemprop="dateModified" datetime="2021-12-28T21:05:20+08:00">2021-12-28</time>
+                <time title="Modified: 2022-01-10 18:09:31" itemprop="dateModified" datetime="2022-01-10T18:09:31+08:00">2022-01-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -393,30 +393,19 @@
 <p>7）等达到MemStore的刷写时机后，将<strong>数据刷写到HFile</strong>。</p>
 <h3 id="MemStore-Flush"><a href="#MemStore-Flush" class="headerlink" title="MemStore Flush"></a>MemStore Flush</h3><p><img src="/Hbase/27.png" alt="27"></p>
 <p><strong>MemStore刷写时机：</strong></p>
-<ol>
-<li>当某个memstroe的大小达到了<strong>hbase.hregion.memstore.flush.size（默认值128M）</strong>，其所在region的所有memstore都会刷写。</li>
-</ol>
-<p>当memstore的大小达到了</p>
-<p>hbase.hregion.memstore.flush.size（默认值128M）</p>
-<p>hbase.hregion.memstore.block.multiplier（默认值4）</p>
-<p>时，会阻止继续往该memstore写数据。</p>
-<ol start="2">
-<li>当region server中memstore的总大小达到</li>
-</ol>
-<p>java_heapsize（堆内存）</p>
-<p>hbase.regionserver.global.memstore.size（默认值0.4）</p>
-<p>hbase.regionserver.global.memstore.size.lower.limit（默认值0.95），</p>
-<p>region会按照其所有memstore的大小顺序（由大到小）依次进行刷写。直到region server中所有memstore的总大小减小到上述值以下。</p>
-<p>当region server中memstore的总大小达到</p>
-<p>java_heapsize</p>
-<p>hbase.regionserver.global.memstore.size（默认值0.4）</p>
-<p>时，会阻止继续往所有的memstore写数据。</p>
-<ol start="3">
-<li><p>到达自动刷写的时间，也会触发memstore flush。自动刷新的时间间隔由该属性进行配置hbase.regionserver.optionalcacheflushinterval（默认1小时）。</p>
-</li>
-<li><p>当WAL文件的数量超过hbase.regionserver.max.logs，region会按照时间顺序依次进行刷写，直到WAL文件数量减小到hbase.regionserver.max.log以下（该属性名已经废弃，现无需手动设置，最大值为32）。</p>
-</li>
-</ol>
+<p><strong>所有的flush都是以Region为单位刷新</strong></p>
+<p><strong>1）MemStore级别</strong><br>当 Region中 某个 MemStore 的大小达到了hbase.hregion.memstore.flush.size（默认值128M），会触发Region的刷写（若Region中有多个Store，只要有其中一个达到hbase.hregion.memstore.flush.size（默认值128M）值，就会触发flush，每个Store都会生成一个StroeFile文件，可能会生成多个小文件，所以一般情况下，一个Region只设置一个列簇（即一个Store））</p>
+<p><strong>2）Region级别</strong><br>当处于写高峰的时候，会延迟触发第一个时机（MemStore级别）</p>
+<p>当 Region 中的MemStore的总大小达到了hbase.hregion.memstore.flush.size（默认值128M）* hbase.hregion.memstore.block.multiplier（默认值4）时，会阻塞所有写入该 Region 的写请求，优先flush！这时候如果往 MemStore 写数据，会出现 RegionTooBusyException 异常。</p>
+<p>举个例子：当 Region 中的某个 MemStore 占用内存达到128M ，会触发flush ，此时是允许写入操作的；若写入操作大于 flush 的速度，当 Region 中的所有 MemStore 占用内存达到 128 * 4 = 512M 时，阻止所有写入该 Region 的写请求，直到Region 中的所有 MemStore ，flush完毕，才取消阻塞，允许写入。</p>
+<p><strong>3）RegionServer级别</strong><br>当RegionServer中，所有Region中的MemStore的总大小达到<br>java_heapsize * hbase.regionserver.global.memstore.size（默认值0.4）* hbase.regionserver.global.memstore.size.lower.limit（默认值0.95）会flush，flush的时候根据每个Region中，总MemStore占用的大小进行降序排序，依次flush；flush的时候优先flush占用空间大的region，每flush一个region，会查看总的占用大小是否小于 java_heapsize * hbase.regionserver.global.memstore.size（默认值0.4）* hbase.regionserver.global.memstore.size.lower.limit（默认值0.95）；如果还是大于，则继续flush region，若小于，则停止flush（注：此情况是允许memStore写入的）</p>
+<p>当处于写高峰的时候，会延迟触发第三个时机（HRegionServer级别）</p>
+<p>当RegionServer中，所有Region中的MemStore的总大小达到了 java_heapsize * hbase.regionserver.global.memstore.size（默认值0.4）时，会阻塞当前 RegionServer 的所有写请求（无法往Region中的MemStore写入数据），直到RegionServer中，所有Region中的MemStore的总大小 低于 java_heapsize * hbase.regionserver.global.memstore.size（默认值0.4）* hbase.regionserver.global.memstore.size.lower.limit（默认值0.95）时，才取消阻塞（允许写入数据）</p>
+<p>举个例子，如果 HBase 堆内存总共是 10G，按照默认的比例，那么触发 RegionServer级别的flush ，是 RegionServer 中所有的 MemStore 占用内存为：10 * 0.4 * 0.95 = 3.8G时触发flush，此时是允许写入操作的，若写入操作大于flush的速度，当占用内存达到 10 * 0.4 = 4G 时，阻止所有写入操作，直到占用内存低于 3.8G ，才取消阻塞，允许写入。</p>
+<p><strong>4）HLog级别</strong><br>当WAL文件的数量超过hbase.regionserver.maxlogs，region会按照时间顺序依次进行刷写，直到WAL文件数量减小到hbase.regionserver.maxlogs以下（该属性名已经废弃，现无需手动设置，最大值为32）。</p>
+<p>WAL 数量触发的刷写策略是，找到最旧的 un-archived WAL 文件，并找到这个 WAL 文件对应的 Regions， 然后对这些 Regions 进行刷写。</p>
+<p><strong>5）定期刷写</strong><br>到达自动刷写的时间，也会触发MemStore flush。自动刷新的时间间隔由该属性进行配置hbase.regionserver.optionalcacheflushinterval（默认1小时），指的是当前 MemStore 1小时会进行一次刷写。如果设定为0，则关闭定时自动刷写。</p>
+<p><strong>6）手动刷写</strong><br>可以通过 shell 命令”flush ‘table’”或者”flush ‘regionname’”分别对一个Region或者多个Region进行flush</p>
 <h3 id="读流程"><a href="#读流程" class="headerlink" title="读流程"></a>读流程</h3><p><img src="/Hbase/28.png" alt="28"></p>
 <p><img src="/Hbase/29.png" alt="29"></p>
 <p>1）Client先访问zookeeper，获取hbase:meta表位于哪个Region Server。</p>
@@ -427,7 +416,6 @@
 <p>6）将合并后的最终结果返回给客户端。</p>
 <h3 id="StoreFile-Compaction"><a href="#StoreFile-Compaction" class="headerlink" title="StoreFile Compaction"></a>StoreFile Compaction</h3><p><strong>由于memstore每次刷写都会生成一个新的HFile</strong>，<strong>且同一个字段的不同版本（timestamp）和不同类型（Put/Delete）有可能会分布在不同的HFile中</strong>，因此<strong>查询时需要遍历所有的HFile</strong>。<strong>为了减少HFile的个数，以及清理掉过期和删除的数据，会进行StoreFile Compaction</strong>。</p>
 <p>Compaction分为两种，分别是<strong>Minor Compaction</strong>和<strong>Major Compaction</strong>。Minor Compaction会<strong>将临近的若干个较小的HFile合并成一个较大的HFile</strong>，并清理掉部分过期和删除的数据。Major Compaction会将<strong>一个Store下的所有的HFile合并成一个大HFile</strong>，并且清理掉所有过期和删除的数据。</p>
-<p>假删除，能够恢复。</p>
 <p><img src="/Hbase/30.png" alt="30"></p>
 <h3 id="Region-Split"><a href="#Region-Split" class="headerlink" title="Region Split"></a>Region Split</h3><p>默认情况下，每个Table起初只有一个Region，随着数据的不断写入，Region会自动进行拆分。刚拆分时，两个子Region都位于当前的Region Server，但处于负载均衡的考虑，HMaster有可能会将某个Region转移给其他的Region Server。</p>
 <p>Region Split时机：</p>
@@ -684,12 +672,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/Hive/" rel="prev" title="Hive">
-      <i class="fa fa-chevron-left"></i> Hive
+    <a href="/Redis/" rel="prev" title="Redis">
+      <i class="fa fa-chevron-left"></i> Redis
     </a></div>
       <div class="post-nav-item">
-    <a href="/Hadoop%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" rel="next" title="HDFS配置">
-      HDFS配置 <i class="fa fa-chevron-right"></i>
+    <a href="/Hive/" rel="next" title="Hive">
+      Hive <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
