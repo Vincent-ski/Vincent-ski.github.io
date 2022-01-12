@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/cute.jpeg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/cute.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/cute.jpeg">
+  <link rel="mask-icon" href="/images/cute.jpeg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="精通Flume">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flume">
+<meta property="og:url" content="http://example.com/Flume/index.html">
+<meta property="og:site_name" content="Vincent&#39;s Learning Journey">
+<meta property="og:description" content="精通Flume">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/Flume/3.png">
+<meta property="og:image" content="http://example.com/Flume/4.png">
+<meta property="og:image" content="http://example.com/Flume/5.png">
+<meta property="og:image" content="http://example.com/Flume/6.png">
+<meta property="og:image" content="http://example.com/Flume/7.png">
+<meta property="og:image" content="http://example.com/Flume/142.png">
+<meta property="og:image" content="http://example.com/Flume/143.png">
+<meta property="og:image" content="http://example.com/Flume/144.png">
+<meta property="og:image" content="http://example.com/Flume/145.png">
+<meta property="og:image" content="http://example.com/Flume/146.png">
+<meta property="og:image" content="http://example.com/Flume/147.png">
+<meta property="og:image" content="http://example.com/Flume/8.png">
+<meta property="og:image" content="http://example.com/Flume/9.png">
+<meta property="og:image" content="http://example.com/Flume/10.png">
+<meta property="og:image" content="http://example.com/Flume/11.png">
+<meta property="og:image" content="http://example.com/Flume/12.png">
+<meta property="og:image" content="http://example.com/Flume/14.png">
+<meta property="og:image" content="http://example.com/Flume/15.png">
+<meta property="article:published_time" content="2021-12-01T04:42:37.000Z">
+<meta property="article:modified_time" content="2022-01-12T02:45:40.422Z">
+<meta property="article:author" content="Vincent">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/Flume/3.png">
+
+<link rel="canonical" href="http://example.com/Flume/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Flume | Vincent's Learning Journey</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Vincent's Learning Journey</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">DayDayUp</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section">Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section">Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section">Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/Flume/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cute.jpeg">
+      <meta itemprop="name" content="Vincent">
+      <meta itemprop="description" content="nice">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vincent's Learning Journey">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Flume
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-12-01 12:42:37" itemprop="dateCreated datePublished" datetime="2021-12-01T12:42:37+08:00">2021-12-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-12 10:45:40" itemprop="dateModified" datetime="2022-01-12T10:45:40+08:00">2022-01-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A6%BB%E7%BA%BF%E8%AE%A1%E7%AE%97/" itemprop="url" rel="index"><span itemprop="name">离线计算</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">精通Flume</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Flume定义"><a href="#Flume定义" class="headerlink" title="Flume定义"></a>Flume定义</h2><p>Flume是Cloudera提供的一个高可用的，高可靠的，分布式的海量日志采集、聚合和传输的系统。Flume基于流式架构，灵活简单。</p>
+<p><img src="/Flume/3.png" alt="3"></p>
+<h2 id="Flume基础架构"><a href="#Flume基础架构" class="headerlink" title="Flume基础架构"></a>Flume基础架构</h2><p><img src="/Flume/4.png" alt="4"></p>
+<h3 id="Agent"><a href="#Agent" class="headerlink" title="Agent"></a>Agent</h3><p>Agent是一个JVM进程，它以事件的形式将数据从源头送至目的。</p>
+<p>Agent主要有3个部分组成，Source、Channel、Sink。</p>
+<h3 id="Source"><a href="#Source" class="headerlink" title="Source"></a>Source</h3><p>Source是负责接收数据到Flume Agent的组件。Source组件可以处理各种类型、各种格式的日志数据，包括avro、thrift、exec、jms、spooling directory、netcat、sequence generator、syslog、http、legacy。</p>
+<h3 id="Sink"><a href="#Sink" class="headerlink" title="Sink"></a>Sink</h3><p><strong>Sink不断地轮询Channel中的事件且批量地移除它们</strong>，并将这些事件批量写入到存储或索引系统、或者被发送到另一个Flume Agent。</p>
+<p>Sink组件目的地包括<strong>hdfs</strong>、logger、avro、thrift、ipc、file、<strong>HBase</strong>、solr、自定义。</p>
+<h3 id="Channel"><a href="#Channel" class="headerlink" title="Channel"></a>Channel</h3><p>channels是一个Agent上存储events的仓库，Source向其中添加events，而Sink从中取走移除events。</p>
+<p>Channel是位于Source和Sink之间的缓冲区。因此，<strong>Channel允许Source和Sink运作在不同的速率上</strong>。<strong>Channel是线程安全的，可以同时处理几个Source的写入操作和几个Sink的读取操作。</strong></p>
+<p>Flume自带两种Channel：Memory Channel和File Channel。</p>
+<p>Memory Channel是内存中的队列。Memory Channel在不需要关心数据丢失的情景下适用。如果需要关心数据丢失，那么Memory Channel就不应该使用，因为程序死亡、机器宕机或者重启都会导致数据丢失。</p>
+<p>File Channel将所有事件写到磁盘。因此在程序关闭或机器宕机的情况下不会丢失数据。</p>
+<p>kafka channel的parseAsFlumeEvent解析event</p>
+<p>Kafka Channel的parseAsFlumeEvent的默认值为true，即会为对source来的数据进行解析，解析完会对数据前加前缀，前缀为topic名，因此这种情况，下游会需要做额外的截取工作，所以，当不需要前缀名时，将该属性设置为false.</p>
+<p>实际中使用kafkachannel, 使用header中时间戳滚动, 会有问题, 建议值使用本地时间来滚动, 并且parseAsFlumeEvent设置为false</p>
+<h3 id="Event"><a href="#Event" class="headerlink" title="Event"></a>Event</h3><p>传输单元，Flume数据传输的基本单元，以Event的形式将数据从源头送至目的地。<strong>Event由Header和Body两部分组成</strong>，Header用来存放该event的一些属性，为<strong>K-V结构</strong>，Body用来存放该条数据，形式为<strong>字节数组</strong>。</p>
+<h2 id="Flume入门"><a href="#Flume入门" class="headerlink" title="Flume入门"></a>Flume入门</h2><h3 id="Flume安装部署"><a href="#Flume安装部署" class="headerlink" title="Flume安装部署"></a>Flume安装部署</h3><p>Flume官网地址：<a target="_blank" rel="noopener" href="http://flume.apache.org/">http://flume.apache.org/</a></p>
+<p>文档查看地址：<a target="_blank" rel="noopener" href="http://flume.apache.org/FlumeUserGuide.html">http://flume.apache.org/FlumeUserGuide.html</a></p>
+<p>下载地址：<a target="_blank" rel="noopener" href="http://archive.apache.org/dist/flume/">http://archive.apache.org/dist/flume/</a></p>
+<p>将apache-flume-1.9.0-bin.tar.gz上传到linux的/opt/software目录下</p>
+<p>解压apache-flume-1.9.0-bin.tar.gz到/opt/module/目录下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxf /opt/software/apache-flume-1.9.0-bin.tar.gz -C /opt/module/</span><br></pre></td></tr></table></figure>
+
+<p>修改apache-flume-1.9.0-bin的名称为flume</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv /opt/module/apache-flume-1.9.0-bin /opt/module/flume</span><br></pre></td></tr></table></figure>
+
+<p>将lib文件夹下的guava-11.0.2.jar删除以兼容Hadoop 3.1.3</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm /opt/module/flume/lib/guava-11.0.2.jar</span><br></pre></td></tr></table></figure>
+
+<h3 id="监控端口数据官方案例"><a href="#监控端口数据官方案例" class="headerlink" title="监控端口数据官方案例"></a>监控端口数据官方案例</h3><p>使用Flume监听一个端口，收集该端口数据，并打印到控制台。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">netcat</span><br><span class="line"></span><br><span class="line">client/server模式</span><br><span class="line"><span class="meta">#</span><span class="bash"> linux1作为服务器监听4444端口</span></span><br><span class="line">[vincent@linux1 ~]$ nc -l 4444</span><br><span class="line"><span class="meta">#</span><span class="bash"> linux2作为客户端向服务器4444端口发送数据</span></span><br><span class="line">[vincent@linux2 ~]$ nc -linux1 4444</span><br><span class="line"></span><br><span class="line">data transfer模式</span><br><span class="line"><span class="meta">#</span><span class="bash"> filename.in的数据写入filename.out</span></span><br><span class="line">[vincent@linux1 ~]$ nc -l 1234 &gt; filename.out</span><br><span class="line">[vincent@linux1 ~]$ nc host.example 1234 &lt; filename.in</span><br></pre></td></tr></table></figure>
+
+<p>（1）安装netcat工具</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 software]$ sudo yum install -y nc</span><br></pre></td></tr></table></figure>
+
+<p>（2）判断6666端口是否被占用</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 flume-telnet]$ sudo netstat -tunlp | grep 6666</span><br></pre></td></tr></table></figure>
+
+<p>（3）创建Flume Agent配置文件flume-netcat-logger.conf</p>
+<p>在flume目录下创建job文件夹并进入job文件夹。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 flume]$ mkdir job</span><br><span class="line"></span><br><span class="line">[vincent@linux1 flume]$ cd job/</span><br></pre></td></tr></table></figure>
+
+<p>在job文件夹下创建Flume Agent配置文件netcat-logger.conf。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 job]$ vim netcat-logger.conf</span><br></pre></td></tr></table></figure>
+
+<p>在flume-netcat-logger.conf文件中添加如下内容。</p>
+<p>添加内容如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">a1.sources = r1</span><br><span class="line">a1.channels = c1</span><br><span class="line">a1.sinks = k1</span><br><span class="line"></span><br><span class="line">a1.sources.r1.type = netcat</span><br><span class="line">a1.sources.r1.bind = 0.0.0.0</span><br><span class="line">a1.sources.r1.port = 6666</span><br><span class="line">a1.sources.r1.channels = c1</span><br><span class="line"></span><br><span class="line">a1.sinks.k1.type = logger</span><br><span class="line">a1.sinks.k1.channel = c1</span><br><span class="line"></span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line"><span class="meta">#</span><span class="bash"> the maximum number of events stored <span class="keyword">in</span> the channel</span></span><br><span class="line">a1.channels.c1.capacity = 10000</span><br><span class="line"><span class="meta">#</span><span class="bash"> the maximum number of events the channel will take from</span> </span><br><span class="line"><span class="meta">#</span><span class="bash"> a <span class="built_in">source</span> or give to a sink per transaction</span> </span><br><span class="line">a1.channels.c1.transactionCapacity = 10000</span><br><span class="line">a1.channels.c1.byteCapacityBufferPercentage = 20</span><br><span class="line">a1.channels.c1.byteCapacity = 800000</span><br></pre></td></tr></table></figure>
+
+<p>注：配置文件来源于官方手册<a target="_blank" rel="noopener" href="http://flume.apache.org/FlumeUserGuide.html">http://flume.apache.org/FlumeUserGuide.html</a></p>
+<p>4）修改log4j.properties，将数据输出到控制台</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /opt/module/hive/conf/log4j.properties</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flume.root.logger=INFO,console</span><br></pre></td></tr></table></figure>
+
+<p>5）先开启flume监听端口</p>
+<p>第一种写法：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 flume]$ bin/flume-ng agent --conf conf/ --name a1 --conf-file job/netcat-logger.conf -Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure>
+
+<p>第二种写法：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 flume]$ bin/flume-ng agent -c conf/ -n a1 -f job/netcat-logger.conf -Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<p>​    –conf/-c：表示配置文件存储在conf/目录</p>
+<p>​    –name/-n：表示给agent起名为a1</p>
+<p>​    –conf-file/-f：flume本次启动读取的配置文件是在job文件夹下的flume-telnet.conf文件。</p>
+<p>​    -Dflume.root.logger=INFO,console ：-D表示flume运行时动态修改flume.root.logger参数属性值，并将控制台日志打印级别设置为INFO级别。日志级别包括:log、info、warn、error。</p>
+<p>（6）使用netcat工具向本机的6666端口发送内容</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 ~]$ nc localhost 6666</span><br></pre></td></tr></table></figure>
+
+<p>（7）在Flume监听页面观察接收数据情况</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2020</span>-<span class="number">06</span>-<span class="number">16</span> <span class="number">10</span>:<span class="number">18</span>:<span class="number">22</span>,<span class="number">393</span> (SinkRunner-PollingRunner-DefaultSinkProcessor) [INFO - org.apache.flume.sink.LoggerSink.<span class="built_in">process</span>(LoggerSink.java:<span class="number">95</span>)] Event: &#123; headers:&#123;&#125; <span class="selector-tag">body</span>: <span class="number">61</span> <span class="number">61</span> <span class="number">61</span> <span class="number">61</span>                                     aaaa &#125;</span><br><span class="line"><span class="number">2020</span>-<span class="number">06</span>-<span class="number">16</span> <span class="number">10</span>:<span class="number">18</span>:<span class="number">32</span>,<span class="number">305</span> (SinkRunner-PollingRunner-DefaultSinkProcessor) [INFO - org.apache.flume.sink.LoggerSink.<span class="built_in">process</span>(LoggerSink.java:<span class="number">95</span>)] Event: &#123; headers:&#123;&#125; <span class="selector-tag">body</span>: <span class="number">73</span> <span class="number">73</span> <span class="number">73</span> <span class="number">73</span>                                     ssss &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="实时监控单个追加文件"><a href="#实时监控单个追加文件" class="headerlink" title="实时监控单个追加文件"></a>实时监控单个追加文件</h3><p>实时监控Hive日志，并上传到HDFS中</p>
+<p><img src="/Flume/5.png" alt="5"></p>
+<p>（1）Flume要想将数据输出到HDFS，依赖Hadoop相关jar包</p>
+<p>检查/etc/profile.d/my_env.sh文件，确认Hadoop和Java环境变量配置正确</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">JAVA_HOME</span></span><br><span class="line">export JAVA_HOME=/opt/module/jdk1.8.0_212</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"> </span></span><br><span class="line"><span class="meta">#</span><span class="bash">HADOOP_HOME</span></span><br><span class="line">export HADOOP_HOME=/opt/module/hadoop-3.1.3</span><br><span class="line">export PATH=$PATH:$HADOOP_HOME/bin</span><br><span class="line">export PATH=$PATH:$HADOOP_HOME/sbin</span><br></pre></td></tr></table></figure>
+
+<p>（2）创建exec-hdfs.conf文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 job]$ vim exec-hdfs.conf</span><br></pre></td></tr></table></figure>
+
+<p>注：要想读取Linux系统中的文件，就得按照Linux命令的规则执行命令。由于Hive日志在Linux系统中所以读取文件的类型选择：exec即execute执行的意思，表示执行Linux命令来读取文件。</p>
+<p>添加如下内容:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Name the components on this agent</span></span><br><span class="line">a2.sources = r2</span><br><span class="line">a2.sinks = k2</span><br><span class="line">a2.channels = c2</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe/configure the <span class="built_in">source</span></span></span><br><span class="line">a2.sources.r2.type = exec</span><br><span class="line"><span class="meta">#</span><span class="bash"> 不能实现断点续传，可能会在flume挂掉的时候丢失数据</span></span><br><span class="line">a2.sources.r2.command = tail -F /opt/module/hive/logs/hive.log</span><br><span class="line"><span class="meta">#</span><span class="bash"> 下面一行配置可以使上面一行执行更复杂的命令，如增加管道符运算等</span></span><br><span class="line">a2.sources.r2.shell = /bin/bash -c</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe the sink</span></span><br><span class="line">a2.sinks.k2.type = hdfs</span><br><span class="line">a2.sinks.k2.hdfs.path = hdfs://linux1:9820/flume/%Y%m%d/%H</span><br><span class="line"><span class="meta">#</span><span class="bash">上传文件的前缀</span></span><br><span class="line">a2.sinks.k2.hdfs.filePrefix = logs-</span><br><span class="line"><span class="meta">#</span><span class="bash">是否对时间戳取整</span></span><br><span class="line">a2.sinks.k2.hdfs.round = true</span><br><span class="line"><span class="meta">#</span><span class="bash">多少时间单位创建一个新的文件夹</span></span><br><span class="line">a2.sinks.k2.hdfs.roundValue = 2</span><br><span class="line"><span class="meta">#</span><span class="bash">重新定义时间单位</span></span><br><span class="line">a2.sinks.k2.hdfs.roundUnit = hour</span><br><span class="line"><span class="meta">#</span><span class="bash">是否使用本地时间戳</span></span><br><span class="line">a2.sinks.k2.hdfs.useLocalTimeStamp = true</span><br><span class="line"><span class="meta">#</span><span class="bash">积攒多少个Event才flush到HDFS一次，小于等于transactionCapacity</span></span><br><span class="line">a2.sinks.k2.hdfs.batchSize = 100</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">设置文件类型，可支持压缩</span></span><br><span class="line">a2.sinks.k2.hdfs.fileType = DataStream</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">多久生成一个新的目录（60秒钟滚动一次）</span></span><br><span class="line">a2.sinks.k2.hdfs.rollInterval = 60</span><br><span class="line"><span class="meta">#</span><span class="bash">设置每个目录的滚动大小（128M滚动一次）</span></span><br><span class="line">a2.sinks.k2.hdfs.rollSize = 134217700</span><br><span class="line"><span class="meta">#</span><span class="bash">目录的滚动与Event数量无关(多少个event写到一个文件)</span></span><br><span class="line">a2.sinks.k2.hdfs.rollCount = 0</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Use a channel <span class="built_in">which</span> buffers events <span class="keyword">in</span> memory</span></span><br><span class="line">a2.channels.c2.type = memory</span><br><span class="line">a2.channels.c2.capacity = 1000</span><br><span class="line">a2.channels.c2.transactionCapacity = 100</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Bind the <span class="built_in">source</span> and sink to the channel</span></span><br><span class="line">a2.sources.r2.channels = c2</span><br><span class="line">a2.sinks.k2.channel = c2</span><br></pre></td></tr></table></figure>
+
+<p>注意：</p>
+<p>对于所有与时间相关的转义序列，Event Header中必须存在以 “timestamp”的key（除非hdfs.useLocalTimeStamp设置为true，此方法会使用TimestampInterceptor自动添加timestamp）。</p>
+<p>a3.sinks.k3.hdfs.useLocalTimeStamp = true</p>
+<p>（3）启动HDFS并等待安全模式退出</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 flume]$ mycluster start[vincent@linux1 flume]$ hdfs dfsadmin -safemode wait</span><br></pre></td></tr></table></figure>
+
+<p>（4）运行Flume</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 flume]$ bin/flume-ng agent --conf conf/ --name a2 --conf-file job/exec-hdfs.conf -Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure>
+
+<p>（5）开启Hadoop和Hive并操作Hive产生日志</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent<span class="variable">@linux1</span> hadoop<span class="number">-3.1</span>.<span class="number">3</span>]<span class="variable">$ </span>sbin/start-dfs.sh[vincent<span class="variable">@linux1</span> hadoop<span class="number">-3.1</span>.<span class="number">3</span>]<span class="variable">$ </span>sbin/start-yarn.sh[vincent<span class="variable">@linux1</span> hive]<span class="variable">$ </span>bin/hivehive (default)&gt;</span><br></pre></td></tr></table></figure>
+
+<p>（6）在HDFS上查看文件</p>
+<p>linux1:9820</p>
+<h3 id="实时监控目录下多个新文件"><a href="#实时监控目录下多个新文件" class="headerlink" title="实时监控目录下多个新文件"></a>实时监控目录下多个新文件</h3><p>使用Flume监听整个目录的文件，并上传至HDFS。</p>
+<p><img src="/Flume/6.png" alt="6"></p>
+<p>（1）创建配置文件spooldir-hdfs.conf</p>
+<p>创建一个文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 job]$ vim spooldir-hdfs.conf</span><br></pre></td></tr></table></figure>
+
+<p>添加如下内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Name the components on this agent</span></span><br><span class="line">a3.sources = r3</span><br><span class="line">a3.sinks = k3</span><br><span class="line">a3.channels = c3</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe/configure the <span class="built_in">source</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 监控一个目录下的多个文件</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 断点续传</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 延迟高，不能进行实时采集</span></span><br><span class="line">a3.sources.r3.type = spooldir</span><br><span class="line">a3.sources.r3.spoolDir = /opt/module/flume/upload</span><br><span class="line">a3.sources.r3.fileSuffix = .COMPLETED</span><br><span class="line">a3.sources.r3.fileHeader = true</span><br><span class="line"><span class="meta">#</span><span class="bash">忽略所有以.tmp结尾的文件，不上传</span></span><br><span class="line">a3.sources.r3.ignorePattern = \\S*\\.tmp</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe the sink</span></span><br><span class="line">a3.sinks.k3.type = hdfs</span><br><span class="line">a3.sinks.k3.hdfs.path = hdfs://linux1:9820/flume/upload/%Y%m%d/%H</span><br><span class="line"><span class="meta">#</span><span class="bash">上传文件的前缀</span></span><br><span class="line">a3.sinks.k3.hdfs.filePrefix = upload-</span><br><span class="line"><span class="meta">#</span><span class="bash">是否按照时间滚动文件夹</span></span><br><span class="line">a3.sinks.k3.hdfs.round = true</span><br><span class="line"><span class="meta">#</span><span class="bash">多少时间单位创建一个新的文件夹</span></span><br><span class="line">a3.sinks.k3.hdfs.roundValue = 1</span><br><span class="line"><span class="meta">#</span><span class="bash">重新定义时间单位</span></span><br><span class="line">a3.sinks.k3.hdfs.roundUnit = hour</span><br><span class="line"><span class="meta">#</span><span class="bash">是否使用本地时间戳</span></span><br><span class="line">a3.sinks.k3.hdfs.useLocalTimeStamp = true</span><br><span class="line"><span class="meta">#</span><span class="bash">积攒多少个Event才flush到HDFS一次</span></span><br><span class="line">a3.sinks.k3.hdfs.batchSize = 100</span><br><span class="line"><span class="meta">#</span><span class="bash">设置文件类型，可支持压缩</span></span><br><span class="line">a3.sinks.k3.hdfs.fileType = DataStream</span><br><span class="line"><span class="meta">#</span><span class="bash">多久生成一个新的文件</span></span><br><span class="line">a3.sinks.k3.hdfs.rollInterval = 60</span><br><span class="line"><span class="meta">#</span><span class="bash">设置每个文件的滚动大小大概是128M</span></span><br><span class="line">a3.sinks.k3.hdfs.rollSize = 134217700</span><br><span class="line"><span class="meta">#</span><span class="bash">文件的滚动与Event数量无关</span></span><br><span class="line">a3.sinks.k3.hdfs.rollCount = 0</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Use a channel <span class="built_in">which</span> buffers events <span class="keyword">in</span> memory</span></span><br><span class="line">a3.channels.c3.type = memory</span><br><span class="line">a3.channels.c3.capacity = 1000</span><br><span class="line">a3.channels.c3.transactionCapacity = 100</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Bind the <span class="built_in">source</span> and sink to the channel</span></span><br><span class="line">a3.sources.r3.channels = c3</span><br><span class="line">a3.sinks.k3.channel = c3</span><br></pre></td></tr></table></figure>
+
+<p>（2）启动监控文件夹命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 flume]$ bin/flume-ng agent --conf conf/ --name a3 --conf-file job/spooldir-hdfs.conf</span><br></pre></td></tr></table></figure>
+
+<p>说明：在使用Spooling Directory Source时，不要在监控目录中创建并持续修改文件；上传完成的文件会以.COMPLETED结尾；被监控文件夹每500毫秒扫描一次文件变动。</p>
+<p>（3）向upload文件夹中添加文件</p>
+<p>在/opt/module/flume目录下创建upload文件夹</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 flume]$ mkdir upload</span><br></pre></td></tr></table></figure>
+
+<p>向upload文件夹中添加文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 upload]$ touch vincent.txt</span><br><span class="line">[vincent@linux1 upload]$ touch vincent.tmp</span><br><span class="line">[vincent@linux1 upload]$ touch vincent.log</span><br></pre></td></tr></table></figure>
+
+<p>（4）查看HDFS上的数据</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2020</span>-<span class="number">06</span>-<span class="number">17</span> <span class="number">11</span>:<span class="number">05</span>:<span class="number">23</span>,<span class="number">957</span> (hdfs-k3-roll-timer-<span class="number">0</span>) [INFO - org.apache.flume.sink.hdfs.HDFSEventSink<span class="variable">$1</span>.run(HDFSEventSink.java:<span class="number">393</span>)] Writer callback called.</span><br><span class="line"><span class="number">2020</span>-<span class="number">06</span>-<span class="number">17</span> <span class="number">11</span>:<span class="number">05</span>:<span class="number">23</span>,<span class="number">958</span> (hdfs-k3-roll-timer-<span class="number">0</span>) [INFO - org.apache.flume.sink.hdfs.BucketWriter.doClose(BucketWriter.java:<span class="number">438</span>)] Closing hdfs:<span class="regexp">//</span>linux1:<span class="number">9820</span><span class="regexp">/flume/u</span>pload<span class="regexp">/20200617/</span><span class="number">11</span>/upload-.<span class="number">1592362973087</span>.tmp</span><br><span class="line"><span class="number">2020</span>-<span class="number">06</span>-<span class="number">17</span> <span class="number">11</span>:<span class="number">05</span>:<span class="number">23</span>,<span class="number">967</span> (hdfs-k3-call-runner-<span class="number">5</span>) [INFO - org.apache.flume.sink.hdfs.BucketWriter<span class="variable">$7</span>.call(BucketWriter.java:<span class="number">681</span>)] Renaming hdfs:<span class="regexp">//</span>linux1:<span class="number">9820</span><span class="regexp">/flume/u</span>pload<span class="regexp">/20200617/</span><span class="number">11</span><span class="regexp">/upload-.1592362973087.tmp to hdfs:/</span><span class="regexp">/linux1:9820/</span>flume<span class="regexp">/upload/</span><span class="number">20200617</span><span class="regexp">/11/u</span>pload-.<span class="number">1592362973087</span></span><br><span class="line"><span class="number">2020</span>-<span class="number">06</span>-<span class="number">17</span> <span class="number">11</span>:<span class="number">05</span>:<span class="number">27</span>,<span class="number">909</span> (pool-<span class="number">5</span>-thread-<span class="number">1</span>) [INFO - org.apache.flume.client.avro.ReliableSpoolingFileEventReader.readEvents(ReliableSpoolingFileEventReader.java:<span class="number">384</span>)] Last read took us just up to a file boundary. Rolling to the <span class="keyword">next</span> file, <span class="keyword">if</span> there is one.</span><br><span class="line"><span class="number">2020</span>-<span class="number">06</span>-<span class="number">17</span> <span class="number">11</span>:<span class="number">05</span>:<span class="number">27</span>,<span class="number">909</span> (pool-<span class="number">5</span>-thread-<span class="number">1</span>) [INFO - org.apache.flume.client.avro.ReliableSpoolingFileEventReader.rollCurrentFile(ReliableSpoolingFileEventReader.java:<span class="number">497</span>)] Preparing to move file <span class="regexp">/opt/m</span>odule<span class="regexp">/flume/u</span>pload<span class="regexp">/d.txt to /</span>opt<span class="regexp">/module/</span>flume<span class="regexp">/upload/</span>d.txt.COMPLETED</span><br><span class="line"><span class="number">2020</span>-<span class="number">06</span>-<span class="number">17</span> <span class="number">11</span>:<span class="number">05</span>:<span class="number">28</span>,<span class="number">982</span> (SinkRunner-PollingRunner-DefaultSinkProcessor) [INFO - org.apache.flume.sink.hdfs.HDFSDataStream.configure(HDFSDataStream.java:<span class="number">57</span>)] Serializer = TEXT, UseRawLocalFileSystem = false</span><br><span class="line"><span class="number">2020</span>-<span class="number">06</span>-<span class="number">17</span> <span class="number">11</span>:<span class="number">05</span>:<span class="number">28</span>,<span class="number">992</span> (SinkRunner-PollingRunner-DefaultSinkProcessor) [INFO - org.apache.flume.sink.hdfs.BucketWriter.open(BucketWriter.java:<span class="number">246</span>)] Creating hdfs:<span class="regexp">//</span>linux1:<span class="number">9820</span><span class="regexp">/flume/u</span>pload<span class="regexp">/20200617/</span><span class="number">11</span>/upload-.<span class="number">1592363128983</span>.tmp</span><br><span class="line"><span class="number">2020</span>-<span class="number">06</span>-<span class="number">17</span> <span class="number">11</span>:<span class="number">05</span>:<span class="number">32</span>,<span class="number">011</span> (Thread-<span class="number">20</span>) [INFO - org.apache.hadoop.hdfs.protocol.datatransfer.sasl.SaslDataTransferClient.checkTrustAndSend(SaslDataTransferClient.java:<span class="number">239</span>)] SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false</span><br></pre></td></tr></table></figure>
+
+<h3 id="实时监控目录下的多个追加文件"><a href="#实时监控目录下的多个追加文件" class="headerlink" title="实时监控目录下的多个追加文件"></a>实时监控目录下的多个追加文件</h3><p><strong>Exec source适用于监控一个实时追加的文件，不能实现断点续传；Spooldir Source适合用于同步新文件，但不适合对实时追加日志的文件进行监听并同步；而Taildir Source适合用于监听多个实时追加的文件，并且能够实现断点续传。</strong></p>
+<p>使用Flume监听整个目录的实时追加文件，并上传至HDFS。</p>
+<p><img src="/Flume/7.png" alt="7"></p>
+<p>（1）创建配置文件taildir-hdfs.conf</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 job]$ vim taildir-hdfs.conf</span><br></pre></td></tr></table></figure>
+
+<p>添加如下内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Name the components on this agent</span></span><br><span class="line">a3.sources = r3</span><br><span class="line">a3.sinks = k3</span><br><span class="line">a3.channels = c3</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe/configure the <span class="built_in">source</span></span></span><br><span class="line">a3.sources.r3.type = TAILDIR</span><br><span class="line">a3.sources.r3.positionFile = /opt/module/flume/tail_dir.json</span><br><span class="line">a3.sources.r3.filegroups = f1 f2</span><br><span class="line">a3.sources.r3.filegroups.f1 = /opt/module/flume/files/.*file.*</span><br><span class="line">a3.sources.r3.filegroups.f2 = /opt/module/flume/files2/.*</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe the sink</span></span><br><span class="line">a3.sinks.k3.type = hdfs</span><br><span class="line">a3.sinks.k3.hdfs.path = hdfs://linux1:9820/flume/upload2/%Y%m%d/%H</span><br><span class="line"><span class="meta">#</span><span class="bash">上传文件的前缀</span></span><br><span class="line">a3.sinks.k3.hdfs.filePrefix = upload-</span><br><span class="line"><span class="meta">#</span><span class="bash">是否按照时间滚动文件夹</span></span><br><span class="line">a3.sinks.k3.hdfs.round = true</span><br><span class="line"><span class="meta">#</span><span class="bash">多少时间单位创建一个新的文件夹</span></span><br><span class="line">a3.sinks.k3.hdfs.roundValue = 1</span><br><span class="line"><span class="meta">#</span><span class="bash">重新定义时间单位</span></span><br><span class="line">a3.sinks.k3.hdfs.roundUnit = hour</span><br><span class="line"><span class="meta">#</span><span class="bash">是否使用本地时间戳</span></span><br><span class="line">a3.sinks.k3.hdfs.useLocalTimeStamp = true</span><br><span class="line"><span class="meta">#</span><span class="bash">积攒多少个Event才flush到HDFS一次</span></span><br><span class="line">a3.sinks.k3.hdfs.batchSize = 100</span><br><span class="line"><span class="meta">#</span><span class="bash">设置文件类型，可支持压缩</span></span><br><span class="line">a3.sinks.k3.hdfs.fileType = DataStream</span><br><span class="line"><span class="meta">#</span><span class="bash">多久生成一个新的文件</span></span><br><span class="line">a3.sinks.k3.hdfs.rollInterval = 60</span><br><span class="line"><span class="meta">#</span><span class="bash">设置每个文件的滚动大小大概是128M</span></span><br><span class="line">a3.sinks.k3.hdfs.rollSize = 134217700</span><br><span class="line"><span class="meta">#</span><span class="bash">文件的滚动与Event数量无关</span></span><br><span class="line">a3.sinks.k3.hdfs.rollCount = 0</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Use a channel <span class="built_in">which</span> buffers events <span class="keyword">in</span> memory</span></span><br><span class="line">a3.channels.c3.type = memory</span><br><span class="line">a3.channels.c3.capacity = 1000</span><br><span class="line">a3.channels.c3.transactionCapacity = 100</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Bind the <span class="built_in">source</span> and sink to the channel</span></span><br><span class="line">a3.sources.r3.channels = c3</span><br><span class="line">a3.sinks.k3.channel = c3</span><br></pre></td></tr></table></figure>
+
+<p>（2）创建目录files和files2</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 flume]$ mkdir files files2</span><br></pre></td></tr></table></figure>
+
+<p>（2）启动监控文件夹命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 flume]$ bin/flume-ng agent --conf conf/ --name a3 --conf-file jobs/taildir-hdfs.conf</span><br></pre></td></tr></table></figure>
+
+<p>（3）向files文件夹中追加内容</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 files]$ echo hello &gt;&gt; file1.txt</span><br><span class="line">[vincent@linux1 files]$ echo world &gt;&gt; file2.txt</span><br></pre></td></tr></table></figure>
+
+<p>（4）查看HDFS上的数据</p>
+<p>Taildir说明：</p>
+<p>Taildir Source维护了一个json格式的position File，其会定期的往position File中更新每个文件读取到的最新的位置，因此能够实现断点续传。Position File的格式如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">&quot;inode&quot;</span>:<span class="number">2496272</span>,<span class="attr">&quot;pos&quot;</span>:<span class="number">12</span>,<span class="attr">&quot;file&quot;</span>:<span class="string">&quot;/opt/module/flume/files/file1.txt&quot;</span>&#125;&#123;<span class="attr">&quot;inode&quot;</span>:<span class="number">2496275</span>,<span class="attr">&quot;pos&quot;</span>:<span class="number">12</span>,<span class="attr">&quot;file&quot;</span>:<span class="string">&quot;/opt/module/flume/files/file2.txt&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注：Linux中储存文件元数据的区域就叫做inode，每个inode都有一个号码，操作系统用inode号码来识别不同的文件，Unix/Linux系统内部不使用文件名，而使用inode号码来识别文件。</p>
+<h2 id="Flume事务"><a href="#Flume事务" class="headerlink" title="Flume事务"></a>Flume事务</h2><p><img src="/Flume/142.png" alt="142"></p>
+<h2 id="Flume-Agent内部原理"><a href="#Flume-Agent内部原理" class="headerlink" title="Flume Agent内部原理"></a>Flume Agent内部原理</h2><p><img src="/Flume/143.png" alt="143"></p>
+<h3 id="1）ChannelSelector"><a href="#1）ChannelSelector" class="headerlink" title="1）ChannelSelector"></a>1）ChannelSelector</h3><p>ChannelSelector的作用就是选出Event将要被发往哪个Channel。其共有两种类型，分别是<strong>Replicating（复制）</strong>和<strong>Multiplexing（多路复用）</strong>。</p>
+<p><strong>ReplicatingSelector会将同一个Event发往所有的Channel，Multiplexing会根据相应的原则，将不同的Event发往不同的Channel。</strong></p>
+<h3 id="2）SinkProcessor"><a href="#2）SinkProcessor" class="headerlink" title="2）SinkProcessor"></a>2）SinkProcessor</h3><p>SinkProcessor共有三种类型，分别是<strong>DefaultSinkProcessor、LoadBalancingSinkProcessor和FailoverSinkProcessor</strong></p>
+<p><strong>DefaultSinkProcessor对应的是单个的Sink，LoadBalancingSinkProcessor和FailoverSinkProcessor对应的是Sink Group，LoadBalancingSinkProcessor可以实现负载均衡的功能，FailoverSinkProcessor具有错误恢复的功能。</strong></p>
+<h2 id="Flume拓扑结构"><a href="#Flume拓扑结构" class="headerlink" title="Flume拓扑结构"></a>Flume拓扑结构</h2><h3 id="简单串联"><a href="#简单串联" class="headerlink" title="简单串联"></a>简单串联</h3><p><img src="/Flume/144.png" alt="144"></p>
+<p>这种模式是将多个flume顺序连接起来了，从最初的source开始到最终sink传送的目的存储系统。此模式不建议桥接过多的flume数量， flume数量过多不仅会影响传输速率，而且一旦传输过程中某个节点flume宕机，会影响整个传输系统。</p>
+<h3 id="复制和多路复用"><a href="#复制和多路复用" class="headerlink" title="复制和多路复用"></a>复制和多路复用</h3><p><img src="/Flume/145.png" alt="145"></p>
+<p>Flume支持将事件流向一个或者多个目的地。这种模式可以将相同数据复制到多个channel中，或者将不同数据分发到不同的channel中，sink可以选择传送到不同的目的地。</p>
+<h3 id="负载均衡和故障转移"><a href="#负载均衡和故障转移" class="headerlink" title="负载均衡和故障转移"></a>负载均衡和故障转移</h3><p><img src="/Flume/146.png" alt="146"></p>
+<p>Flume支持使用将多个sink逻辑上分到一个sink组，sink组配合不同的SinkProcessor可以实现负载均衡和错误恢复的功能。</p>
+<h3 id="聚合"><a href="#聚合" class="headerlink" title="聚合"></a>聚合</h3><p><img src="/Flume/147.png" alt="147"></p>
+<p>这种模式是我们最常见的，也非常实用，日常web应用通常分布在上百个服务器，大者甚至上千个、上万个服务器。产生的日志，处理起来也非常麻烦。用flume的这种组合方式能很好的解决这一问题，每台服务器部署一个flume采集日志，传送到一个集中收集日志的flume，再由此flume上传到hdfs、hive、hbase等，进行日志分析。</p>
+<h2 id="Flume企业开发案例"><a href="#Flume企业开发案例" class="headerlink" title="Flume企业开发案例"></a>Flume企业开发案例</h2><h3 id="复制和多路复用-1"><a href="#复制和多路复用-1" class="headerlink" title="复制和多路复用"></a>复制和多路复用</h3><p>使用Flume-1监控文件变动，Flume-1将变动内容传递给Flume-2，Flume-2负责存储到HDFS。同时Flume-1将变动内容传递给Flume-3，Flume-3负责输出到Local FileSystem。</p>
+<p>注：先启动服务端flume（后面的）</p>
+<p><img src="/Flume/8.png" alt="8"></p>
+<p>（1）准备工作</p>
+<p>配置f1在linux1，配置f2在linux2，配置f3在linux3</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 job]$ mkdir replicating</span><br><span class="line">[vincent@linux2 job]$ mkdir replicating</span><br><span class="line">[vincent@linux3 job]$ mkdir replicating</span><br></pre></td></tr></table></figure>
+
+<p>（2）创建a1.conf</p>
+<p>配置1个接收日志文件的source和两个channel、两个sink，分别输送给flume-hdfs和flume-dir。</p>
+<p>编辑配置文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 replicating]$ vim taildir-avro.conf</span><br></pre></td></tr></table></figure>
+
+<p>添加如下内容：</p>
+<p>注：channel selector没配置默认使用复制模式</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Name the components on this agent</span></span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.sinks = k1 k2</span><br><span class="line">a1.channels = c1 c2</span><br><span class="line"><span class="meta">#</span><span class="bash"> 将数据流复制给所有channel</span></span><br><span class="line">a1.sources.r1.selector.type = replicating</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe/configure the <span class="built_in">source</span></span></span><br><span class="line">a1.sources.r1.type = TAILDIR</span><br><span class="line">a1.sources.r1.positionFile = /opt/module/flume/t1.json</span><br><span class="line">a1.sources.r1.filegroups = f1</span><br><span class="line">a1.sources.r1.filegroups.f1 = /opt/module/hive/logs/hive.log</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe the sink</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> sink端的avro是一个数据发送者</span></span><br><span class="line">a1.sinks.k1.type = avro</span><br><span class="line"><span class="meta">#</span><span class="bash"> 服务端ip</span></span><br><span class="line">a1.sinks.k1.hostname = linux2</span><br><span class="line">a1.sinks.k1.port = 4141</span><br><span class="line"></span><br><span class="line">a1.sinks.k2.type = avro</span><br><span class="line"><span class="meta">#</span><span class="bash"> 服务端ip</span></span><br><span class="line">a1.sinks.k2.hostname = linux3</span><br><span class="line">a1.sinks.k2.port = 4141</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe the channel</span></span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line">a1.channels.c1.capacity = 1000</span><br><span class="line">a1.channels.c1.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line">a1.channels.c2.type = memory</span><br><span class="line">a1.channels.c2.capacity = 1000</span><br><span class="line">a1.channels.c2.transactionCapacity = 100</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Bind the <span class="built_in">source</span> and sink to the channel</span></span><br><span class="line">a1.sources.r1.channels = c1 c2</span><br><span class="line">a1.sinks.k1.channel = c1</span><br><span class="line">a1.sinks.k2.channel = c2</span><br></pre></td></tr></table></figure>
+
+<p>（3）创建a2.conf</p>
+<p>配置上级Flume输出的Source，输出是到HDFS的Sink。</p>
+<p>编辑配置文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux2 replicating]$ vim avro-hdfs.conf</span><br></pre></td></tr></table></figure>
+
+<p>添加如下内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Name the components on this agent</span></span><br><span class="line">a2.sources = r1</span><br><span class="line">a2.sinks = k1</span><br><span class="line">a2.channels = c1</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe/configure the <span class="built_in">source</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">source</span>端的avro是一个数据接收服务</span></span><br><span class="line">a2.sources.r1.type = avro</span><br><span class="line">a2.sources.r1.bind = linux2</span><br><span class="line">a2.sources.r1.port = 4141</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe the sink</span></span><br><span class="line">a2.sinks.k1.type = hdfs</span><br><span class="line">a2.sinks.k1.hdfs.path = hdfs://linux1:9820/flume2/%Y%m%d/%H</span><br><span class="line"><span class="meta">#</span><span class="bash">上传文件的前缀</span></span><br><span class="line">a2.sinks.k1.hdfs.filePrefix = flume2-</span><br><span class="line"><span class="meta">#</span><span class="bash">是否按照时间滚动文件夹</span></span><br><span class="line">a2.sinks.k1.hdfs.round = true</span><br><span class="line"><span class="meta">#</span><span class="bash">多少时间单位创建一个新的文件夹</span></span><br><span class="line">a2.sinks.k1.hdfs.roundValue = 1</span><br><span class="line"><span class="meta">#</span><span class="bash">重新定义时间单位</span></span><br><span class="line">a2.sinks.k1.hdfs.roundUnit = hour</span><br><span class="line"><span class="meta">#</span><span class="bash">是否使用本地时间戳</span></span><br><span class="line">a2.sinks.k1.hdfs.useLocalTimeStamp = true</span><br><span class="line"><span class="meta">#</span><span class="bash">积攒多少个Event才flush到HDFS一次</span></span><br><span class="line">a2.sinks.k1.hdfs.batchSize = 100</span><br><span class="line"><span class="meta">#</span><span class="bash">设置文件类型，可支持压缩</span></span><br><span class="line">a2.sinks.k1.hdfs.fileType = DataStream</span><br><span class="line"><span class="meta">#</span><span class="bash">多久生成一个新的文件</span></span><br><span class="line">a2.sinks.k1.hdfs.rollInterval = 600</span><br><span class="line"><span class="meta">#</span><span class="bash">设置每个文件的滚动大小大概是128M</span></span><br><span class="line">a2.sinks.k1.hdfs.rollSize = 134217700</span><br><span class="line"><span class="meta">#</span><span class="bash">文件的滚动与Event数量无关</span></span><br><span class="line">a2.sinks.k1.hdfs.rollCount = 0</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe the channel</span></span><br><span class="line">a2.channels.c1.type = memory</span><br><span class="line">a2.channels.c1.capacity = 1000</span><br><span class="line">a2.channels.c1.transactionCapacity = 100</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Bind the <span class="built_in">source</span> and sink to the channel</span></span><br><span class="line">a2.sources.r1.channels = c1</span><br><span class="line">a2.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure>
+
+<p>（4）创建a3.conf</p>
+<p>配置上级Flume输出的Source，输出是到本地目录的Sink。</p>
+<p>编辑配置文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux3 replicating]$ vim avro-file.conf</span><br></pre></td></tr></table></figure>
+
+<p>添加如下内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Name the components on this agent</span></span><br><span class="line">a3.sources = r1</span><br><span class="line">a3.sinks = k1</span><br><span class="line">a3.channels = c2</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe/configure the <span class="built_in">source</span></span></span><br><span class="line">a3.sources.r1.type = avro</span><br><span class="line">a3.sources.r1.bind = linux3</span><br><span class="line">a3.sources.r1.port = 4141</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe the sink</span></span><br><span class="line">a3.sinks.k1.type = file_roll</span><br><span class="line"><span class="meta">#</span><span class="bash"> 需要手动创建下面本地路径</span></span><br><span class="line">a3.sinks.k1.sink.directory = /opt/module/datas/flume3</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe the channel</span></span><br><span class="line">a3.channels.c2.type = memory</span><br><span class="line">a3.channels.c2.capacity = 1000</span><br><span class="line">a3.channels.c2.transactionCapacity = 100</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Bind the <span class="built_in">source</span> and sink to the channel</span></span><br><span class="line">a3.sources.r1.channels = c2</span><br><span class="line">a3.sinks.k1.channel = c2</span><br></pre></td></tr></table></figure>
+
+<p>提示：输出的本地目录必须是已经存在的目录，如果该目录不存在，并不会创建新的目录。</p>
+<p>（6）启动Hadoop和Hive</p>
+<p>（7）先后启动后两个flume，最后启动第一个flume（a3、a2、a1）</p>
+<p>（8）检查HDFS上数据</p>
+<p>（9）检查/opt/module/datas/flume3目录中数据</p>
+<h3 id="负载均衡和故障转移-1"><a href="#负载均衡和故障转移-1" class="headerlink" title="负载均衡和故障转移"></a>负载均衡和故障转移</h3><p>使用Flume1监控一个端口，其sink组中的sink分别对接Flume2和Flume3，采用FailoverSinkProcessor，实现故障转移的功能。</p>
+<p>注：一个channel对应一个sink group</p>
+<p><img src="/Flume/9.png" alt="9"></p>
+<p>（1）准备工作</p>
+<p>在/opt/module/flume/job目录下创建group2文件夹</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 job]$ mkdir failover</span><br></pre></td></tr></table></figure>
+
+<p>（2）创建a1.conf.conf</p>
+<p>配置1个netcat source和1个channel、1个sink group（2个sink），分别输送给a2.conf和a3.conf。</p>
+<p>编辑配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 failover]$ vim a1.conf</span><br></pre></td></tr></table></figure>
+
+<p>添加如下内容:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Name the components on this agent</span></span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.channels = c1</span><br><span class="line">a1.sinks = k1 k2</span><br><span class="line"></span><br><span class="line">a1.sinkgroups = g1</span><br><span class="line">a1.sinkgroups.g1.sinks = k1 k2</span><br><span class="line">a1.sinkgroups.g1.processor.type = failover</span><br><span class="line"><span class="meta">#</span><span class="bash"> 优先级高的工作，断了之后低的工作，连上之后高的继续工作</span></span><br><span class="line">a1.sinkgroups.g1.processor.priority.k1 = 5</span><br><span class="line">a1.sinkgroups.g1.processor.priority.k2 = 10</span><br><span class="line">a1.sinkgroups.g1.processor.maxpenalty = 10000</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe/configure the <span class="built_in">source</span></span></span><br><span class="line">a1.sources.r1.type = netcat</span><br><span class="line">a1.sources.r1.bind = 0.0.0.0</span><br><span class="line">a1.sources.r1.port = 44444</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe the sink</span></span><br><span class="line">a1.sinks.k1.type = avro</span><br><span class="line">a1.sinks.k1.hostname = linux2</span><br><span class="line">a1.sinks.k1.port = 4141</span><br><span class="line">a1.sinks.k2.type = avro</span><br><span class="line">a1.sinks.k2.hostname = linux3</span><br><span class="line">a1.sinks.k2.port = 4141</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe the channel</span></span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line">a1.channels.c1.capacity = 1000</span><br><span class="line">a1.channels.c1.transactionCapacity = 100</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Bind the <span class="built_in">source</span> and sink to the channel</span></span><br><span class="line">a1.sources.r1.channels = c1</span><br><span class="line">a1.sinks.k1.channel = c1</span><br><span class="line">a1.sinks.k2.channel = c1</span><br></pre></td></tr></table></figure>
+
+<p>（3）创建a2.conf</p>
+<p>配置上级Flume输出的Source，输出是到本地控制台。</p>
+<p>编辑配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux2 failover]$ vim a2.conf</span><br></pre></td></tr></table></figure>
+
+<p>添加如下内容:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Name the components on this agent</span></span><br><span class="line">a2.sources = r1</span><br><span class="line">a2.sinks = k1</span><br><span class="line">a2.channels = c1</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe/configure the <span class="built_in">source</span></span></span><br><span class="line">a2.sources.r1.type = avro</span><br><span class="line">a2.sources.r1.bind = linux2</span><br><span class="line">a2.sources.r1.port = 4141</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe the sink</span></span><br><span class="line">a2.sinks.k1.type = logger</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe the channel</span></span><br><span class="line">a2.channels.c1.type = memory</span><br><span class="line">a2.channels.c1.capacity = 1000</span><br><span class="line">a2.channels.c1.transactionCapacity = 100</span><br><span class="line"><span class="meta"> </span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Bind the <span class="built_in">source</span> and sink to the channel</span></span><br><span class="line">a2.sources.r1.channels = c1</span><br><span class="line">a2.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure>
+
+<p>（4）创建a3.conf</p>
+<p>配置上级Flume输出的Source，输出是到本地控制台。</p>
+<p>编辑配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux3 failover]$ vim a3.conf</span><br></pre></td></tr></table></figure>
+
+<p>添加如下内容:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Name the components on this agent</span></span><br><span class="line">a3.sources = r1</span><br><span class="line">a3.sinks = k1</span><br><span class="line">a3.channels = c2</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe/configure the <span class="built_in">source</span></span></span><br><span class="line">a3.sources.r1.type = avro</span><br><span class="line">a3.sources.r1.bind = linux3</span><br><span class="line">a3.sources.r1.port = 4141</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe the sink</span></span><br><span class="line">a3.sinks.k1.type = logger</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe the channel</span></span><br><span class="line">a3.channels.c2.type = memory</span><br><span class="line">a3.channels.c2.capacity = 1000</span><br><span class="line">a3.channels.c2.transactionCapacity = 100</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Bind the <span class="built_in">source</span> and sink to the channel</span></span><br><span class="line">a3.sources.r1.channels = c2</span><br><span class="line">a3.sinks.k1.channel = c2</span><br></pre></td></tr></table></figure>
+
+<p>（5）执行配置文件</p>
+<p>分别开启对应配置文件：a3.conf，a2.conf，a1.conf。</p>
+<p>（6）使用netcat工具向本机的44444端口发送内容</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> nc localhost 44444</span></span><br></pre></td></tr></table></figure>
+
+<p>（7）查看Flume2及Flume3的控制台打印日志</p>
+<p>（8）将Flume2 kill，观察Flume3的控制台打印情况。</p>
+<p>注：使用jps -ml查看Flume进程。</p>
+<h3 id="聚合-1"><a href="#聚合-1" class="headerlink" title="聚合"></a>聚合</h3><p>linux1上的Flume-1监控文件/opt/module/group.log，</p>
+<p>linux2上的Flume-2监控某一个端口的数据流，</p>
+<p>Flume-1与Flume-2将数据发送给linux3上的Flume-3，Flume-3将最终数据打印到控制台。</p>
+<p><img src="/Flume/10.png" alt="10"></p>
+<p>（1）准备工作</p>
+<p>分发Flume</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 module]$ xsync flume</span><br></pre></td></tr></table></figure>
+
+<p>在linux1、linux2以及linux3的/opt/module/flume/job目录下创建一个consolidation文件夹。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 job]$ mkdir consolidation</span><br><span class="line">[vincent@linux2 job]$ mkdir consolidation</span><br><span class="line">[vincent@linux3 job]$ mkdir consolidation</span><br></pre></td></tr></table></figure>
+
+<p>（2）创建a1.conf </p>
+<p>配置Source用于监控hive.log文件，配置Sink输出数据到下一级Flume。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 consolidation]$ vim exec-avro.conf </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Name the components on this agent</span></span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.sinks = k1</span><br><span class="line">a1.channels = c1</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe/configure the <span class="built_in">source</span></span></span><br><span class="line">a1.sources.r1.type = exec</span><br><span class="line">a1.sources.r1.command = tail -F /opt/module/hive/logs/hive.log</span><br><span class="line">a1.sources.r1.shell = /bin/bash -c</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe the sink</span></span><br><span class="line">a1.sinks.k1.type = avro</span><br><span class="line">a1.sinks.k1.hostname = linux3</span><br><span class="line">a1.sinks.k1.port = 4141</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe the channel</span></span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line">a1.channels.c1.capacity = 1000</span><br><span class="line">a1.channels.c1.transactionCapacity = 100</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Bind the <span class="built_in">source</span> and sink to the channel</span></span><br><span class="line">a1.sources.r1.channels = c1</span><br><span class="line">a1.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure>
+
+<p>（3）创建a2.conf</p>
+<p>配置Source监控端口44444数据流，配置Sink数据到下一级Flume：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux2 consolidation]$ vim netcat-avro.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Name the components on this agent</span></span><br><span class="line">a2.sources = r1</span><br><span class="line">a2.sinks = k1</span><br><span class="line">a2.channels = c1</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe/configure the <span class="built_in">source</span></span></span><br><span class="line">a2.sources.r1.type = netcat</span><br><span class="line">a2.sources.r1.bind = linux2</span><br><span class="line">a2.sources.r1.port = 4444</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe the sink</span></span><br><span class="line">a2.sinks.k1.type = avro</span><br><span class="line">a2.sinks.k1.hostname = linux3</span><br><span class="line">a2.sinks.k1.port = 4141</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Use a channel <span class="built_in">which</span> buffers events <span class="keyword">in</span> memory</span></span><br><span class="line">a2.channels.c1.type = memory</span><br><span class="line">a2.channels.c1.capacity = 1000</span><br><span class="line">a2.channels.c1.transactionCapacity = 100</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Bind the <span class="built_in">source</span> and sink to the channel</span></span><br><span class="line">a2.sources.r1.channels = c1</span><br><span class="line">a2.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure>
+
+<p>（4）创建a3.conf</p>
+<p>配置source用于接收flume1与flume2发送过来的数据流，最终合并后sink到控制台。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux3 consolidation]$ vim avro-logger.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Name the components on this agent</span></span><br><span class="line">a3.sources = r1</span><br><span class="line">a3.sinks = k1</span><br><span class="line">a3.channels = c1</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe/configure the <span class="built_in">source</span></span></span><br><span class="line">a3.sources.r1.type = avro</span><br><span class="line">a3.sources.r1.bind = linux3</span><br><span class="line">a3.sources.r1.port = 4141</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe the sink</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe the sink</span></span><br><span class="line">a3.sinks.k1.type = logger</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe the channel</span></span><br><span class="line">a3.channels.c1.type = memory</span><br><span class="line">a3.channels.c1.capacity = 1000</span><br><span class="line">a3.channels.c1.transactionCapacity = 100</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Bind the <span class="built_in">source</span> and sink to the channel</span></span><br><span class="line">a3.sources.r1.channels = c1</span><br><span class="line">a3.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure>
+
+<p>（5）分发配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 flume] xsync ../flume</span><br></pre></td></tr></table></figure>
+
+<p>（6）执行配置文件</p>
+<p>分别开启对应配置文件：avro-logger.conf，netcat-avro.conf，exec-avro.conf 。</p>
+<p>（7）在linux1上向/opt/module目录下的hive.log追加内容</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 module]$ echo &#x27;hello&#x27; &gt; hive.log</span><br></pre></td></tr></table></figure>
+
+<p>（7）向linux2的4444端口发送数据</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux2 flume]$ nc linux2 4444</span><br></pre></td></tr></table></figure>
+
+<p>（8）检查linux3上数据</p>
+<h3 id="自定义Interceptor"><a href="#自定义Interceptor" class="headerlink" title="自定义Interceptor"></a>自定义Interceptor</h3><p>1）案例需求</p>
+<p>使用Flume采集服务器本地日志，需要按照日志类型的不同，将不同种类的日志发往不同的分析系统。</p>
+<p>2）需求分析</p>
+<p>在实际的开发中，一台服务器产生的日志类型可能有很多种，不同类型的日志可能需要发送到不同的分析系统。此时会用到Flume拓扑结构中的Multiplexing结构，Multiplexing的原理是，根据event中Header的某个key的值，将不同的event发送到不同的Channel中，所以我们需要自定义一个Interceptor，为不同类型的event的Header中的key赋予不同的值。</p>
+<p>在该案例中，我们以端口数据模拟日志，以数字（单个）和字母（单个）模拟不同类型的日志，我们需要自定义interceptor区分数字和字母，将其分别发往不同的分析系统（Channel）。</p>
+<p><img src="/Flume/11.png" alt="11"></p>
+<p>3）实现步骤</p>
+<p>（1）创建一个maven项目，并引入以下依赖。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.flume<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>flume-ng-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.9.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>（2）定义MyInterceptor类并实现Interceptor接口。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.vincent.flume.interceptor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.flume.Context;</span><br><span class="line"><span class="keyword">import</span> org.apache.flume.Event;</span><br><span class="line"><span class="keyword">import</span> org.apache.flume.interceptor.Interceptor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 根据输入数据的首字符不同，添加不同的header来让ChannelSelector处理</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Vincent</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span> 2020-06-17</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyInterceptor</span> <span class="keyword">implements</span> <span class="title">Interceptor</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 初始化方法，新建Interceptor时候用</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initialize</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 更改方法 对event进行处理</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> event 传入数据</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span>  处理好的数据</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Event <span class="title">intercept</span><span class="params">(Event event)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">byte</span>[] body = event.getBody();</span><br><span class="line">        <span class="keyword">if</span> (body[<span class="number">0</span>] &lt; <span class="string">&#x27;z&#x27;</span> &amp;&amp; body[<span class="number">0</span>] &gt; <span class="string">&#x27;a&#x27;</span>) &#123;</span><br><span class="line">            event.getHeaders().put(<span class="string">&quot;type&quot;</span>, <span class="string">&quot;letter&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (body[<span class="number">0</span>] &gt; <span class="string">&#x27;0&#x27;</span> &amp;&amp; body[<span class="number">0</span>] &lt; <span class="string">&#x27;9&#x27;</span>) &#123;</span><br><span class="line">            event.getHeaders().put(<span class="string">&quot;type&quot;</span>, <span class="string">&quot;number&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> event;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 批处理方法，对传入的一批数据进行处理，source设置了batchSize</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> events</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span>  处理好的数据</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Event&gt; <span class="title">intercept</span><span class="params">(List&lt;Event&gt; events)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (Event event : events) &#123;</span><br><span class="line">            intercept(event);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> events;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 如果有需要关闭的资源，在这个方法中关闭</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 框架会调用Builder来创建Interceptor实例</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">MyBuilder</span> <span class="keyword">implements</span> <span class="title">Interceptor</span>.<span class="title">Builder</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 创建实例的方法</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@return</span>  新的Interceptor</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Interceptor <span class="title">build</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> MyInterceptor();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 读取配置文件的方法</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> context   配置文件</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>（3）编辑flume配置文件</p>
+<p>为linux1上的Flume-1配置1个netcat source，1个sink group（2个avro sink），并配置相应的ChannelSelector和interceptor。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Name the components on this agent</span></span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.sinks = k1 k2</span><br><span class="line">a1.channels = c1 c2</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe/configure the <span class="built_in">source</span></span></span><br><span class="line">a1.sources.r1.type = netcat</span><br><span class="line">a1.sources.r1.bind = linux1</span><br><span class="line">a1.sources.r1.port = 4444</span><br><span class="line"></span><br><span class="line">a1.sources.r1.interceptors = i1</span><br><span class="line">a1.sources.r1.interceptors.i1.type = com.vincent.flume.interceptor.MyInterceptor$MyBuilder</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 多路复用模式</span></span><br><span class="line">a1.sources.r1.selector.type = multiplexing</span><br><span class="line">a1.sources.r1.selector.header = type</span><br><span class="line">a1.sources.r1.selector.mapping.letter = c1</span><br><span class="line">a1.sources.r1.selector.mapping.number = c2</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe the sink</span></span><br><span class="line">a1.sinks.k1.type = avro</span><br><span class="line">a1.sinks.k1.hostname = linux2</span><br><span class="line">a1.sinks.k1.port = 4141</span><br><span class="line"></span><br><span class="line">a1.sinks.k2.type = avro</span><br><span class="line">a1.sinks.k2.hostname = linux3</span><br><span class="line">a1.sinks.k2.port = 4141</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Use a channel <span class="built_in">which</span> buffers events <span class="keyword">in</span> memory</span></span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line">a1.channels.c1.capacity = 1000</span><br><span class="line">a1.channels.c1.transactionCapacity = 100</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Use a channel <span class="built_in">which</span> buffers events <span class="keyword">in</span> memory</span></span><br><span class="line">a1.channels.c2.type = memory</span><br><span class="line">a1.channels.c2.capacity = 1000</span><br><span class="line">a1.channels.c2.transactionCapacity = 100</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Bind the <span class="built_in">source</span> and sink to the channel</span></span><br><span class="line">a1.sources.r1.channels = c1 c2</span><br><span class="line">a1.sinks.k1.channel = c1</span><br><span class="line">a1.sinks.k2.channel = c2</span><br></pre></td></tr></table></figure>
+
+<p>为linux2上的Flume-2配置一个avro source和一个logger sink。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">a2.sources = r1</span><br><span class="line">a2.sinks = k1</span><br><span class="line">a2.channels = c1</span><br><span class="line"></span><br><span class="line">a2.sources.r1.type = avro</span><br><span class="line">a2.sources.r1.bind = linux2</span><br><span class="line">a2.sources.r1.port = 4141</span><br><span class="line"></span><br><span class="line">a2.sinks.k1.type = logger</span><br><span class="line"></span><br><span class="line">a2.channels.c1.type = memory</span><br><span class="line">a2.channels.c1.capacity = 1000</span><br><span class="line">a2.channels.c1.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line">a2.sinks.k1.channel = c1</span><br><span class="line">a2.sources.r1.channels = c1</span><br></pre></td></tr></table></figure>
+
+<p>为linux3上的Flume-3配置一个avro source和一个logger sink。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">a3.sources = r1</span><br><span class="line">a3.sinks = k1</span><br><span class="line">a3.channels = c1</span><br><span class="line"></span><br><span class="line">a3.sources.r1.type = avro</span><br><span class="line">a3.sources.r1.bind = linux3</span><br><span class="line">a3.sources.r1.port = 4141</span><br><span class="line"></span><br><span class="line">a3.sinks.k1.type = logger</span><br><span class="line"></span><br><span class="line">a3.channels.c1.type = memory</span><br><span class="line">a3.channels.c1.capacity = 1000</span><br><span class="line">a3.channels.c1.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line">a3.sinks.k1.channel = c1</span><br><span class="line">a3.sources.r1.channels = c1</span><br></pre></td></tr></table></figure>
+
+<p>（4）分别在linux3，linux2，linux1上启动flume进程，注意先后顺序。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux3 flume]$ bin/flume-ng agent --conf conf/ --name a3 --conf-file job/interceptor/a3.conf -Dflume.root.logger=INFO,console</span><br><span class="line">[vincent@linux2 flume]$ bin/flume-ng agent --conf conf/ --name a2 --conf-file job/interceptor/a2.conf -Dflume.root.logger=INFO,console</span><br><span class="line">[vincent@linux1 flume]$ bin/flume-ng agent --conf conf/ --name a1 --conf-file job/interceptor/a1.conf -Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure>
+
+<p>（5）像linux1的44444端口发送字母和数字。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 ~]$ nc linux1 4444</span><br></pre></td></tr></table></figure>
+
+<p>（6）观察linux2和linux3打印的日志。</p>
+<h3 id="自定义Source"><a href="#自定义Source" class="headerlink" title="自定义Source"></a>自定义Source</h3><p>Source是负责接收数据到Flume Agent的组件。Source组件可以处理各种类型、各种格式的日志数据，包括avro、thrift、exec、jms、spooling directory、netcat、sequence generator、syslog、http、legacy。官方提供的source类型已经很多，但是有时候并不能满足实际开发当中的需求，此时我们就需要根据实际需求自定义某些source。</p>
+<p>官方也提供了自定义source的接口：</p>
+<p><a href="#source">https://flume.apache.org/FlumeDeveloperGuide.html#source</a> </p>
+<p>根据官方说明自定义MySource需要继承AbstractSource类并实现Configurable和PollableSource接口。</p>
+<p>实现相应方法：</p>
+<p>getBackOffSleepIncrement()            //暂不用</p>
+<p>getMaxBackOffSleepInterval()         //暂不用</p>
+<p>configure(Context context)             //初始化context（读取配置文件内容）</p>
+<p>process()                                         //获取数据封装成event并写入channel，这个方法将被循环调用。</p>
+<p>使用场景：读取MySQL数据或者其他文件系统。</p>
+<p>需求：使用flume接收数据，并给每条数据添加前缀，输出到控制台。前缀可从flume配置文件中配置。</p>
+<p><img src="/Flume/12.png" alt="12"></p>
+<p><img src="/Flume/14.png" alt="14"></p>
+<p>1）导入pom依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.flume<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>flume-ng-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.9.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>2）编写代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.vincent.flume.source;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.flume.*;</span><br><span class="line"><span class="keyword">import</span> org.apache.flume.channel.ChannelProcessor;</span><br><span class="line"><span class="keyword">import</span> org.apache.flume.conf.Configurable;</span><br><span class="line"><span class="keyword">import</span> org.apache.flume.event.SimpleEvent;</span><br><span class="line"><span class="keyword">import</span> org.apache.flume.source.AbstractSource;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Vincent</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span> 2020-06-17</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MySource</span> <span class="keyword">extends</span> <span class="title">AbstractSource</span> <span class="keyword">implements</span> <span class="title">Configurable</span>, <span class="title">PollableSource</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String prefff;</span><br><span class="line">    <span class="keyword">private</span> Long interval;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 拉取事件并交给ChannelProcessor处理的方法，循环调用</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> EventDeliveryException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Status <span class="title">process</span><span class="params">()</span> <span class="keyword">throws</span> EventDeliveryException </span>&#123;</span><br><span class="line">        Status status = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//通过外部方法拉取数据</span></span><br><span class="line">            Event e = getSomeData();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Store the Event into this Source&#x27;s associated Channel(s)</span></span><br><span class="line">            <span class="comment">//getChannelProcessor().processEvent(e);</span></span><br><span class="line">            ChannelProcessor channelProcessor = getChannelProcessor();</span><br><span class="line">            channelProcessor.processEvent(e);</span><br><span class="line"></span><br><span class="line">            status = Status.READY;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Throwable t) &#123;</span><br><span class="line">            <span class="comment">// Log exception, handle individual exceptions as needed</span></span><br><span class="line"></span><br><span class="line">            status = Status.BACKOFF;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// re-throw all Errors</span></span><br><span class="line">            <span class="keyword">if</span> (t <span class="keyword">instanceof</span> Error) &#123;</span><br><span class="line">                <span class="keyword">throw</span> (Error)t;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> status;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 拉取数据并包装成Event的过程</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span>  拉取到的Event</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> Event <span class="title">getSomeData</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        <span class="comment">//通过随机数模拟拉取到的数据</span></span><br><span class="line">        <span class="keyword">int</span> i = (<span class="keyword">int</span>) (Math.random() * <span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//添加前缀</span></span><br><span class="line">        String message = prefix + i;</span><br><span class="line"></span><br><span class="line">        Thread.sleep(interval);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//包装成Event</span></span><br><span class="line">        Event event = <span class="keyword">new</span> SimpleEvent();</span><br><span class="line">        event.setBody(message.getBytes());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> event;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 如果拉取不到数据，Backoff时间的增长速度</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span>  增长量</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getBackOffSleepIncrement</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1000</span>;    <span class="comment">//1s</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 最大等待时间</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span>  时间</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getMaxBackOffSleepInterval</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">10000</span>;   <span class="comment">//10s</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 来自configurable，可以定义我们的自定义Source</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> context   配置文件</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">        prefix = context.getString(<span class="string">&quot;prefff&quot;</span>,<span class="string">&quot;xxxx&quot;</span>);</span><br><span class="line">        interval = context.getLong(<span class="string">&quot;interval&quot;</span>, <span class="number">500L</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3）测试</p>
+<p>（1）打包</p>
+<p>将写好的代码打包，并放到flume的lib目录（/opt/module/flume）下。</p>
+<p>（2）配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 flume]$ vim job/custom-logger.conf </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Name the components on this agent</span></span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.sinks = k1</span><br><span class="line">a1.channels = c1</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe/configure the <span class="built_in">source</span></span></span><br><span class="line">a1.sources.r1.type = com.vincent.flume.source.MySource</span><br><span class="line">a1.sources.r1.interval = 100</span><br><span class="line">a1.sources.r1.prefff = ABCD-</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe the sink</span></span><br><span class="line">a1.sinks.k1.type = logger</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Use a channel <span class="built_in">which</span> buffers events <span class="keyword">in</span> memory</span></span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line">a1.channels.c1.capacity = 1000</span><br><span class="line">a1.channels.c1.transactionCapacity = 100</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Bind the <span class="built_in">source</span> and sink to the channel</span></span><br><span class="line">a1.sources.r1.channels = c1</span><br><span class="line">a1.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure>
+
+<p>3）开启任务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 flume]$ bin/flume-ng agent -c conf/ -f job/custom-logger.conf -n a1 -Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义Sink"><a href="#自定义Sink" class="headerlink" title="自定义Sink"></a>自定义Sink</h3><p>1）介绍</p>
+<p>Sink不断地轮询Channel中的事件且批量地移除它们，并将这些事件批量写入到存储或索引系统、或者被发送到另一个Flume Agent。</p>
+<p>Sink是完全事务性的。在从Channel批量删除数据之前，每个Sink用Channel启动一个事务。批量事件一旦成功写出到存储系统或下一个Flume Agent，Sink就利用Channel提交事务。事务一旦被提交，该Channel从自己的内部缓冲区删除事件。</p>
+<p>Sink组件目的地包括hdfs、logger、avro、thrift、ipc、file、null、HBase、solr、自定义。官方提供的Sink类型已经很多，但是有时候并不能满足实际开发当中的需求，此时我们就需要根据实际需求自定义某些Sink。</p>
+<p>官方也提供了自定义sink的接口：</p>
+<p><a target="_blank" rel="noopener" href="https://flume.apache.org/FlumeDeveloperGuide.html#sink">https://flume.apache.org/FlumeDeveloperGuide.html#sink</a></p>
+<p>根据官方说明自定义MySink需要继承AbstractSink类并实现Configurable接口。</p>
+<p>实现相应方法：</p>
+<p>configure(Context context)//初始化context（读取配置文件内容）</p>
+<p>process()//从Channel读取获取数据（event），这个方法将被循环调用。</p>
+<p>使用场景：读取Channel数据写入MySQL或者其他文件系统。</p>
+<p>2）需求</p>
+<p>使用flume接收数据，并在Sink端给每条数据添加前缀和后缀，输出到控制台。前后缀可在flume任务配置文件中配置。</p>
+<p><img src="/Flume/15.png" alt="15"></p>
+<p>3）编码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.vincent.flume.sink;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.flume.*;</span><br><span class="line"><span class="keyword">import</span> org.apache.flume.conf.Configurable;</span><br><span class="line"><span class="keyword">import</span> org.apache.flume.sink.AbstractSink;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Vincent</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span> 2020-06-17</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MySink</span> <span class="keyword">extends</span> <span class="title">AbstractSink</span> <span class="keyword">implements</span> <span class="title">Configurable</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">  	<span class="comment">//创建Logger对象</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOG = LoggerFactory.getLogger(MySink.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String prefix;</span><br><span class="line">    <span class="keyword">private</span> String suffix;</span><br><span class="line">  </span><br><span class="line">  	<span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 改方法被调用时，会从Channel中拉取数据并处理</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span>  处理的状态</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> EventDeliveryException   处理失败时候会抛出异常</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Status <span class="title">process</span><span class="params">()</span> <span class="keyword">throws</span> EventDeliveryException </span>&#123;</span><br><span class="line">        <span class="comment">//声明返回值状态信息</span></span><br><span class="line">        Status status;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//获取当前Sink绑定的Channel</span></span><br><span class="line">        Channel ch = getChannel();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//获取事务</span></span><br><span class="line">        Transaction txn = ch.getTransaction();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//声明事件</span></span><br><span class="line">        Event event;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//开启事务</span></span><br><span class="line">        txn.begin();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//读取Channel中的事件，直到读取到事件结束循环</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            event = ch.take();</span><br><span class="line">            <span class="keyword">if</span> (event != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//处理事件（打印）</span></span><br><span class="line">            LOG.info(prefix + <span class="keyword">new</span> String(event.getBody()) + suffix);</span><br><span class="line"></span><br><span class="line">            <span class="comment">//事务提交</span></span><br><span class="line">            txn.commit();</span><br><span class="line">            status = Status.READY;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//遇到异常，事务回滚</span></span><br><span class="line">            txn.rollback();</span><br><span class="line">            status = Status.BACKOFF;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//关闭事务</span></span><br><span class="line">            txn.close();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> status;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 配置方法</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> context   配置文件</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">				<span class="comment">//读取配置文件内容，有默认值</span></span><br><span class="line">        prefix = context.getString(<span class="string">&quot;prefix&quot;</span>, <span class="string">&quot;hello:&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//读取配置文件内容，无默认值</span></span><br><span class="line">        suffix = context.getString(<span class="string">&quot;suffix&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>4）测试</p>
+<p>（1）打包</p>
+<p>将写好的代码打包，并放到flume的lib目录（/opt/module/flume）下。</p>
+<p>（2）配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Name the components on this agent</span></span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.sinks = k1</span><br><span class="line">a1.channels = c1</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe/configure the <span class="built_in">source</span></span></span><br><span class="line">a1.sources.r1.type = netcat</span><br><span class="line">a1.sources.r1.bind = 0.0.0.0</span><br><span class="line">a1.sources.r1.port = 4444</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Describe the sink</span></span><br><span class="line">a1.sinks.k1.type = com.vincent.flume.sink.MySink</span><br><span class="line">a1.sinks.k1.prefix = xsh:</span><br><span class="line">a1.sinks.k1.suffix = :xsh</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Use a channel <span class="built_in">which</span> buffers events <span class="keyword">in</span> memory</span></span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line">a1.channels.c1.capacity = 1000</span><br><span class="line">a1.channels.c1.transactionCapacity = 100</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Bind the <span class="built_in">source</span> and sink to the channel</span></span><br><span class="line">a1.sources.r1.channels = c1</span><br><span class="line">a1.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure>
+
+<p>（3）开启任务并向linux1的44444端口发送数据</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 flume]$ bin/flume-ng agent -c conf/ -f job/mysink.conf -n a1 -Dflume.root.logger=INFO,console</span><br><span class="line">[vincent@linux1 ~]$ nc linux1 4444</span><br></pre></td></tr></table></figure>
+
+<h2 id="Flume数据流监控"><a href="#Flume数据流监控" class="headerlink" title="Flume数据流监控"></a>Flume数据流监控</h2><h3 id="Ganglia的安装与部署"><a href="#Ganglia的安装与部署" class="headerlink" title="Ganglia的安装与部署"></a>Ganglia的安装与部署</h3><p>1）安装httpd服务与php</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 flume]$ sudo yum -y install httpd php</span><br></pre></td></tr></table></figure>
+
+<p>2）安装其他依赖</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 flume]$ sudo yum -y install rrdtool perl-rrdtool rrdtool-devel</span><br><span class="line">[vincent@linux1 flume]$ sudo yum -y install apr-devel</span><br></pre></td></tr></table></figure>
+
+<p>3）安装ganglia</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 flume]$ sudo rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 flume]$ sudo yum -y install ganglia-gmetad ganglia-web ganglia-gmond</span><br></pre></td></tr></table></figure>
+
+<p>Ganglia由gmond、gmetad和gweb三部分组成。</p>
+<p>gmond（Ganglia Monitoring Daemon）是一种轻量级服务，安装在每台需要收集指标数据的节点主机上。使用gmond，你可以很容易收集很多系统指标数据，如CPU、内存、磁盘、网络和活跃进程的数据等。</p>
+<p>gmetad（Ganglia Meta Daemon）整合所有信息，并将其以RRD格式存储至磁盘的服务。</p>
+<p>gweb（Ganglia Web）Ganglia可视化工具，gweb是一种利用浏览器显示gmetad所存储数据的PHP前端。在Web界面中以图表方式展现集群的运行状态下收集的多种不同指标数据。</p>
+<p>4）修改配置文件/etc/httpd/conf.d/ganglia.conf</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 flume]$ sudo vim /etc/httpd/conf.d/ganglia.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Ganglia monitoring system php web frontend</span></span><br><span class="line">Alias /ganglia /usr/share/ganglia</span><br><span class="line">&lt;Location /ganglia&gt;</span><br><span class="line"><span class="meta">	#</span><span class="bash"> Require <span class="built_in">local</span></span></span><br><span class="line">  Require ip linux1</span><br><span class="line">&lt;/Location&gt;</span><br></pre></td></tr></table></figure>
+
+<p>5）修改配置文件/etc/ganglia/gmetad.conf</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 flume]$ sudo vim /etc/ganglia/gmetad.conf</span><br></pre></td></tr></table></figure>
+
+<p>修改为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data_source &quot;flume_cluster&quot; linux1 linux2 linux3</span><br></pre></td></tr></table></figure>
+
+<p>6）修改配置文件/etc/ganglia/gmond.conf</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 flume]$ sudo vim /etc/ganglia/gmond.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">cluster &#123;</span><br><span class="line">  name = &quot;flume_cluster&quot;</span><br><span class="line">  owner = &quot;unspecified&quot;</span><br><span class="line">  latlong = &quot;unspecified&quot;</span><br><span class="line">  url = &quot;unspecified&quot;</span><br><span class="line">&#125;</span><br><span class="line">udp_send_channel &#123;</span><br><span class="line"><span class="meta">  #</span><span class="bash">bind_hostname = yes <span class="comment"># Highly recommended, soon to be default.</span></span></span><br><span class="line">                       # This option tells gmond to use a source address</span><br><span class="line">                       # that resolves to the machine&#x27;s hostname.  Without</span><br><span class="line">                       # this, the metrics may appear to come from any</span><br><span class="line">                       # interface and the DNS names associated with</span><br><span class="line">                       # those IPs will be used to create the RRDs.</span><br><span class="line"><span class="meta">  #</span><span class="bash"> mcast_join = 239.2.11.71</span></span><br><span class="line">  host = linux1</span><br><span class="line">  port = 8649</span><br><span class="line">  ttl = 1</span><br><span class="line">&#125;</span><br><span class="line">udp_recv_channel &#123;</span><br><span class="line"><span class="meta">  #</span><span class="bash"> mcast_join = 239.2.11.71</span></span><br><span class="line">  bind = linux1</span><br><span class="line">  port = 8649</span><br><span class="line">  retry_bind = true</span><br><span class="line"><span class="meta">  #</span><span class="bash"> Size of the UDP buffer. If you are handling lots of metrics you really</span></span><br><span class="line"><span class="meta">  #</span><span class="bash"> should bump it up to e.g. 10MB or even higher.</span></span><br><span class="line"><span class="meta">  #</span><span class="bash"> buffer = 10485760</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 flume]$ xsync.sh /etc/ganglia/gmond.conf</span><br></pre></td></tr></table></figure>
+
+<p>7）修改配置文件/etc/selinux/config</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 flume]$ sudo vim /etc/selinux/config</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> This file controls the state of SELinux on the system.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> SELINUX= can take one of these three values:</span></span><br><span class="line"><span class="meta">#</span><span class="bash">     enforcing - SELinux security policy is enforced.</span></span><br><span class="line"><span class="meta">#</span><span class="bash">     permissive - SELinux prints warnings instead of enforcing.</span></span><br><span class="line"><span class="meta">#</span><span class="bash">     disabled - No SELinux policy is loaded.</span></span><br><span class="line">SELINUX=disabled</span><br><span class="line"><span class="meta">#</span><span class="bash"> SELINUXTYPE= can take one of these two values:</span></span><br><span class="line"><span class="meta">#</span><span class="bash">     targeted - Targeted processes are protected,</span></span><br><span class="line"><span class="meta">#</span><span class="bash">     mls - Multi Level Security protection.</span></span><br><span class="line">SELINUXTYPE=targeted</span><br></pre></td></tr></table></figure>
+
+<p>尖叫提示：selinux本次生效关闭必须重启，如果此时不想重启，可以临时生效之：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 flume]$ sudo setenforce 0</span><br></pre></td></tr></table></figure>
+
+<p>8）启动ganglia</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 flume]$ sudo systemctl start httpd</span><br><span class="line">[vincent@linux1 flume]$ sudo systemctl start gmetad</span><br><span class="line">[vincent@linux1 flume]$ sudo systemctl start gmond</span><br></pre></td></tr></table></figure>
+
+<p>9）打开网页浏览ganglia页面</p>
+<p><a target="_blank" rel="noopener" href="http://linux3/ganglia">http://linux3/ganglia</a></p>
+<p>尖叫提示：如果完成以上操作依然出现权限不足错误，请修改/var/lib/ganglia目录的权限：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 flume]$ sudo chmod -R 777 /var/lib/ganglia</span><br></pre></td></tr></table></figure>
+
+<h3 id="Ganglia-Reporting"><a href="#Ganglia-Reporting" class="headerlink" title="Ganglia Reporting"></a>Ganglia Reporting</h3><p>1）启动Flume任务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 flume]$ bin/flume-ng agent \</span><br><span class="line">--conf conf/ \</span><br><span class="line">--name a1 \</span><br><span class="line">--conf-file job/flume-netcat-logger.conf \</span><br><span class="line">-Dflume.root.logger==INFO,console \</span><br><span class="line">-Dflume.monitoring.type=ganglia \</span><br><span class="line">-Dflume.monitoring.hosts=linux1:8649</span><br></pre></td></tr></table></figure>
+
+<p>2）发送数据观察ganglia监测图</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 flume]$ nc localhost 6666</span><br></pre></td></tr></table></figure>
+
+<p>3）图例说明：</p>
+<table>
+<thead>
+<tr>
+<th>字段（图表名称）</th>
+<th>字段含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>EventPutAttemptCount</td>
+<td>source尝试写入channel的事件总数量</td>
+</tr>
+<tr>
+<td>EventPutSuccessCount</td>
+<td>成功写入channel且提交的事件总数量</td>
+</tr>
+<tr>
+<td>EventTakeAttemptCount</td>
+<td>sink尝试从channel拉取事件的总数量。</td>
+</tr>
+<tr>
+<td>EventTakeSuccessCount</td>
+<td>sink成功读取的事件的总数量</td>
+</tr>
+<tr>
+<td>StartTime</td>
+<td>channel启动的时间（毫秒）</td>
+</tr>
+<tr>
+<td>StopTime</td>
+<td>channel停止的时间（毫秒）</td>
+</tr>
+<tr>
+<td>ChannelSize</td>
+<td>目前channel中事件的总数量</td>
+</tr>
+<tr>
+<td>ChannelFillPercentage</td>
+<td>channel占用百分比</td>
+</tr>
+<tr>
+<td>ChannelCapacity</td>
+<td>channel的容量</td>
+</tr>
+</tbody></table>
+<h3 id="JSON-Reporting"><a href="#JSON-Reporting" class="headerlink" title="JSON Reporting"></a>JSON Reporting</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/flume-ng agent --conf-file example.conf --name a1 -Dflume.monitoring.type=http -Dflume.monitoring.port=34545</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="regexp">//</span>&lt;hostname&gt;:&lt;port&gt;/metrics</span><br><span class="line">http:<span class="regexp">//</span>linux1:<span class="number">34545</span>/metrics</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Kylin/" rel="prev" title="Kylin">
+      <i class="fa fa-chevron-left"></i> Kylin
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Flink/" rel="next" title="Flink">
+      Flink <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Flume%E5%AE%9A%E4%B9%89"><span class="nav-number">1.</span> <span class="nav-text">Flume定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Flume%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">Flume基础架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Agent"><span class="nav-number">2.1.</span> <span class="nav-text">Agent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Source"><span class="nav-number">2.2.</span> <span class="nav-text">Source</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sink"><span class="nav-number">2.3.</span> <span class="nav-text">Sink</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Channel"><span class="nav-number">2.4.</span> <span class="nav-text">Channel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Event"><span class="nav-number">2.5.</span> <span class="nav-text">Event</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Flume%E5%85%A5%E9%97%A8"><span class="nav-number">3.</span> <span class="nav-text">Flume入门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Flume%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2"><span class="nav-number">3.1.</span> <span class="nav-text">Flume安装部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%91%E6%8E%A7%E7%AB%AF%E5%8F%A3%E6%95%B0%E6%8D%AE%E5%AE%98%E6%96%B9%E6%A1%88%E4%BE%8B"><span class="nav-number">3.2.</span> <span class="nav-text">监控端口数据官方案例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E6%97%B6%E7%9B%91%E6%8E%A7%E5%8D%95%E4%B8%AA%E8%BF%BD%E5%8A%A0%E6%96%87%E4%BB%B6"><span class="nav-number">3.3.</span> <span class="nav-text">实时监控单个追加文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E6%97%B6%E7%9B%91%E6%8E%A7%E7%9B%AE%E5%BD%95%E4%B8%8B%E5%A4%9A%E4%B8%AA%E6%96%B0%E6%96%87%E4%BB%B6"><span class="nav-number">3.4.</span> <span class="nav-text">实时监控目录下多个新文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E6%97%B6%E7%9B%91%E6%8E%A7%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%9A%84%E5%A4%9A%E4%B8%AA%E8%BF%BD%E5%8A%A0%E6%96%87%E4%BB%B6"><span class="nav-number">3.5.</span> <span class="nav-text">实时监控目录下的多个追加文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Flume%E4%BA%8B%E5%8A%A1"><span class="nav-number">4.</span> <span class="nav-text">Flume事务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Flume-Agent%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86"><span class="nav-number">5.</span> <span class="nav-text">Flume Agent内部原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%EF%BC%89ChannelSelector"><span class="nav-number">5.1.</span> <span class="nav-text">1）ChannelSelector</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%EF%BC%89SinkProcessor"><span class="nav-number">5.2.</span> <span class="nav-text">2）SinkProcessor</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Flume%E6%8B%93%E6%89%91%E7%BB%93%E6%9E%84"><span class="nav-number">6.</span> <span class="nav-text">Flume拓扑结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E4%B8%B2%E8%81%94"><span class="nav-number">6.1.</span> <span class="nav-text">简单串联</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E5%88%B6%E5%92%8C%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8"><span class="nav-number">6.2.</span> <span class="nav-text">复制和多路复用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%92%8C%E6%95%85%E9%9A%9C%E8%BD%AC%E7%A7%BB"><span class="nav-number">6.3.</span> <span class="nav-text">负载均衡和故障转移</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%81%9A%E5%90%88"><span class="nav-number">6.4.</span> <span class="nav-text">聚合</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Flume%E4%BC%81%E4%B8%9A%E5%BC%80%E5%8F%91%E6%A1%88%E4%BE%8B"><span class="nav-number">7.</span> <span class="nav-text">Flume企业开发案例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E5%88%B6%E5%92%8C%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8-1"><span class="nav-number">7.1.</span> <span class="nav-text">复制和多路复用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%92%8C%E6%95%85%E9%9A%9C%E8%BD%AC%E7%A7%BB-1"><span class="nav-number">7.2.</span> <span class="nav-text">负载均衡和故障转移</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%81%9A%E5%90%88-1"><span class="nav-number">7.3.</span> <span class="nav-text">聚合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89Interceptor"><span class="nav-number">7.4.</span> <span class="nav-text">自定义Interceptor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89Source"><span class="nav-number">7.5.</span> <span class="nav-text">自定义Source</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89Sink"><span class="nav-number">7.6.</span> <span class="nav-text">自定义Sink</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Flume%E6%95%B0%E6%8D%AE%E6%B5%81%E7%9B%91%E6%8E%A7"><span class="nav-number">8.</span> <span class="nav-text">Flume数据流监控</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Ganglia%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E9%83%A8%E7%BD%B2"><span class="nav-number">8.1.</span> <span class="nav-text">Ganglia的安装与部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ganglia-Reporting"><span class="nav-number">8.2.</span> <span class="nav-text">Ganglia Reporting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSON-Reporting"><span class="nav-number">8.3.</span> <span class="nav-text">JSON Reporting</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Vincent"
+      src="/images/cute.jpeg">
+  <p class="site-author-name" itemprop="name">Vincent</p>
+  <div class="site-description" itemprop="description">nice</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vincent</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

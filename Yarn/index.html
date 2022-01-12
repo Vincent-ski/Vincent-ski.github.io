@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/cute.jpeg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/cute.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/cute.jpeg">
+  <link rel="mask-icon" href="/images/cute.jpeg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Yarn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Yarn">
+<meta property="og:url" content="http://example.com/Yarn/index.html">
+<meta property="og:site_name" content="Vincent&#39;s Learning Journey">
+<meta property="og:description" content="Yarn">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/Yarn/121.png">
+<meta property="og:image" content="http://example.com/Yarn/122.png">
+<meta property="og:image" content="http://example.com/Yarn/123.png">
+<meta property="og:image" content="http://example.com/Yarn/124.png">
+<meta property="og:image" content="http://example.com/Yarn/125.png">
+<meta property="og:image" content="http://example.com/Yarn/126.png">
+<meta property="og:image" content="http://example.com/Yarn/127.png">
+<meta property="og:image" content="http://example.com/Yarn/128.png">
+<meta property="article:published_time" content="2021-12-01T04:42:06.000Z">
+<meta property="article:modified_time" content="2022-01-12T02:13:22.567Z">
+<meta property="article:author" content="Vincent">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/Yarn/121.png">
+
+<link rel="canonical" href="http://example.com/Yarn/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Yarn | Vincent's Learning Journey</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Vincent's Learning Journey</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">DayDayUp</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section">Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section">Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section">Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/Yarn/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cute.jpeg">
+      <meta itemprop="name" content="Vincent">
+      <meta itemprop="description" content="nice">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vincent's Learning Journey">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Yarn
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-12-01 12:42:06" itemprop="dateCreated datePublished" datetime="2021-12-01T12:42:06+08:00">2021-12-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-01-12 10:13:22" itemprop="dateModified" datetime="2022-01-12T10:13:22+08:00">2022-01-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hadoop/" itemprop="url" rel="index"><span itemprop="name">Hadoop</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">Yarn</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Yarn是一个资源调度平台，<strong>负责为运算程序提供服务器运算资源</strong>，相当于一个分布式的操作系统平台，而MapReduce等运算程序则相当于运行于操作系统之上的应用程序。</p>
+<h1 id="Yarn基本架构"><a href="#Yarn基本架构" class="headerlink" title="Yarn基本架构"></a>Yarn基本架构</h1><p>YARN主要由ResourceManager、NodeManager、ApplicationMaster和Container等组件构成。</p>
+<p><img src="/Yarn/121.png" alt="121"></p>
+<h1 id="Yarn工作机制"><a href="#Yarn工作机制" class="headerlink" title="Yarn工作机制"></a>Yarn工作机制</h1><p><img src="/Yarn/122.png" alt="122"></p>
+<p>工作机制详解</p>
+<p>​    （1）MR程序提交到<strong>客户端所在的节点</strong>。</p>
+<p>​    （2）YarnRunner向ResourceManager申请一个Application。</p>
+<p>​    （3）RM将该应用程序的资源路径返回给YarnRunner。</p>
+<p>​    （4）该程序将运行所需资源提交到HDFS上。</p>
+<p>​    （5）程序资源提交完毕后，申请运行mrAppMaster。</p>
+<p>​    （6）RM将用户的请求初始化成一个Task。</p>
+<p>​    （7）其中一个NodeManager领取到Task任务。</p>
+<p>​    （8）该NodeManager创建容器Container，并产生MRAppmaster。</p>
+<p>​    （9）Container从HDFS上拷贝资源到本地。</p>
+<p>​    （10）MRAppmaster向RM 申请运行MapTask资源。</p>
+<p>​    （11）RM将运行MapTask任务分配给另外两个NodeManager，另两个NodeManager分别领取任务并创建容器。</p>
+<p>​    （12）MR向两个接收到任务的NodeManager发送程序启动脚本，这两个NodeManager分别启动MapTask，MapTask对数据分区排序。</p>
+<p>​    （13）<strong>MrAppMaster等待所有MapTask运行完毕后，向RM申请容器，运行ReduceTask。</strong></p>
+<p>​    （14）ReduceTask向MapTask获取相应分区的数据。</p>
+<p>​    （15）程序运行完毕后，MR会向RM申请注销自己。</p>
+<h1 id="作业提交全过程"><a href="#作业提交全过程" class="headerlink" title="作业提交全过程"></a>作业提交全过程</h1><h2 id="作业提交过程之YARN"><a href="#作业提交过程之YARN" class="headerlink" title="作业提交过程之YARN"></a>作业提交过程之YARN</h2><p><img src="/Yarn/123.png" alt="123"></p>
+<p>（1）作业提交</p>
+<p>第1步：Client调用job.waitForCompletion方法，向整个集群提交MapReduce作业。</p>
+<p>第2步：Client向RM申请一个作业id。</p>
+<p>第3步：<strong>RM给Client返回该job资源的提交路径和作业id</strong>。</p>
+<p>第4步：<strong>Client提交jar包、切片信息和配置文件到指定的资源提交路径</strong>。</p>
+<p>第5步：Client提交完资源后，向RM申请运行MrAppMaster。</p>
+<p>（2）作业初始化</p>
+<p>第6步：当RM收到Client的请求后，将该job添加到<strong>容量调度器</strong>中。</p>
+<p>第7步：某一个空闲的NM领取到该Job。</p>
+<p>第8步：<strong>该NM创建Container，并产生MRAppmaster</strong>。</p>
+<p>第9步：<strong>下载Client提交的资源到本地</strong>。</p>
+<p>（3）任务分配</p>
+<p>第10步：MrAppMaster向RM申请运行多个MapTask任务资源。</p>
+<p>第11步：RM将运行MapTask任务分配给另外两个NodeManager，另两个NodeManager分别领取任务并创建容器。</p>
+<p>（4）任务运行</p>
+<p>第12步：MR向两个接收到任务的NodeManager发送程序启动脚本，这两个NodeManager分别启动MapTask，MapTask对数据分区排序。</p>
+<p>第13步：MrAppMaster等待所有MapTask运行完毕后，向RM申请容器，运行ReduceTask。</p>
+<p>第14步：ReduceTask向MapTask获取相应分区的数据。</p>
+<p>第15步：程序运行完毕后，MR会向RM申请注销自己。</p>
+<p>（5）进度和状态更新</p>
+<p>YARN中的任务将其进度和状态(包括counter)返回给应用管理器, 客户端每秒(通过mapreduce.client.progressmonitor.pollinterval设置)向应用管理器请求进度更新, 展示给用户。</p>
+<p>（6）作业完成</p>
+<p>除了向应用管理器请求作业进度外, 客户端每5秒都会通过调用waitForCompletion()来检查作业是否完成。时间间隔可以通过mapreduce.client.completion.pollinterval来设置。作业完成之后, 应用管理器和Container会清理工作状态。作业的信息会被作业历史服务器存储以备之后用户核查。</p>
+<h2 id="作业提交过程之MapReduce"><a href="#作业提交过程之MapReduce" class="headerlink" title="作业提交过程之MapReduce"></a>作业提交过程之MapReduce</h2><p><img src="/Yarn/124.png" alt="124"></p>
+<h1 id="资源调度器"><a href="#资源调度器" class="headerlink" title="资源调度器"></a>资源调度器</h1><p>Hadoop作业调度器主要有三种：FIFO、Capacity Scheduler和Fair Scheduler。Hadoop3.1.3默认的资源调度器是Capacity Scheduler。</p>
+<p>具体设置详见：yarn-default.xml文件</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span>The class to use as the resource scheduler.<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.scheduler.class<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">value</span>&gt;</span>org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacityScheduler<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>FIFO：</p>
+<p><img src="/Yarn/125.png" alt="125"></p>
+<p><strong>FIFO调度器以集群资源独占的方式来运行作业，这样的好处是一个作业可以充分利用所有的集群资源，但是对于运行时间短，重要性高或者交互式查询类的MR作业就要等待排在序列前的作业完成才能被执行，这也就导致了如果有一个非常大的Job在运行，那么后面的作业将会被阻塞。</strong></p>
+<p>Capacity Scheduler：</p>
+<p><img src="/Yarn/126.png" alt="126"></p>
+<p>可以将它理解成一个个的资源队列。这个资源队列是用户自己去分配的。例如因为工作所需要把整个集群分成了AB两个队列，A队列下面还可以继续分，比如将A队列再分为1和2两个子队列。那么队列的分配就可以参考下面的树形结构：</p>
+<p>—A[60%]</p>
+<p>|—A.1[40%]</p>
+<p>|—A.2[60%]</p>
+<p>—B[40%]</p>
+<p>上述的树形结构可以理解为A队列占用整个资源的60%，B队列占用整个资源的40%。A队列里面又分了两个子队列，A.1占据40%，A.2占据60%，也就是说此时A.1和A.2分别占用A队列的40%和60%的资源。虽然此时已经具体分配了集群的资源，但是并不是说A提交了任务之后只能使用它被分配到的60%的资源，而B队列的40%的资源就处于空闲。只要是其它队列中的资源处于空闲状态，那么有任务提交的队列可以使用空闲队列所分配到的资源，使用的多少是依据配来决定。</p>
+<p>Capacity调度器具有以下的几个特性：</p>
+<ol>
+<li><p><strong>层次化的队列设计</strong>，这种层次化的队列设计保证了<strong>子队列可以使用父队列设置的全部资源</strong>。这样通过层次化的管理，更容易合理分配和限制资源的使用。</p>
+</li>
+<li><p>容量保证，队列上都会设置一个资源的占比，这样可以<strong>保证每个队列都不会占用整个集群的资源</strong>。</p>
+</li>
+<li><p>安全，<strong>每个队列又严格的访问控制</strong>。用户只能向自己的队列里面提交任务，而且不能修改或者访问其他队列的任务。</p>
+</li>
+<li><p>弹性分配，空闲的资源可以被分配给任何队列。当多个队列出现争用的时候，则会按照比例进行平衡。</p>
+</li>
+<li><p>多租户租用，通过队列的容量限制，多个用户就可以共享同一个集群，同事保证每个队列分配到自己的容量，提高利用率。</p>
+</li>
+<li><p>操作性，Yarn支持动态修改调整容量、权限等的分配，可以在运行时直接修改。还提供给管理员界面，来显示当前的队列状况。管理员可以在运行时，添加一个队列；但是不能删除一个队列。管理员还可以在运行时暂停某个队列，这样可以保证当前的队列在执行过程中，集群不会接收其他的任务。如果一个队列被设置成了stopped，那么就不能向他或者子队列上提交任务了。</p>
+</li>
+<li><p>基于资源的调度，协调不同资源需求的应用程序，比如内存、CPU、磁盘等等。</p>
+</li>
+</ol>
+<p>相关参数的配置：</p>
+<p>（1）capacity：队列的资源容量（百分比）。 当系统非常繁忙时，应保证每个队列的容量得到满足，而如果每个队列应用程序较少，可将剩余资源共享给其他队列。注意，所有队列的容量之和应小于100。</p>
+<p>（2）maximum-capacity：队列的资源使用上限（百分比）。由于存在资源共享，因此一个队列使用的资源量可能超过其容量，而最多使用资源量可通过该参数限制。（这也是前文提到的关于有任务运行的队列可以占用的资源的最大百分比）</p>
+<p>（3）user-limit-factor：每个用户最多可使用的资源量（百分比）。比如，假设该值为30，则任何时刻，每个用户使用的资源量不能超过该队列容量的30%。</p>
+<p>（4）maximum-applications ：集群或者队列中同时处于等待和运行状态的应用程序数目上限，这是一个强限制，一旦集群中应用程序数目超过该上限，后续提交的应用程序将被拒绝，默认值为 10000。所有队列的数目上限可通过参数yarn.scheduler.capacity.maximum-applications设置（可看做默认值），而单个队列可通过参数yarn.scheduler.capacity.<queue-path>.maximum- applications设置适合自己的值。</queue-path></p>
+<p>（5）maximum-am-resource-percent：集群中用于运行应用程序<br>ApplicationMaster的资源比例上限，该参数通常用于限制处于活动状态的应用程序数目。该参数类型为浮点型，默认是0.1，表示10%。所有队列的ApplicationMaster资源比例上限可通过参数yarn.scheduler.capacity. maximum-am-resource-percent设置（可看做默认值），而单个队列可通过参数<br>yarn.scheduler.capacity.<queue-path>.<br>maximum-am-resource-percent设置适合自己的值。</queue-path></p>
+<p>（6）state ：队列状态可以为STOPPED或者 RUNNING，如果一个队列处于STOPPED状态，用户不可以将应用程序提交到该队列或者它的子队列中，类似的，如果ROOT队列处于STOPPED 状态，用户不可以向集群中提交应用程序，但正在运行的应用程序仍可以正常运行结束，以便队列可以优雅地退出。</p>
+<p>（7）acl_submit_applications：限定哪些Linux用户/用户组可向给定队列中提交应用程序。需要注意的是，该属性具有继承性，即如果一个用户可以向某个队列中提交应用程序，则它可以向它的所有子队列中提交应用程序。配置该属性时，用户之间或用户组之间用“，”分割，用户和用户组之间用空格分割，比如“user1, user2 group1,group2”。</p>
+<p>（8）acl_administer_queue：为队列指定一个管理员，该管理员可控制该队列的所有应用程序，比如杀死任意一个应用程序等。同样，该属性具有继承性，如果一个用户可以向某个队列中提交应用程序，则它可以向它的所有子队列中提交应用程序。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">如果用idea，可以在用</span><br><span class="line">conf.set(<span class="string">&quot;mapred.job.queue.name&quot;</span>, <span class="string">&quot;a&quot;</span>);	<span class="regexp">//</span>a 是队列名称</span><br><span class="line"></span><br><span class="line">如果在Linux上运行jar包，则可以用</span><br><span class="line">hadoop jar hadoop-mapreduce-examples-<span class="number">2.7</span>.<span class="number">2</span>.jar  wordcount -D mapreduce.job.queuename=a <span class="regexp">/mapjoin /</span>output3</span><br></pre></td></tr></table></figure>
+
+<p>Fair Scheduler：</p>
+<p><img src="/Yarn/127.png" alt="127"></p>
+<p><img src="/Yarn/128.png" alt="128"></p>
+<p>Fair调度器是一个队列资源分配方式，在整个时间线上，所有的Job平均的获取资源。默认情况下，Fair调度器只是对内存资源做公平的调度和分配。当集群中只有一个任务在运行时，那么此任务会占用整个集群的资源。当其他的任务提交后，那些释放的资源将会被分配给新的Job，所以每个任务最终都能获取几乎一样多的资源。</p>
+<p>例如有两个用户A和B，他们分别拥有一个队列。当A启动一个Job而B没有任务提交时，A会获得全部集群资源；当B启动一个Job后，A的任务会继续运行，不过队列A会慢慢释放它的一些资源，一会儿之后两个任务会各自获得一半的集群资源。如果此时B再启动第二个Job并且其它任务也还在运行时，那么它将会和B队列中的的第一个Job共享队列B的资源，也就是队列B的两个Job会分别使用集群四分之一的资源，而队列A的Job仍然会使用集群一半的资源，结果就是<strong>集群的资源最终在两个用户之间平等的共享</strong>。</p>
+<p>相关参数的配置：</p>
+<p>（1）yarn.scheduler.fair.allocation.file： “allocation”文件的位置，“allocation”文件是一个用来描述queue以及它们的属性的配置文件。这个文件必须为格式严格的xml文件。如果为相对路径，那么将会在classpath下查找此文件(conf目录下)。默认值为“fair-scheduler.xml”。</p>
+<p>（2）yarn.scheduler.fair.user-as-default-queue：是否将与allocation有关的username作为默认的queue name，当queue name没有指定的时候。如果设置成false(且没有指定queue name) 或者没有设定，所有的jobs将共享“default”<br>queue。默认值为true。</p>
+<p>（3）yarn.scheduler.fair.preemption：是否使用“preemption”(优先权，抢占)，默认为fasle，在此版本中此功能为测试性的。</p>
+<p>（4）yarn.scheduler.fair.assignmultiple：是在允许在一个心跳中，发送多个container分配信息。默认值为false。</p>
+<p>（5）yarn.scheduler.fair.max.assign：如果assignmultuple为true，那么在一次心跳中，最多发送分配container的个数。默认为-1，无限制。</p>
+<p>（6）yarn.scheduler.fair.locality.threshold.node：一个float值，在0~1之间，表示在等待获取满足node-local条件的containers时，最多放弃不满足node-local的container的机会次数，放弃的nodes个数为集群的大小的比例。默认值为-1.0表示不放弃任何调度的机会。</p>
+<p>（7）yarn.scheduler.fair.locality.threashod.rack：同上，满足rack-local。</p>
+<p>（8）yarn.scheduler.fair.sizebaseweight：是否根据application的大小(Job的个数)作为权重。默认为false，如果为true，那么复杂的application将获取更多的资源。</p>
+<p><strong>如果业务逻辑比较简单或者刚接触Hadoop的时候建议使用FIFO调度器；如果需要控制部分应用的优先级同时又想要充分利用集群资源的情况下，建议使用Capacity调度器；如果想要多用户或者多队列公平的共享集群资源，那么就选用Fair调度器。希望大家能够根据业务所需选择合适的调度器。</strong></p>
+<h1 id="容量调度器多队列提交案例"><a href="#容量调度器多队列提交案例" class="headerlink" title="容量调度器多队列提交案例"></a>容量调度器多队列提交案例</h1><h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p><strong>Yarn默认的容量调度器是一条单队列的调度器</strong>，在实际使用中会出现单个任务阻塞整个队列的情况。同时，随着业务的增长，公司需要分业务限制集群使用率。这就<strong>需要我们按照业务种类配置多条任务队列</strong>。</p>
+<h2 id="配置多队列的容量调度器"><a href="#配置多队列的容量调度器" class="headerlink" title="配置多队列的容量调度器"></a>配置多队列的容量调度器</h2><p>默认Yarn的配置下，容量调度器只有一条Default队列。在capacity-scheduler.xml中可以配置多条队列，并降低default队列资源占比：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.scheduler.capacity.root.queues<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>default,hive<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span></span><br><span class="line">      The queues at the this level (root is the root queue).</span><br><span class="line">    <span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.scheduler.capacity.root.default.capacity<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>40<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--队列目标资源百分比，所有队列相加必须等于100--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.scheduler.capacity.root.hive.capacity<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>60<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span>  </span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--队列最大资源百分比--&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.scheduler.capacity.root.hive.maximum-capacity<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>100<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--单用户可用队列资源占比--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.scheduler.capacity.root.hive.user-limit-factor<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--队列状态（RUNNING或STOPPING）--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.scheduler.capacity.root.hive.state<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>RUNNING<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--队列允许哪些用户提交--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.scheduler.capacity.root.hive.acl_submit_applications<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>*<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--队列允许哪些用户管理--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.scheduler.capacity.root.hive.acl_administer_queue<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>*<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.scheduler.capacity.root.hive.maximum-application-lifetime<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">value</span>&gt;</span>-1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span>hive队列中任务的最大生命时长<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在配置完成后，重启Yarn，就可以看到两条队列。</p>
+<h2 id="向Hive队列提交任务"><a href="#向Hive队列提交任务" class="headerlink" title="向Hive队列提交任务"></a>向Hive队列提交任务</h2><p>默认的任务提交都是提交到default队列的。如果希望向其他队列提交任务，需要在Driver中声明：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WcDrvier</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, ClassNotFoundException, InterruptedException </span>&#123;</span><br><span class="line">        Configuration configuration = <span class="keyword">new</span> Configuration();</span><br><span class="line"></span><br><span class="line">        configuration.set(<span class="string">&quot;mapred.job.queue.name&quot;</span>, <span class="string">&quot;hive&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//1. 获取一个Job实例</span></span><br><span class="line">        Job job = Job.getInstance(configuration);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//2. 设置类路径</span></span><br><span class="line">        job.setJarByClass(WcDrvier.class);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//3. 设置Mapper和Reducer</span></span><br><span class="line">        job.setMapperClass(WcMapper.class);</span><br><span class="line">        job.setReducerClass(WcReducer.class);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//4. 设置Mapper和Reducer的输出类型</span></span><br><span class="line">        job.setMapOutputKeyClass(Text.class);</span><br><span class="line">        job.setMapOutputValueClass(IntWritable.class);</span><br><span class="line"></span><br><span class="line">        job.setOutputKeyClass(Text.class);</span><br><span class="line">        job.setOutputValueClass(IntWritable.class);</span><br><span class="line"></span><br><span class="line">        job.setCombinerClass(WcReducer.class);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//5. 设置输入输出文件</span></span><br><span class="line">        FileInputFormat.setInputPaths(job, <span class="keyword">new</span> Path(args[<span class="number">0</span>]));</span><br><span class="line">        FileOutputFormat.setOutputPath(job, <span class="keyword">new</span> Path(args[<span class="number">1</span>]));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//6. 提交Job</span></span><br><span class="line">        <span class="keyword">boolean</span> b = job.waitForCompletion(<span class="keyword">true</span>);</span><br><span class="line">        System.exit(b ? <span class="number">0</span> : <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="任务的推测执行"><a href="#任务的推测执行" class="headerlink" title="任务的推测执行"></a>任务的推测执行</h1><p>1．作业完成时间取决于最慢的任务完成时间</p>
+<p>一个作业由若干个Map任务和Reduce任务构成。因硬件老化、软件Bug等，某些任务可能运行非常慢。</p>
+<p>思考：系统中有99%的Map任务都完成了，只有少数几个Map老是进度很慢，完不成，怎么办？</p>
+<p>2．推测执行机制</p>
+<p>发现拖后腿的任务，比如某个任务运行速度远慢于任务平均速度。<strong>为拖后腿任务启动一个备份任务</strong>，同时运行。谁先运行完，则采用谁的结果。</p>
+<p>3．执行推测任务的前提条件</p>
+<p>（1）每个Task只能有一个备份任务</p>
+<p>（2）当前Job已完成的Task必须不小于0.05（5%）</p>
+<p>（3）开启推测执行参数设置。mapred-site.xml文件中默认是打开的。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.map.speculative<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="name">description</span>&gt;</span>If true, then multiple instances of some map tasks may be executed in parallel.<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.reduce.speculative<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="name">description</span>&gt;</span>If true, then multiple instances of some reduce tasks may be executed in parallel.<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>4．不能启用推测执行机制情况</p>
+<p>  （1）任务间存在严重的负载倾斜；</p>
+<p>  （2）特殊任务，比如任务向数据库中写数据。</p>
+<h1 id="查看YARN任务日志的几种方式"><a href="#查看YARN任务日志的几种方式" class="headerlink" title="查看YARN任务日志的几种方式"></a>查看YARN任务日志的几种方式</h1><h2 id="1、通过history-server"><a href="#1、通过history-server" class="headerlink" title="1、通过history server"></a>1、通过history server</h2><h2 id="2、通过yarn命令-用户要和提交任务的用户一致）"><a href="#2、通过yarn命令-用户要和提交任务的用户一致）" class="headerlink" title="2、通过yarn命令(用户要和提交任务的用户一致）"></a>2、通过yarn命令(用户要和提交任务的用户一致）</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn application -list -appStates ALL（这个不显示时间信息）</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn logs -applicationId application_1493700892407_0007</span><br></pre></td></tr></table></figure>
+
+<h2 id="3、直接查看hdfs路径的log"><a href="#3、直接查看hdfs路径的log" class="headerlink" title="3、直接查看hdfs路径的log"></a>3、直接查看hdfs路径的log</h2><p>1）查看yarn-site.xml，确定log配置目录</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.remote-app-log-dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">value</span>&gt;</span>/app-logs<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>2）查看日志文件信息（注意日期和时间）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[hdfs@node1 root]$ hdfs dfs -ls /app-logs/hdfs/logs</span><br><span class="line">Found 1 items</span><br><span class="line">drwxrwx---   - hdfs hadoop          0 2017-05-02 04:18 /app-logs/hdfs/logs/application_1493700892407_0007</span><br></pre></td></tr></table></figure>
+
+<p>3）查看日志详情（注意查看节点重启前的几个敏感app）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn logs -applicationId application_1493700892407_0007</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Zookeeper/" rel="prev" title="Zookeeper">
+      <i class="fa fa-chevron-left"></i> Zookeeper
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Linux/" rel="next" title="Linux">
+      Linux <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Yarn%E5%9F%BA%E6%9C%AC%E6%9E%B6%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">Yarn基本架构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Yarn%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6"><span class="nav-number">2.</span> <span class="nav-text">Yarn工作机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%9C%E4%B8%9A%E6%8F%90%E4%BA%A4%E5%85%A8%E8%BF%87%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">作业提交全过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%9C%E4%B8%9A%E6%8F%90%E4%BA%A4%E8%BF%87%E7%A8%8B%E4%B9%8BYARN"><span class="nav-number">3.1.</span> <span class="nav-text">作业提交过程之YARN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%9C%E4%B8%9A%E6%8F%90%E4%BA%A4%E8%BF%87%E7%A8%8B%E4%B9%8BMapReduce"><span class="nav-number">3.2.</span> <span class="nav-text">作业提交过程之MapReduce</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E8%B0%83%E5%BA%A6%E5%99%A8"><span class="nav-number">4.</span> <span class="nav-text">资源调度器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%B9%E9%87%8F%E8%B0%83%E5%BA%A6%E5%99%A8%E5%A4%9A%E9%98%9F%E5%88%97%E6%8F%90%E4%BA%A4%E6%A1%88%E4%BE%8B"><span class="nav-number">5.</span> <span class="nav-text">容量调度器多队列提交案例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9C%80%E6%B1%82"><span class="nav-number">5.1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%A4%9A%E9%98%9F%E5%88%97%E7%9A%84%E5%AE%B9%E9%87%8F%E8%B0%83%E5%BA%A6%E5%99%A8"><span class="nav-number">5.2.</span> <span class="nav-text">配置多队列的容量调度器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%91Hive%E9%98%9F%E5%88%97%E6%8F%90%E4%BA%A4%E4%BB%BB%E5%8A%A1"><span class="nav-number">5.3.</span> <span class="nav-text">向Hive队列提交任务</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E7%9A%84%E6%8E%A8%E6%B5%8B%E6%89%A7%E8%A1%8C"><span class="nav-number">6.</span> <span class="nav-text">任务的推测执行</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8BYARN%E4%BB%BB%E5%8A%A1%E6%97%A5%E5%BF%97%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="nav-number">7.</span> <span class="nav-text">查看YARN任务日志的几种方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E9%80%9A%E8%BF%87history-server"><span class="nav-number">7.1.</span> <span class="nav-text">1、通过history server</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E9%80%9A%E8%BF%87yarn%E5%91%BD%E4%BB%A4-%E7%94%A8%E6%88%B7%E8%A6%81%E5%92%8C%E6%8F%90%E4%BA%A4%E4%BB%BB%E5%8A%A1%E7%9A%84%E7%94%A8%E6%88%B7%E4%B8%80%E8%87%B4%EF%BC%89"><span class="nav-number">7.2.</span> <span class="nav-text">2、通过yarn命令(用户要和提交任务的用户一致）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E7%9B%B4%E6%8E%A5%E6%9F%A5%E7%9C%8Bhdfs%E8%B7%AF%E5%BE%84%E7%9A%84log"><span class="nav-number">7.3.</span> <span class="nav-text">3、直接查看hdfs路径的log</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Vincent"
+      src="/images/cute.jpeg">
+  <p class="site-author-name" itemprop="name">Vincent</p>
+  <div class="site-description" itemprop="description">nice</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vincent</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
