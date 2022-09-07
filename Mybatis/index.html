@@ -27,10 +27,12 @@
 <meta property="og:site_name" content="Vincent&#39;s Learning Journey">
 <meta property="og:description" content="持久化层">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/Mybatis/vincent/blog/source/_posts/Mybatis/image-20220907200841185.png">
 <meta property="article:published_time" content="2021-12-24T10:46:41.000Z">
-<meta property="article:modified_time" content="2022-09-07T11:16:58.899Z">
+<meta property="article:modified_time" content="2022-09-07T12:08:49.378Z">
 <meta property="article:author" content="Vincent">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/Mybatis/vincent/blog/source/_posts/Mybatis/image-20220907200841185.png">
 
 <link rel="canonical" href="http://example.com/Mybatis/">
 
@@ -214,7 +216,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-09-07 19:16:58" itemprop="dateModified" datetime="2022-09-07T19:16:58+08:00">2022-09-07</time>
+                <time title="Modified: 2022-09-07 20:08:49" itemprop="dateModified" datetime="2022-09-07T20:08:49+08:00">2022-09-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -339,7 +341,7 @@
 
 <h2 id="sql标签"><a href="#sql标签" class="headerlink" title="sql标签"></a>sql标签</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 使用sql标签抽取重复出现的SQL片段 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">sql</span> <span class="attr">id</span>=<span class="string">&quot;mySelectSql&quot;</span>&gt;</span></span><br><span class="line">    select emp_id,emp_name,emp_age,emp_salary,emp_gender from t_emp</span><br><span class="line"><span class="tag">&lt;/<span class="name">sql</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 使用include标签引用声明的SQL片段 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">include</span> <span class="attr">refid</span>=<span class="string">&quot;mySelectSql&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
 
-<h1 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h1><p>![截屏2022-09-07 16.43.58](/Users/vincent/Library/Application Support/typora-user-images/截屏2022-09-07 16.43.58.png)</p>
+<h1 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h1><p><img src="/Mybatis/vincent/blog/source/_posts/Mybatis/image-20220907200841185.png" alt="image-20220907200841185"></p>
 <p>查询的顺序是：</p>
 <ul>
 <li>先查询二级缓存，因为二级缓存中可能会有其他程序已经查出来的数据，可以拿来直接使用。</li>

@@ -104,7 +104,7 @@
 
 <h2 id="sql标签"><a href="#sql标签" class="headerlink" title="sql标签"></a>sql标签</h2><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 使用sql标签抽取重复出现的SQL片段 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">sql</span> <span class="attr">id</span>=<span class="string">&quot;mySelectSql&quot;</span>&gt;</span></span><br><span class="line">    select emp_id,emp_name,emp_age,emp_salary,emp_gender from t_emp</span><br><span class="line"><span class="tag">&lt;/<span class="name">sql</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 使用include标签引用声明的SQL片段 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">include</span> <span class="attr">refid</span>=<span class="string">&quot;mySelectSql&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
 
-<h1 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h1><p>![截屏2022-09-07 16.43.58](/Users/vincent/Library/Application Support/typora-user-images/截屏2022-09-07 16.43.58.png)</p>
+<h1 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h1><p><img src="/Mybatis/vincent/blog/source/_posts/Mybatis/image-20220907200841185.png" alt="image-20220907200841185"></p>
 <p>查询的顺序是：</p>
 <ul>
 <li>先查询二级缓存，因为二级缓存中可能会有其他程序已经查出来的数据，可以拿来直接使用。</li>
@@ -7206,7 +7206,7 @@
 </tr>
 </tbody></table>
 <h2 id="GitHub"><a href="#GitHub" class="headerlink" title="GitHub"></a>GitHub</h2><p><a href="https://github.com/Vincent-ski/bigdata.git">https://github.com/Vincent-ski/bigdata.git</a></p>
-<p><a href="mailto:&#x67;&#x69;&#x74;&#x40;&#103;&#105;&#116;&#x68;&#x75;&#98;&#46;&#99;&#111;&#109;">&#x67;&#x69;&#x74;&#x40;&#103;&#105;&#116;&#x68;&#x75;&#98;&#46;&#99;&#111;&#109;</a>:Vincent-ski/bigdata.git</p>
+<p><a href="mailto:&#103;&#x69;&#x74;&#64;&#x67;&#x69;&#116;&#x68;&#117;&#98;&#46;&#99;&#x6f;&#x6d;">&#103;&#x69;&#x74;&#64;&#x67;&#x69;&#116;&#x68;&#117;&#98;&#46;&#99;&#x6f;&#x6d;</a>:Vincent-ski/bigdata.git</p>
 <p>GitHub是一个Git项目托管网站,主要提供基于Git的版本托管服务。</p>
 <h3 id="本地库联通GitHub"><a href="#本地库联通GitHub" class="headerlink" title="本地库联通GitHub"></a>本地库联通GitHub</h3><p>1、查看本地是否配置了密钥</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ~/.ssh</span></span><br></pre></td></tr></table></figure>
@@ -7215,7 +7215,7 @@
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ssh-keygen</span></span><br></pre></td></tr></table></figure>
 
 <p>3、将公钥告诉github账户，相当于约定一个接头暗号</p>
-<p>4、测试本地仓库和github的联通性：ssh -T <a href="mailto:&#x67;&#105;&#116;&#x40;&#103;&#x69;&#116;&#104;&#x75;&#x62;&#x2e;&#x63;&#111;&#x6d;">&#x67;&#105;&#116;&#x40;&#103;&#x69;&#116;&#104;&#x75;&#x62;&#x2e;&#x63;&#111;&#x6d;</a></p>
+<p>4、测试本地仓库和github的联通性：ssh -T <a href="mailto:&#x67;&#105;&#116;&#x40;&#x67;&#105;&#116;&#x68;&#x75;&#x62;&#x2e;&#99;&#x6f;&#109;">&#x67;&#105;&#116;&#x40;&#x67;&#105;&#116;&#x68;&#x75;&#x62;&#x2e;&#99;&#x6f;&#109;</a></p>
 <p>5、.ssh文件夹中会多一个文件known_hosts，其中记录了连接的github的ip账号</p>
 <h3 id="push"><a href="#push" class="headerlink" title="push"></a>push</h3><p>本地库推送到GitHub</p>
 <p>1、准备本地库</p>
