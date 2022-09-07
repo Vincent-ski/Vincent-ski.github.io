@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/cute.jpeg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/cute.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/cute.jpeg">
+  <link rel="mask-icon" href="/images/cute.jpeg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="持久化层">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mybatis">
+<meta property="og:url" content="http://example.com/Mybatis/index.html">
+<meta property="og:site_name" content="Vincent&#39;s Learning Journey">
+<meta property="og:description" content="持久化层">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-12-24T10:46:41.000Z">
+<meta property="article:modified_time" content="2022-09-07T07:54:18.726Z">
+<meta property="article:author" content="Vincent">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/Mybatis/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Mybatis | Vincent's Learning Journey</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Vincent's Learning Journey</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">DayDayUp</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section">Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section">Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section">Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/Mybatis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cute.jpeg">
+      <meta itemprop="name" content="Vincent">
+      <meta itemprop="description" content="nice">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vincent's Learning Journey">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Mybatis
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-12-24 18:46:41" itemprop="dateCreated datePublished" datetime="2021-12-24T18:46:41+08:00">2021-12-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-09-07 15:54:18" itemprop="dateModified" datetime="2022-09-07T15:54:18+08:00">2022-09-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">持久化层</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//com.vincent.pojo</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Employee</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Integer empId;</span><br><span class="line">    <span class="keyword">private</span> String empName;</span><br><span class="line">    <span class="keyword">private</span> Double empSalary;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//com.vincent.dao</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">EmployeeMapper</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">Employee <span class="title">selectEmployee</span><span class="params">(Integer empId)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 功能：根据主键值删除数据库记录</span></span><br><span class="line">    <span class="comment">// 入参：作为删除依据的主键值</span></span><br><span class="line">    <span class="comment">// 返回值：受影响的行数</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">deleteEmployeeById</span><span class="params">(Integer empId)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 功能：根据实体类对象中封装的数据执行更新操作</span></span><br><span class="line">    <span class="comment">// 入参：封装更新数据的实体类对象</span></span><br><span class="line">    <span class="comment">// 返回值：受影响的行数</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">updateEmployeeById</span><span class="params">(Employee employee)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">insertEmployee</span><span class="params">(Employee employee)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">updateEmployee</span><span class="params">(<span class="meta">@Param(&quot;empId&quot;)</span> Integer empId, <span class="meta">@Param(&quot;empSalary&quot;)</span> Double empSalary)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">updateEmployeeByMap</span><span class="params">(Map&lt;String, Object&gt; paramMap)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">Map&lt;String,Object&gt; <span class="title">selectEmpNameAndMaxSalary</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">List&lt;Employee&gt; <span class="title">selectAll</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="单个简单类型参数"><a href="#单个简单类型参数" class="headerlink" title="单个简单类型参数"></a>单个简单类型参数</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Employee selectEmployee(Integer empId); --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;selectEmployee&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;com.vincent.pojo.Employee&quot;</span>&gt;</span></span><br><span class="line">  select emp_id empId,emp_name empName,emp_salary empSalary from t_emp where emp_id=#&#123;empId&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="实体类类型参数"><a href="#实体类类型参数" class="headerlink" title="实体类类型参数"></a>实体类类型参数</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- int insertEmployee(Employee employee); --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">&quot;insertEmployee&quot;</span>&gt;</span></span><br><span class="line">  insert into t_emp(emp_name,emp_salary) values(#&#123;empName&#125;,#&#123;empSalary&#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Mybatis会根据#{}中传入的数据，加工成getXxx()方法，通过反射在实体类对象中调用这个方法，从而获取到对应的数据。填充到#{}解析后的问号占位符这个位置。</p>
+<h2 id="零散的简单类型数据"><a href="#零散的简单类型数据" class="headerlink" title="零散的简单类型数据"></a>零散的简单类型数据</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- int updateEmployee(@Param(&quot;empId&quot;) Integer empId,@Param(&quot;empSalary&quot;) Double empSalary); --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">update</span> <span class="attr">id</span>=<span class="string">&quot;updateEmployee&quot;</span>&gt;</span></span><br><span class="line">  update t_emp set emp_salary=#&#123;empSalary&#125; where emp_id=#&#123;empId&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">update</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Map类型参数"><a href="#Map类型参数" class="headerlink" title="Map类型参数"></a>Map类型参数</h2><p>有很多零散的参数需要传递，但是没有对应的实体类类型可以使用。使用@Param注解一个一个传入又太麻烦了。所以都封装到Map中。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- int updateEmployeeByMap(Map&lt;String, Object&gt; paramMap); --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">update</span> <span class="attr">id</span>=<span class="string">&quot;updateEmployeeByMap&quot;</span>&gt;</span></span><br><span class="line">  update t_emp set emp_salary=#&#123;empSalaryKey&#125; where emp_id=#&#123;empIdKey&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">update</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testUpdateEmpNameByMap</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  EmployeeMapper mapper = session.getMapper(EmployeeMapper.class);</span><br><span class="line">  Map&lt;String, Object&gt; paramMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">  paramMap.put(<span class="string">&quot;empSalaryKey&quot;</span>, <span class="number">999.99</span>);</span><br><span class="line">  paramMap.put(<span class="string">&quot;empIdKey&quot;</span>, <span class="number">5</span>);</span><br><span class="line">  <span class="keyword">int</span> result = mapper.updateEmployeeByMap(paramMap);</span><br><span class="line">  log.info(<span class="string">&quot;result = &quot;</span> + result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>#{}中写Map中的key</p>
+<h2 id="返回单个简单类型数据"><a href="#返回单个简单类型数据" class="headerlink" title="返回单个简单类型数据"></a>返回单个简单类型数据</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- int selectEmpCount(); --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;selectEmpCount&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;int&quot;</span>&gt;</span></span><br><span class="line">  select count(*) from t_emp</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Mybatis 内部给常用的数据类型设定了很多别名。 以 int 类型为例，可以写的名称有：int、integer、Integer、java.lang.Integer、Int、INT、INTEGER 等等。</p>
+<h2 id="返回实体类对象"><a href="#返回实体类对象" class="headerlink" title="返回实体类对象"></a>返回实体类对象</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Employee selectEmployee(Integer empId); --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 编写具体的SQL语句，使用id属性唯一的标记一条SQL语句 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- resultType属性：指定封装查询结果的Java实体类的全类名 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;selectEmployee&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;com.vincent.pojo.Employee&quot;</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- Mybatis负责把SQL语句中的#&#123;&#125;部分替换成“?”占位符 --&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 给每一个字段设置一个别名，让别名和Java实体类中属性名一致 --&gt;</span></span><br><span class="line">  select emp_id empId,emp_name empName,emp_salary empSalary from t_emp where emp_id=#&#123;maomi&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="返回Map类型"><a href="#返回Map类型" class="headerlink" title="返回Map类型"></a>返回Map类型</h2><p>适用于SQL查询返回的各个字段综合起来并不和任何一个现有的实体类对应，没法封装到实体类对象中。能够封装成实体类类型的，就不使用Map类型。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Map&lt;String,Object&gt; selectEmpNameAndMaxSalary(); --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- Map&lt;String,Object&gt; selectEmpNameAndMaxSalary(); --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 返回工资最高的员工的姓名和他的工资 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;selectEmpNameAndMaxSalary&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;map&quot;</span>&gt;</span></span><br><span class="line">  SELECT</span><br><span class="line">    emp_name 员工姓名,</span><br><span class="line">    emp_salary 员工工资,</span><br><span class="line">    (SELECT AVG(emp_salary) FROM t_emp) 部门平均工资</span><br><span class="line">  FROM t_emp WHERE emp_salary=(</span><br><span class="line">    SELECT MAX(emp_salary) FROM t_emp</span><br><span class="line">  )</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testQueryEmpNameAndSalary</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  EmployeeMapper employeeMapper = session.getMapper(EmployeeMapper.class);</span><br><span class="line">  Map&lt;String, Object&gt; resultMap = employeeMapper.selectEmpNameAndMaxSalary();</span><br><span class="line">  Set&lt;Map.Entry&lt;String, Object&gt;&gt; entrySet = resultMap.entrySet();</span><br><span class="line">  <span class="keyword">for</span> (Map.Entry&lt;String, Object&gt; entry : entrySet) &#123;</span><br><span class="line">    String key = entry.getKey();</span><br><span class="line">    Object value = entry.getValue();</span><br><span class="line">    log.info(key + <span class="string">&quot;=&quot;</span> + value);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="返回List类型"><a href="#返回List类型" class="headerlink" title="返回List类型"></a>返回List类型</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- List&lt;Employee&gt; selectAll(); --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;selectAll&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;com.vincent.pojo.Employee&quot;</span>&gt;</span></span><br><span class="line">  select emp_id empId,emp_name empName,emp_salary empSalary</span><br><span class="line">  from t_emp</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="返回自增主键"><a href="#返回自增主键" class="headerlink" title="返回自增主键"></a>返回自增主键</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- int insertEmployee(Employee employee); --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- useGeneratedKeys属性字面意思就是“使用生成的主键” --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- keyProperty属性可以指定主键在实体类对象中对应的属性名，Mybatis会将拿到的主键值存入这个属性 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">&quot;insertEmployee&quot;</span> <span class="attr">useGeneratedKeys</span>=<span class="string">&quot;true&quot;</span> <span class="attr">keyProperty</span>=<span class="string">&quot;empId&quot;</span>&gt;</span></span><br><span class="line">  insert into t_emp(emp_name,emp_salary)</span><br><span class="line">  values(#&#123;empName&#125;,#&#123;empSalary&#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="关联关系"><a href="#关联关系" class="headerlink" title="关联关系"></a>关联关系</h1><table>
+<thead>
+<tr>
+<th>关联关系</th>
+<th>配置项关键词</th>
+<th>所在配置文件和具体位置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>对一</td>
+<td>association标签/javaType属性</td>
+<td>Mapper配置文件中的resultMap标签内</td>
+</tr>
+<tr>
+<td>对多</td>
+<td>collection标签/ofType属性</td>
+<td>Mapper配置文件中的resultMap标签内</td>
+</tr>
+<tr>
+<td>对一分步</td>
+<td>association标签/select属性/column属性</td>
+<td>Mapper配置文件中的resultMap标签内</td>
+</tr>
+<tr>
+<td>对多分步</td>
+<td>collection标签/select属性/column属性</td>
+<td>Mapper配置文件中的resultMap标签内</td>
+</tr>
+<tr>
+<td>延迟加载<br>3.4.1版本前</td>
+<td>lazyLoadingEnabled设置为true  <br>aggressiveLazyLoading设置为false</td>
+<td>Mybatis全局配置文件中的settings标签内</td>
+</tr>
+<tr>
+<td>延迟加载<br>3.4.1版本后</td>
+<td>lazyLoadingEnabled设置为true</td>
+<td>Mybatis全局配置文件中的settings标签内</td>
+</tr>
+</tbody></table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//com.vincent.pojo</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Customer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Integer customerId;</span><br><span class="line">    <span class="keyword">private</span> String customerName;</span><br><span class="line">    <span class="keyword">private</span> List&lt;Order&gt; orderList;<span class="comment">// 体现的是对多的关系</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Order</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Integer orderId;</span><br><span class="line">    <span class="keyword">private</span> String orderName;</span><br><span class="line">    <span class="keyword">private</span> Customer customer;<span class="comment">// 体现的是对一的关系</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//com.vincent.dao</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">CustomerMapper</span> </span>&#123;</span><br><span class="line">    <span class="function">Customer <span class="title">selectCustomerWithOrderList</span><span class="params">(Integer customerId)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">OrderMapper</span> </span>&#123;</span><br><span class="line">    <span class="function">Order <span class="title">selectOrderWithCustomer</span><span class="params">(Integer orderId)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="对一"><a href="#对一" class="headerlink" title="对一"></a>对一</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">mapper</span></span></span><br><span class="line"><span class="meta">        <span class="meta-keyword">PUBLIC</span> <span class="meta-string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span></span></span><br><span class="line"><span class="meta">        <span class="meta-string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- mapper是根标签，namespace属性：在Mybatis全局范围内找到一个具体的Mapper配置 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 引入接口后，为了方便通过接口全类名来找到Mapper配置文件，所以通常将namespace属性设置为接口全类名 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.vincent.dao.OrderMapper&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 创建resultMap实现“对一”关联关系映射 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- id属性：通常设置为这个resultMap所服务的那条SQL语句的id加上“ResultMap” --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- type属性：要设置为这个resultMap所服务的那条SQL语句最终要返回的类型 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;selectOrderWithCustomerResultMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;com.vincent.pojo.Order&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 先设置Order自身属性和字段的对应关系 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span> <span class="attr">column</span>=<span class="string">&quot;order_id&quot;</span> <span class="attr">property</span>=<span class="string">&quot;orderId&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;order_name&quot;</span> <span class="attr">property</span>=<span class="string">&quot;orderName&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- 使用association标签配置“对一”关联关系 --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- property属性：在Order类中对一的一端进行引用时使用的属性名 --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- javaType属性：一的一端类的全类名 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">association</span> <span class="attr">property</span>=<span class="string">&quot;customer&quot;</span> <span class="attr">javaType</span>=<span class="string">&quot;com.vincent.pojo.Customer&quot;</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 配置Customer类的属性和字段名之间的对应关系 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">id</span> <span class="attr">column</span>=<span class="string">&quot;customer_id&quot;</span> <span class="attr">property</span>=<span class="string">&quot;customerId&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;customer_name&quot;</span> <span class="attr">property</span>=<span class="string">&quot;customerName&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">association</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 编写具体的SQL语句，使用id属性唯一的标记一条SQL语句 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- resultType属性：指定封装查询结果的Java实体类的全类名 --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Order selectOrderWithCustomer(Integer orderId); --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;selectOrderWithCustomer&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;selectOrderWithCustomerResultMap&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- Mybatis负责把SQL语句中的#&#123;&#125;部分替换成“?”占位符，在#&#123;&#125;内部还是要声明一个见名知意的名称 --&gt;</span></span><br><span class="line">        SELECT order_id,order_name,c.customer_id,customer_name</span><br><span class="line">        FROM t_order o</span><br><span class="line">        LEFT JOIN t_customer c</span><br><span class="line">        ON o.customer_id=c.customer_id</span><br><span class="line">        WHERE o.order_id=#&#123;orderId&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="对多"><a href="#对多" class="headerlink" title="对多"></a>对多</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">mapper</span></span></span><br><span class="line"><span class="meta">        <span class="meta-keyword">PUBLIC</span> <span class="meta-string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span></span></span><br><span class="line"><span class="meta">        <span class="meta-string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- mapper是根标签，namespace属性：在Mybatis全局范围内找到一个具体的Mapper配置 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 引入接口后，为了方便通过接口全类名来找到Mapper配置文件，所以通常将namespace属性设置为接口全类名 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.vincent.dao.CustomerMapper&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 配置resultMap实现从Customer到OrderList的“对多”关联关系 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;selectCustomerWithOrderListResultMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;com.vincent.pojo.Customer&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 映射Customer本身的属性 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span> <span class="attr">column</span>=<span class="string">&quot;customer_id&quot;</span> <span class="attr">property</span>=<span class="string">&quot;customerId&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;customer_name&quot;</span> <span class="attr">property</span>=<span class="string">&quot;customerName&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- collection标签：映射“对多”的关联关系 --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- property属性：在Customer类中，关联“多”的一端的属性名 --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- ofType属性：集合属性中元素的类型 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">collection</span> <span class="attr">property</span>=<span class="string">&quot;orderList&quot;</span> <span class="attr">ofType</span>=<span class="string">&quot;com.vincent.pojo.Order&quot;</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 映射Order的属性 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">id</span> <span class="attr">column</span>=<span class="string">&quot;order_id&quot;</span> <span class="attr">property</span>=<span class="string">&quot;orderId&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;order_name&quot;</span> <span class="attr">property</span>=<span class="string">&quot;orderName&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">collection</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- Customer selectCustomerWithOrderList(Integer customerId); --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;selectCustomerWithOrderList&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;selectCustomerWithOrderListResultMap&quot;</span>&gt;</span></span><br><span class="line">      SELECT c.customer_id,c.customer_name,o.order_id,o.order_name</span><br><span class="line">      FROM t_customer c</span><br><span class="line">      LEFT JOIN t_order o</span><br><span class="line">      ON c.customer_id=o.customer_id</span><br><span class="line">      WHERE c.customer_id=#&#123;customerId&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="对多分步"><a href="#对多分步" class="headerlink" title="对多分步"></a>对多分步</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">mapper</span></span></span><br><span class="line"><span class="meta">        <span class="meta-keyword">PUBLIC</span> <span class="meta-string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span></span></span><br><span class="line"><span class="meta">        <span class="meta-string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- mapper是根标签，namespace属性：在Mybatis全局范围内找到一个具体的Mapper配置 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 引入接口后，为了方便通过接口全类名来找到Mapper配置文件，所以通常将namespace属性设置为接口全类名 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.vincent.dao.CustomerMapper&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 专门指定一条SQL语句，用来查询Customer，而且是仅仅查询Customer本身，不携带Order --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;selectCustomerWithOrderList&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;selectCustomerWithOrderListResultMap&quot;</span>&gt;</span></span><br><span class="line">        select customer_id,customer_name from t_customer</span><br><span class="line">        where customer_id=#&#123;customerId&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;selectOrderList&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;com.vincent.pojo.Order&quot;</span>&gt;</span></span><br><span class="line">        select order_id,order_name from t_order where customer_id=#&#123;customer_id&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;selectCustomerWithOrderListResultMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;com.vincent.pojo.Customer&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- orderList集合属性的映射关系，使用分步查询 --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 在collection标签中使用select属性指定要引用的SQL语句 --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- select属性值的格式是：Mapper配置文件的名称空间.SQL语句id --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- column属性：指定Customer和Order之间建立关联关系时所依赖的字段 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">collection</span></span></span><br><span class="line"><span class="tag">                <span class="attr">property</span>=<span class="string">&quot;orderList&quot;</span></span></span><br><span class="line"><span class="tag">                <span class="attr">select</span>=<span class="string">&quot;com.vincent.dao.CustomerMapper.selectOrderList&quot;</span></span></span><br><span class="line"><span class="tag">                <span class="attr">column</span>=<span class="string">&quot;customer_id&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Redis/" rel="prev" title="Redis">
+      <i class="fa fa-chevron-left"></i> Redis
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/MapReduce/" rel="next" title="MapReduce">
+      MapReduce <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">基本用法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E4%B8%AA%E7%AE%80%E5%8D%95%E7%B1%BB%E5%9E%8B%E5%8F%82%E6%95%B0"><span class="nav-number">1.1.</span> <span class="nav-text">单个简单类型参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E4%BD%93%E7%B1%BB%E7%B1%BB%E5%9E%8B%E5%8F%82%E6%95%B0"><span class="nav-number">1.2.</span> <span class="nav-text">实体类类型参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%B6%E6%95%A3%E7%9A%84%E7%AE%80%E5%8D%95%E7%B1%BB%E5%9E%8B%E6%95%B0%E6%8D%AE"><span class="nav-number">1.3.</span> <span class="nav-text">零散的简单类型数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Map%E7%B1%BB%E5%9E%8B%E5%8F%82%E6%95%B0"><span class="nav-number">1.4.</span> <span class="nav-text">Map类型参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%94%E5%9B%9E%E5%8D%95%E4%B8%AA%E7%AE%80%E5%8D%95%E7%B1%BB%E5%9E%8B%E6%95%B0%E6%8D%AE"><span class="nav-number">1.5.</span> <span class="nav-text">返回单个简单类型数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%94%E5%9B%9E%E5%AE%9E%E4%BD%93%E7%B1%BB%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.6.</span> <span class="nav-text">返回实体类对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%94%E5%9B%9EMap%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.7.</span> <span class="nav-text">返回Map类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%94%E5%9B%9EList%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.8.</span> <span class="nav-text">返回List类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%94%E5%9B%9E%E8%87%AA%E5%A2%9E%E4%B8%BB%E9%94%AE"><span class="nav-number">1.9.</span> <span class="nav-text">返回自增主键</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB"><span class="nav-number">2.</span> <span class="nav-text">关联关系</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E4%B8%80"><span class="nav-number">2.1.</span> <span class="nav-text">对一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E5%A4%9A"><span class="nav-number">2.2.</span> <span class="nav-text">对多</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E5%A4%9A%E5%88%86%E6%AD%A5"><span class="nav-number">2.3.</span> <span class="nav-text">对多分步</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Vincent"
+      src="/images/cute.jpeg">
+  <p class="site-author-name" itemprop="name">Vincent</p>
+  <div class="site-description" itemprop="description">nice</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vincent</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
