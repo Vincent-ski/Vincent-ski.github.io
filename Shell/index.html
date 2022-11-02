@@ -28,7 +28,7 @@
 <meta property="og:description" content="Shell编程">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-12-01T04:42:06.000Z">
-<meta property="article:modified_time" content="2022-01-05T12:25:15.246Z">
+<meta property="article:modified_time" content="2022-11-02T12:34:28.747Z">
 <meta property="article:author" content="Vincent">
 <meta name="twitter:card" content="summary">
 
@@ -214,7 +214,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-01-05 20:25:15" itemprop="dateModified" datetime="2022-01-05T20:25:15+08:00">2022-01-05</time>
+                <time title="Modified: 2022-11-02 20:34:28" itemprop="dateModified" datetime="2022-11-02T20:34:28+08:00">2022-11-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -238,7 +238,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="Shell解析器"><a href="#Shell解析器" class="headerlink" title="Shell解析器"></a>Shell解析器</h1><p>（1）Linux提供的Shell解析器有：</p>
+        <h1 id="Shell解析器"><a href="#Shell解析器" class="headerlink" title="Shell解析器"></a>Shell解析器</h1><p>（1）Linux提供的Shell解析器</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 ~]$ cat /etc/shells </span><br><span class="line">/bin/sh</span><br><span class="line">/bin/bash</span><br><span class="line">/sbin/nologin</span><br><span class="line">/usr/bin/sh</span><br><span class="line">/usr/bin/bash</span><br><span class="line">/usr/sbin/nologin</span><br><span class="line">/bin/tcsh</span><br><span class="line">/bin/csh</span><br></pre></td></tr></table></figure>
 
 <p>（2）bash和sh的关系</p>
@@ -253,15 +253,15 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br></pre></td></tr></table></figure>
 
 <p>2．脚本执行方式</p>
-<p>第一种：采用 bash+脚本 或  sh+脚本 的相对路径或绝对路径（不用赋予脚本+x权限）</p>
+<p>第一种：采用 bash+脚本或 sh+脚本的相对路径或绝对路径（不用赋予脚本+x权限）</p>
 <p>第二种：采用输入脚本的绝对路径或相对路径执行脚本（必须具有可执行权限+x）</p>
 <p>注意：第一种执行方法，本质是bash解析器帮你执行脚本，所以脚本本身不需要执行权限。第二种执行方法，本质是脚本需要自己执行，所以需要执行权限。</p>
-<p>第三种：在脚本的路径前加上“.”</p>
+<p>第三种：在脚本的路径前加上”.”</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">(a) 有以下脚本</span><br><span class="line">[root@0725pc shells]# cat test1.sh </span><br><span class="line"><span class="meta">#</span><span class="bash">! /bin/bash</span></span><br><span class="line">A=&quot;hello&quot;</span><br><span class="line"></span><br><span class="line">(b) 分别使用sh,bash,./ 和 . 的方式来执行，结果如下：</span><br><span class="line">[root@0725pc shells]#  bash test1.sh </span><br><span class="line">[root@0725pc shells]# echo $A</span><br><span class="line"></span><br><span class="line">[root@0725pc shells]# sh test1.sh </span><br><span class="line">[root@0725pc shells]# echo $A</span><br><span class="line"></span><br><span class="line">[root@0725pc shells]# ./test1.sh </span><br><span class="line">[root@0725pc shells]# echo $A</span><br><span class="line"></span><br><span class="line">[root@0725pc shells]# . test1.sh </span><br><span class="line">[root@0725pc shells]# echo $A</span><br><span class="line">hello</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>原因：</p>
 <p>前三种方式都是在当前shell中打开一个子shell来执行脚本内容，当脚本内容结束，则子shell关闭，回到父shell中。</p>
-<p>第四种，也就是使用在脚本路径前加.的方式，可以使脚本内容在当前shell里执行，而无需打开子shell！</p>
+<p>第四种，也就是使用在脚本路径前加.的方式，可以使脚本内容在当前shell里执行，而无需打开子shell。</p>
 <p>开子shell与不开子shell的区别就在于，环境变量的继承关系，如<strong>在子shell中设置的当前变量，父shell是不可见的</strong>。</p>
 <h1 id="Shell中的变量"><a href="#Shell中的变量" class="headerlink" title="Shell中的变量"></a>Shell中的变量</h1><h2 id="系统变量"><a href="#系统变量" class="headerlink" title="系统变量"></a>系统变量</h2><ol>
 <li>常用系统变量</li>
@@ -312,44 +312,45 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 datas]$ export B</span><br><span class="line">[vincent@linux1 datas]$ ./helloworld.sh </span><br><span class="line">helloworld</span><br><span class="line">2</span><br></pre></td></tr></table></figure>
 
 <h2 id="特殊变量：-n"><a href="#特殊变量：-n" class="headerlink" title="特殊变量：$n"></a>特殊变量：$n</h2><p>1．基本语法</p>
-<p>​    $n  （功能描述：n为数字，**$0代表该脚本名称**，$1-$9代表第一到第九个参数，十以上的参数，十以上的参数需要用大括号包含，如${10}）</p>
+<p>n为数字，**$0代表该脚本名称**，$1-$9代表第一到第九个参数，十以上的参数，十以上的参数需要用大括号包含，如${10}。</p>
 <p>2．案例实操</p>
-<p>（1）输出该脚本文件名称、输入参数1和输入参数2的值</p>
+<p>输出该脚本文件名称、输入参数1和输入参数2的值</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 datas]$ touch parameter.sh </span><br><span class="line">[vincent@linux1 datas]$ vim parameter.sh</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">echo &quot;$0 $1 $2&quot;</span><br><span class="line"></span><br><span class="line">[vincent@linux1 datas]$ chmod 777 parameter.sh</span><br><span class="line"></span><br><span class="line">[vincent@linux1 datas]$ ./parameter.sh cls  xz</span><br><span class="line">./parameter.sh  cls   xz</span><br></pre></td></tr></table></figure>
 
 <h2 id="特殊变量："><a href="#特殊变量：" class="headerlink" title="特殊变量：$#"></a>特殊变量：$#</h2><p>1．基本语法</p>
-<p>​    $#  （功能描述：获取所有<strong>输入参数个数</strong>，常用于循环）。</p>
+<p>获取所有<strong>输入参数个数</strong>，常用于循环。</p>
 <p>2．案例实操</p>
-<p>（1）获取输入参数的个数</p>
+<p>获取输入参数的个数</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 datas]$ vim parameter.sh</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">echo &quot;$0 $1 $2&quot;</span><br><span class="line">echo $#</span><br><span class="line"></span><br><span class="line">[vincent@linux1 datas]$ chmod 777 parameter.sh</span><br><span class="line"></span><br><span class="line">[vincent@linux1 datas]$ ./parameter.sh cls  xz</span><br><span class="line">parameter.sh cls xz </span><br><span class="line">2</span><br></pre></td></tr></table></figure>
 
 <h2 id="特殊变量：-、"><a href="#特殊变量：-、" class="headerlink" title="特殊变量：$*、$@"></a>特殊变量：$*、$@</h2><p>1．基本语法</p>
-<p>​    $*  （功能描述：这个变量代表命令行中所有的参数，$*把所有的参数看成<strong>一个整体</strong>）</p>
-<p>​    $@ （功能描述：这个变量也代表命令行中所有的参数，不过$@把每个参数<strong>区分对待</strong>）</p>
+<p>$* 这个变量代表命令行中所有的参数，$*把所有的参数看成<strong>一个整体</strong>。</p>
+<p>$@ 这个变量也代表命令行中所有的参数，不过$@把每个参数<strong>区分对待</strong>。</p>
 <p>2．案例实操</p>
-<p>（1）打印输入的所有参数</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 datas]$ vim parameter.sh</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">echo &quot;$0 $1 $2&quot;</span><br><span class="line">echo $#</span><br><span class="line">echo $*</span><br><span class="line">echo $@</span><br><span class="line"></span><br><span class="line">[vincent@linux1 datas]$ bash parameter.sh 1 2 3</span><br><span class="line">parameter.sh  1   2</span><br><span class="line">3</span><br><span class="line">1 2 3</span><br><span class="line">1 2 3</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>打印输入的所有参数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 datas]$ vim parameter.sh</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">echo &quot;$0 $1 $2&quot;</span><br><span class="line">echo $#</span><br><span class="line">echo $*</span><br><span class="line">echo $@</span><br><span class="line"></span><br><span class="line">[vincent@linux1 datas]$ bash parameter.sh 1 2 3</span><br><span class="line">parameter.sh  1   2</span><br><span class="line">3</span><br><span class="line">1 2 3</span><br><span class="line">1 2 3</span><br></pre></td></tr></table></figure>
+
+<p>*<em>比较$<em>和$@区别</em></em></p>
+<p>$*和$@都表示传递给函数或脚本的所有参数，不被双引号””包含时，都以$1 $2 …$n的形式输出所有参数。</p>
+<p>当它们被双引号””包含时，”$*”会将所有的参数作为一个整体，以”$1 $2 …$n”的形式输出所有参数；”$@”会将各个参数分开，以”$1” “$2”…”$n”的形式输出所有参数。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 datas]$ vim for.sh</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span> </span><br><span class="line"></span><br><span class="line">for i in &quot;$*&quot; </span><br><span class="line"><span class="meta">#</span><span class="bash">$*中的所有参数看成是一个整体，所以这个<span class="keyword">for</span>循环只会循环一次</span> </span><br><span class="line">        do </span><br><span class="line">                echo &quot;ban zhang love $i&quot;</span><br><span class="line">        done </span><br><span class="line"></span><br><span class="line">for j in &quot;$@&quot; </span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="variable">$@</span>中的每个参数都看成是独立的，所以“<span class="variable">$@</span>”中有几个参数，就会循环几次</span> </span><br><span class="line">        do </span><br><span class="line">                echo &quot;ban zhang love $j&quot; </span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">[vincent@linux1 datas]$ chmod 777 for.sh</span><br><span class="line">[vincent@linux1 datas]$ bash for.sh cls xz bd</span><br><span class="line">ban zhang love cls xz bd</span><br><span class="line">ban zhang love cls</span><br><span class="line">ban zhang love xz</span><br><span class="line">ban zhang love bd</span><br></pre></td></tr></table></figure>
 
 <h2 id="特殊变量：-？"><a href="#特殊变量：-？" class="headerlink" title="特殊变量：$？"></a>特殊变量：$？</h2><p>1．基本语法</p>
-<p>$？ （功能描述：<strong>最后一次执行的命令的返回状态</strong>。如果这个<strong>变量的值为0，证明上一个命令正确执行</strong>；如果这个变量的值为非0（具体是哪个数，由命令自己来决定），则证明上一个命令执行不正确了。）</p>
+<p><strong>最后一次执行的命令的返回状态</strong>。如果这个<strong>变量的值为0，证明上一个命令正确执行</strong>；如果这个变量的值为非0（具体是哪个数，由命令自己来决定），则证明上一个命令执行不正确了。</p>
 <p>2．案例实操</p>
-<p>​    （1）判断helloworld.sh脚本是否正确执行</p>
+<p>判断helloworld.sh脚本是否正确执行</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 datas]$ ./helloworld.sh </span><br><span class="line">hello world</span><br><span class="line">[vincent@linux1 datas]$ echo $?</span><br><span class="line">0</span><br></pre></td></tr></table></figure>
 
-<p>（2）删除目录下文件</p>
+<p>删除目录下文件</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd mytmp</span><br><span class="line">if (( $? == 0 )); then rm * ; fi</span><br><span class="line">或者</span><br><span class="line">if cd mytmp; then rm * ; fi</span><br></pre></td></tr></table></figure>
 
 <h1 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h1><p>1．基本语法</p>
-<p>（1）“**$((运算式))<strong>”或</strong>“$[运算式]”**</p>
-<p>（2）expr  + , - , *, /, %  加，减，乘，除，取余</p>
-<p>   (3)用 <code>$(( ))</code> 或 <code>let</code> 进行整数运算</p>
+<p>(1) <strong>“$((运算式))”<strong>或</strong>“$[运算式]”</strong></p>
+<p>(2) expr  + , - , *, /, %  加，减，乘，除，取余</p>
+<p>(3) 使用 let 进行整数运算</p>
 <p>注意：expr运算符间要有<strong>空格</strong></p>
 <p>2．案例实操：</p>
-<p>（1）计算3+2的值</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 datas]$ expr 2 + 3</span><br><span class="line">5</span><br></pre></td></tr></table></figure>
-
-<p>（2）计算 (2+3)*4 的值</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">expr一步完成计算</span><br><span class="line">[vincent@linux1 datas]$ expr `expr 2 + 3` \* 4</span><br><span class="line">20</span><br><span class="line"></span><br><span class="line">采用$[运算式]方式</span><br><span class="line">[vincent@linux1 datas]$ S=$[(2+3)*4]</span><br><span class="line">[vincent@linux1 datas]$ echo $S</span><br><span class="line">[vincent@linux1 datas]$ COUNT=$((COUNT + 5 + MAX * 2))</span><br><span class="line">[vincent@linux1 datas]$ let COUNT+=&#x27;5+MAX*2&#x27;</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 datas]$ expr 2 + 3</span><br><span class="line">5</span><br><span class="line">[vincent@linux1 datas]$ expr `expr 2 + 3` \* 4</span><br><span class="line">20</span><br><span class="line">[vincent@linux1 datas]$ S=$[(2+3)*4]</span><br><span class="line">[vincent@linux1 datas]$ echo $S</span><br><span class="line">[vincent@linux1 datas]$ COUNT=$((COUNT + 5 + MAX * 2))</span><br><span class="line">[vincent@linux1 datas]$ let COUNT+=&#x27;5+MAX*2&#x27;</span><br></pre></td></tr></table></figure>
 
 <h1 id="条件判断"><a href="#条件判断" class="headerlink" title="条件判断"></a>条件判断</h1><ol>
 <li>基本语法</li>
@@ -362,13 +363,13 @@
 <li>常用判断条件</li>
 </ol>
 <p>（1）两个整数之间比较</p>
-<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">= 字符串比较</span></span><br><span class="line"></span><br><span class="line">-lt 小于（less than）         -le 小于等于（less equal）</span><br><span class="line"></span><br><span class="line">-eq 等于（equal）           -gt 大于（greater than）</span><br><span class="line"></span><br><span class="line">-ge 大于等于（greater equal）  -ne 不等于（Not equal）</span><br></pre></td></tr></table></figure>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-lt	<span class="keyword">less</span> than</span><br><span class="line">-le	<span class="keyword">less</span> <span class="keyword">equal</span></span><br><span class="line">-eq	<span class="keyword">equal</span></span><br><span class="line">-gt	<span class="keyword">greater</span> than</span><br><span class="line">-ge	<span class="keyword">greater</span> <span class="keyword">equal</span></span><br><span class="line">-ne	<span class="keyword">not</span> <span class="keyword">equal</span></span><br></pre></td></tr></table></figure>
 
 <p>（2）按照文件权限进行判断</p>
-<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-r 有读的权限（<span class="built_in">read</span>）       -w 有写的权限（<span class="built_in">write</span>）</span><br><span class="line"></span><br><span class="line">-x 有执行的权限（<span class="built_in">execute</span>）</span><br></pre></td></tr></table></figure>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="deletion">-r 有读的权限（read）       </span></span><br><span class="line"><span class="deletion">-w 有写的权限（write）</span></span><br><span class="line"><span class="deletion">-x 有执行的权限（execute）</span></span><br></pre></td></tr></table></figure>
 
 <p>（3）按照文件类型进行判断</p>
-<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="deletion">-f 文件存在并且是一个常规的文件（file）</span></span><br><span class="line"></span><br><span class="line"><span class="deletion">-e 文件存在（existence）      -d 文件存在并是一个目录（directory）</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="deletion">-f 文件存在并且是一个常规的文件（file）</span></span><br><span class="line"><span class="deletion">-e 文件存在（existence）</span></span><br><span class="line"><span class="deletion">-d 文件存在并是一个目录（directory）</span></span><br></pre></td></tr></table></figure>
 
 <ol start="3">
 <li>案例实操</li>
@@ -408,40 +409,27 @@
 </li>
 </ol>
 <p>2．案例实操</p>
-<p>（1）输入一个数字，如果是1，则输出banzhang，如果是2，则输出cls，如果是其它，输出renyao。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">case $1 in</span><br><span class="line">&quot;1&quot;)</span><br><span class="line">	echo &quot;banzhang&quot;</span><br><span class="line">	;;</span><br><span class="line">&quot;2&quot;)</span><br><span class="line">	echo &quot;cls&quot;</span><br><span class="line">	;;</span><br><span class="line">*)</span><br><span class="line">	echo &quot;renyao&quot;</span><br><span class="line">	;;</span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
 
-<h2 id="for-循环"><a href="#for-循环" class="headerlink" title="for 循环"></a>for 循环</h2><p>1．基本语法1</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for ((初始值;循环控制条件;变量变化)) </span><br><span class="line">  do </span><br><span class="line">    程序 </span><br><span class="line">  done</span><br></pre></td></tr></table></figure>
+<h2 id="for-循环"><a href="#for-循环" class="headerlink" title="for 循环"></a>for 循环</h2><p>1．基本语法</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">for ((初始值;循环控制条件;变量变化))</span><br><span class="line">  do </span><br><span class="line">    程序 </span><br><span class="line">  done</span><br><span class="line">  </span><br><span class="line">for 变量 in 值1 值2 值3… </span><br><span class="line">  do </span><br><span class="line">    程序 </span><br><span class="line">  done</span><br></pre></td></tr></table></figure>
 
 <p>2．案例实操</p>
-<p>（1）从1加到100</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">s=0</span><br><span class="line">for ((i=1;i&lt;=100;i=i+1))</span><br><span class="line">	do</span><br><span class="line">		s=$[$i+$s]</span><br><span class="line">	done</span><br><span class="line">echo $s</span><br></pre></td></tr></table></figure>
 
-<p>3．基本语法2</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for 变量 in 值1 值2 值3… </span><br><span class="line">  do </span><br><span class="line">    程序 </span><br><span class="line">  done</span><br></pre></td></tr></table></figure>
-
-<p>4．案例实操</p>
-<p>​    （1）打印所有输入参数</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 datas]$ vim for.sh</span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span> </span><br><span class="line"></span><br><span class="line">for i in $*</span><br><span class="line">do</span><br><span class="line">      echo &quot;ban zhang love $i &quot;</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">for j in $@</span><br><span class="line">do      </span><br><span class="line">        echo &quot;ban zhang love $j&quot;</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">[vincent@linux1 datas]$ bash for.sh cls xz bd</span><br><span class="line">ban zhang love cls </span><br><span class="line">ban zhang love xz </span><br><span class="line">ban zhang love bd </span><br><span class="line">ban zhang love cls</span><br><span class="line">ban zhang love xz</span><br><span class="line">ban zhang love bd</span><br></pre></td></tr></table></figure>
-
-<p>（2）比较$*和$@区别</p>
-<p>（a）$*和$@都表示传递给函数或脚本的所有参数，不被双引号“”包含时，都以$1 $2 …$n的形式输出所有参数。</p>
-<p>（b）当它们被双引号“”包含时，“$*”会将所有的参数作为一个整体，以“$1 $2 …$n”的形式输出所有参数；“$@”会将各个参数分开，以“$1” “$2”…”$n”的形式输出所有参数。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 datas]$ vim for.sh</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span> </span><br><span class="line"></span><br><span class="line">for i in &quot;$*&quot; </span><br><span class="line"><span class="meta">#</span><span class="bash">$*中的所有参数看成是一个整体，所以这个<span class="keyword">for</span>循环只会循环一次</span> </span><br><span class="line">        do </span><br><span class="line">                echo &quot;ban zhang love $i&quot;</span><br><span class="line">        done </span><br><span class="line"></span><br><span class="line">for j in &quot;$@&quot; </span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="variable">$@</span>中的每个参数都看成是独立的，所以“<span class="variable">$@</span>”中有几个参数，就会循环几次</span> </span><br><span class="line">        do </span><br><span class="line">                echo &quot;ban zhang love $j&quot; </span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">[vincent@linux1 datas]$ chmod 777 for.sh</span><br><span class="line">[vincent@linux1 datas]$ bash for.sh cls xz bd</span><br><span class="line">ban zhang love cls xz bd</span><br><span class="line">ban zhang love cls</span><br><span class="line">ban zhang love xz</span><br><span class="line">ban zhang love bd</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 datas]$ vim for.sh</span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span> </span><br><span class="line"></span><br><span class="line">for i in $*</span><br><span class="line">do</span><br><span class="line">      echo &quot;ban zhang love $i &quot;</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">for j in $@</span><br><span class="line">do</span><br><span class="line">        echo &quot;ban zhang love $j&quot;</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">[vincent@linux1 datas]$ bash for.sh cls xz bd</span><br><span class="line">ban zhang love cls </span><br><span class="line">ban zhang love xz </span><br><span class="line">ban zhang love bd </span><br><span class="line">ban zhang love cls</span><br><span class="line">ban zhang love xz</span><br><span class="line">ban zhang love bd</span><br></pre></td></tr></table></figure>
 
 <h2 id="while-循环"><a href="#while-循环" class="headerlink" title="while 循环"></a>while 循环</h2><p>1．基本语法</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">while [ 条件判断式 ] 或者 ((条件判断式))</span><br><span class="line">  do </span><br><span class="line">    程序</span><br><span class="line">  done</span><br><span class="line">注意: while 后面需要有空格</span><br></pre></td></tr></table></figure>
 
 <p>2．案例实操</p>
-<p>​    （1）从1加到100</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">s=0</span><br><span class="line">i=1</span><br><span class="line">while [ i -le 100 ]</span><br><span class="line">	do</span><br><span class="line">   s=$[$s+$i]</span><br><span class="line">   i=$[$i+1]</span><br><span class="line">  done</span><br><span class="line">echo $s</span><br></pre></td></tr></table></figure>
 
 <h1 id="read读取控制台输入"><a href="#read读取控制台输入" class="headerlink" title="read读取控制台输入"></a>read读取控制台输入</h1><p>1．基本语法</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">read(选项)(参数)   </span><br><span class="line">	选项：</span><br><span class="line">-p：指定读取值时的提示符；</span><br><span class="line">-t：指定读取值时等待的时间（秒）。</span><br><span class="line">参数</span><br><span class="line">	变量：指定读取值的变量名</span><br></pre></td></tr></table></figure>
 
 <p>2．案例实操</p>
-<p>​    （1）提示7秒内，读取控制台输入的名称</p>
+<p>提示7秒内，读取控制台输入的名称</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 datas]$ vim read.sh</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">read -t 7 -p &quot;Enter your name in 7 seconds &quot; NAME</span><br><span class="line">echo $NAME</span><br><span class="line"></span><br><span class="line">[vincent@linux1 datas]$ ./read.sh </span><br><span class="line">Enter your name in 7 seconds xiaoze</span><br><span class="line">xiaoze</span><br></pre></td></tr></table></figure>
 
 <h1 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h1><h2 id="系统函数"><a href="#系统函数" class="headerlink" title="系统函数"></a>系统函数</h2><ol>
@@ -452,7 +440,7 @@
 <ol start="2">
 <li>案例实操</li>
 </ol>
-<p>（1）截取该/home/vincent/banzhang.txt路径的文件名称</p>
+<p>截取该/home/vincent/banzhang.txt路径的文件名称</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 datas]$ basename /home/vincent/banzhang.txt </span><br><span class="line">banzhang.txt</span><br><span class="line">[vincent@linux1 datas]$ basename /home/vincent/banzhang.txt .txt</span><br><span class="line">banzhang</span><br></pre></td></tr></table></figure>
 
 <ol start="3">
@@ -460,7 +448,7 @@
 </ol>
 <figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">dirname</span> 文件绝对路径		（功能描述：从给定的包含绝对路径的文件名中去除文件名（非目录的部分），然后返回剩下的路径（目录的部分））</span><br></pre></td></tr></table></figure>
 
-<p>4．案例实操</p>
+<p>​    4．案例实操</p>
 <p>（1）获取banzhang.txt文件的路径</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[vincent@linux1 ~]$ dirname /home/vincent/banzhang.txt </span><br><span class="line">/home/vincent</span><br></pre></td></tr></table></figure>
 
@@ -916,13 +904,10 @@
 
         
     <div class="post-nav">
+      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/Yarn/" rel="prev" title="Yarn">
-      <i class="fa fa-chevron-left"></i> Yarn
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/Kylin/" rel="next" title="Kylin">
-      Kylin <i class="fa fa-chevron-right"></i>
+    <a href="/Zookeeper/" rel="next" title="Zookeeper">
+      Zookeeper <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
