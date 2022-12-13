@@ -66,7 +66,7 @@
 <meta property="og:image" content="http://example.com/Flink/%E6%88%AA%E5%B1%8F2022-07-22%20%E4%B8%8B%E5%8D%885.44.19.png">
 <meta property="og:image" content="http://example.com/Flink/%E6%88%AA%E5%B1%8F2022-07-26%20%E4%B8%8B%E5%8D%885.05.03.png">
 <meta property="article:published_time" content="2021-12-17T10:35:47.000Z">
-<meta property="article:modified_time" content="2022-11-03T03:08:56.880Z">
+<meta property="article:modified_time" content="2022-12-13T06:40:20.837Z">
 <meta property="article:author" content="Vincent">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/Flink/%E6%88%AA%E5%B1%8F2022-03-22%20%E4%B8%8A%E5%8D%8811.27.50.png">
@@ -253,7 +253,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-11-03 11:08:56" itemprop="dateModified" datetime="2022-11-03T11:08:56+08:00">2022-11-03</time>
+                <time title="Modified: 2022-12-13 14:40:20" itemprop="dateModified" datetime="2022-12-13T14:40:20+08:00">2022-12-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -314,7 +314,7 @@
 <p>JobManger 又包含 3 个不同的组件：JobMaster，ResourceManager，Dispatcher</p>
 <h5 id="JobMaster"><a href="#JobMaster" class="headerlink" title="JobMaster"></a>JobMaster</h5><p>JobMaster 是 JobManager 中最核心的组件，<strong>负责处理单独的作业</strong>(Job)。所以 JobMaster 和具体的 Job 是一一对应的，多个 Job 可以同时运行在一个 Flink 集群中，每个 Job 都有一个自己的 JobMaster。需要注意在早期版本的 Flink 中，没有 JobMaster 的概念；而 JobManager 的概念范围较小，实际指的就是现在所说的 JobMaster。</p>
 <p>在作业提交时，JobMaster 会先接收到要执行的应用。这里所说”应用”一般是客户端提交来的，包括：Jar包、数据流图(dataflow graph)、作业图(JobGraph)。</p>
-<p>JobMaster 会把 JobGraph 转换成一个物理层面的数据流图，这个图被叫作”执行图” (ExecutionGraph)，它包含了所有可以并发执行的任务。JobMaster 会向资源管理器 (ResourceManager)发出请求，申请执行任务必要的资源。一旦它获取到了足够的资源，就会将执行图分发到真正运行它们的 TaskManager 上。而在运行过程中，JobMaster 会负责所有需要中央协调的操作，比如说检查点(checkpoints)的协调。</p>
+<p>JobMaster 会把 JobGraph 转换成一个物理层面的数据流图，这个图被叫作”执行图”(ExecutionGraph)，它包含了所有可以并发执行的任务。JobMaster 会向资源管理器 (ResourceManager)发出请求，申请执行任务必要的资源。一旦它获取到了足够的资源，就会将执行图分发到真正运行它们的 TaskManager 上。而在运行过程中，JobMaster 会负责所有需要中央协调的操作，比如说检查点(checkpoints)的协调。</p>
 <h5 id="ResourceManager"><a href="#ResourceManager" class="headerlink" title="ResourceManager"></a>ResourceManager</h5><p>ResourceManager 主要<strong>负责资源的分配和管理</strong>，在 Flink 集群中只有一个。所谓资源，主要是指 TaskManager 的任务槽(task slots)。任务槽就是 Flink 集群中的资源调配单元，包含了机器用来执行计算的一组CPU和内存资源。每一个任务(Task)都需要分配到一个 slot 上执行。</p>
 <p>这里注意要把 Flink 内置的 ResourceManager 和其他资源管理平台(比如 YARN)的 ResourceManager 区分开。</p>
 <p>Flink 的 ResourceManager，针对不同的环境和资源管理平台(比如 Standalone 部署，或者 YARN)，有不同的具体实现。在 Standalone 部署时，因为 TaskManager 是单独启动的(没有 Per-Job 模式)，所以 ResourceManager 只能分发可用 TaskManager 的任务槽，不能单独启动新 TaskManager。</p>
