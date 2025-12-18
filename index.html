@@ -643,6 +643,35 @@
 <p><img src="/../imgs/wps67.jpg" alt="img"> </p>
 <p>右键选择要切换的版本，然后在菜单里点击get。</p>
 <p><img src="/../imgs/%255CUsers%255Cmerge%255CAppData%255CRoaming%255CTypora%255Ctypora-user-images%255C1705472349179.png" alt="%5CUsers%5Cmerge%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1705472349179"></p>
+<h1 id="第5章-企业项目构建与开发分支"><a href="#第5章-企业项目构建与开发分支" class="headerlink" title="第5章 企业项目构建与开发分支"></a>第5章 企业项目构建与开发分支</h1><h2 id="1-GitFlow工作流介绍"><a href="#1-GitFlow工作流介绍" class="headerlink" title="1. GitFlow工作流介绍"></a>1. GitFlow工作流介绍</h2><p>在项目开发过程中使用 Git 的方式常见的有：</p>
+<h3 id="1-1-集中式工作流"><a href="#1-1-集中式工作流" class="headerlink" title="1.1 集中式工作流"></a><strong>1.1 集中式工作流</strong></h3><p>所有修改都提交到 Master 这个分支。比较适合极小团队或单人维护的项目，不建议使用这种方式。</p>
+<p><img src="/../imgs/wps1111.jpg" alt="img"> </p>
+<h3 id="1-2-功能开发工作流"><a href="#1-2-功能开发工作流" class="headerlink" title="1.2 功能开发工作流"></a><strong>1.2 功能开发工作流</strong></h3><p>功能开发应该在一个专门的分支，而不是在 master 分支上。适用于小团队开发。</p>
+<p><img src="/../imgs/wps21111.jpg" alt="img"> </p>
+<h3 id="1-3-GitFlow工作流"><a href="#1-3-GitFlow工作流" class="headerlink" title="1.3 GitFlow工作流"></a><strong>1.3 GitFlow工作流</strong></h3><p>公司中最常用于管理大型项目。为功能开发、发布准备和维护设立了独立的分支，让发布迭代过程更流畅。</p>
+<p><img src="/../imgs/wps13111.jpg" alt="img"> </p>
+<h3 id="1-4-Forking工作流"><a href="#1-4-Forking工作流" class="headerlink" title="1.4 Forking工作流"></a><strong>1.4 Forking工作流</strong></h3><p>在 GitFlow 基础上，充分利用了 Git 的 Fork 和 pull request 的功能以达到代码审核的目的。一般用于跨团队协作、网上开源项目。</p>
+<p><img src="/../imgs/wps41111.jpg" alt="img"> </p>
+<h2 id="2-各分支功能介绍"><a href="#2-各分支功能介绍" class="headerlink" title="2. 各分支功能介绍"></a>2. 各分支功能介绍</h2><p><img src="/../imgs/wps13111.jpg" alt="img"></p>
+<h3 id="2-1-主干分支-master"><a href="#2-1-主干分支-master" class="headerlink" title="2.1 主干分支 master"></a>2.1 主干分支 master</h3><p>主要负责管理正在运行的生产环境代码，永远保持与正在运行的生产环境完全一致。为了保持稳定性一般不会直接在这个分支上修改代码，都是通过其他分支合并过来的。</p>
+<h3 id="2-2-开发分支-develop"><a href="#2-2-开发分支-develop" class="headerlink" title="2.2 开发分支 develop"></a>2.2 开发分支 develop</h3><p>主要负责管理正在开发过程中的代码。一般情况下应该是最新的代码。</p>
+<h3 id="2-3-功能分支-feature"><a href="#2-3-功能分支-feature" class="headerlink" title="2.3 功能分支 feature"></a>2.3 功能分支 feature</h3><p>为了不影响较短周期的开发工作，一般把中长期开发模块，会从开发分支中独立出来。 开发完成后会合并到开发分支。</p>
+<h3 id="2-4-准生产分支（预发布分支）-release"><a href="#2-4-准生产分支（预发布分支）-release" class="headerlink" title="2.4 准生产分支（预发布分支） release"></a>2.4 准生产分支（预发布分支） release</h3><p>较大的版本上线前，会从开发分支中分出准生产分支，进行最后阶段的集成测试。该版本上线后，会合并到主干分支。生产环境运行一段阶段较稳定后可以视情况删除。</p>
+<h3 id="2-5-bug-修理分支-hotfix"><a href="#2-5-bug-修理分支-hotfix" class="headerlink" title="2.5 bug 修理分支 hotfix"></a>2.5 bug 修理分支 hotfix</h3><p>主要负责管理生产环境下出现的紧急修复的代码。 从主干分支分出，修复完毕并测试上线后，并回主干分支和开发分支。并回后，视情况可以删除该分支。</p>
+<h2 id="3-创建项目与分支管理"><a href="#3-创建项目与分支管理" class="headerlink" title="3. 创建项目与分支管理"></a>3. 创建项目与分支管理</h2><p>首先在Gitlab上面按照项目规格创建远程仓库。</p>
+<p><img src="/../imgs/%255CUsers%255Cmerge%255CAppData%255CRoaming%255CTypora%255Ctypora-user-images%255C1706084894289.png" alt="%5CUsers%5Cmerge%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1706084894289"></p>
+<h3 id="3-1-idea与远程仓库连接"><a href="#3-1-idea与远程仓库连接" class="headerlink" title="3.1 idea与远程仓库连接"></a>3.1 idea与远程仓库连接</h3><p><img src="/../imgs/%255CUsers%255Cmerge%255CAppData%255CRoaming%255CTypora%255Ctypora-user-images%255C1705473717653.png" alt="%5CUsers%5Cmerge%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1705473717653"></p>
+<h3 id="3-2-不同分支的提交与合并"><a href="#3-2-不同分支的提交与合并" class="headerlink" title="3.2 不同分支的提交与合并"></a>3.2 不同分支的提交与合并</h3><p>（1）新建分支和切换分支</p>
+<p><img src="/../imgs/%255CUsers%255Cmerge%255CAppData%255CRoaming%255CTypora%255Ctypora-user-images%255C1706087127924.png" alt="%5CUsers%5Cmerge%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1706087127924"></p>
+<p>（2）不同分支提交代码与合并</p>
+<p>首先在feature分支编写第一个模块的模拟代码，并提交</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.atguigu;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">module1</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;完成第一个模块的开发&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>（3）合并feature到develop分支</p>
+<p><img src="/../imgs/%255CUsers%255Cmerge%255CAppData%255CRoaming%255CTypora%255Ctypora-user-images%255C1706088019573.png" alt="%5CUsers%5Cmerge%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1706088019573"></p>
+<p><img src="/../imgs/%255CUsers%255Cmerge%255CAppData%255CRoaming%255CTypora%255Ctypora-user-images%255C1706088077244.png" alt="%5CUsers%5Cmerge%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1706088077244"></p>
+<p>审查测试通过之后，完成合并</p>
+<p><img src="/../imgs/%255CUsers%255Cmerge%255CAppData%255CRoaming%255CTypora%255Ctypora-user-images%255C1706087991195.png" alt="%5CUsers%5Cmerge%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1706087991195"></p>
 
           
         
